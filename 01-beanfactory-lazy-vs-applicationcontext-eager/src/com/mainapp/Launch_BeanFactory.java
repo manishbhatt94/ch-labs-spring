@@ -5,7 +5,7 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-public class Launch {
+public class Launch_BeanFactory {
 
 	public static void main(String[] args) {
 

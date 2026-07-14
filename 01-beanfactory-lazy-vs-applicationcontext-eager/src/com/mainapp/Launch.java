@@ -1,5 +1,6 @@
 package com.mainapp;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -14,7 +15,7 @@ public class Launch {
 
 		System.out.println("\n--- STEP 2: Initializing XmlBeanFactory ---");
 		// The container is instantiated here, but NO beans are constructed yet!
-		XmlBeanFactory factory = new XmlBeanFactory(xmlResource);
+		BeanFactory factory = new XmlBeanFactory(xmlResource);
 		System.out.println("[Container Status] XmlBeanFactory is fully loaded and ready.");
 
 		System.out.println("\n--- STEP 3: Requesting Employee Bean for the FIRST time ---");

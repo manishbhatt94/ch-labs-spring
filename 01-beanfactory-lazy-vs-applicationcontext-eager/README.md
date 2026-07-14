@@ -1,4 +1,4 @@
-# Using BeanFactory (interface) as the IOC Container
+# Spring IOC Containers Bean Initialization: BeanFactory (Lazy) vs. ApplicationContext (Eager)
 
 ## Spring Framework IoC Containers: Core Reference Notes
 

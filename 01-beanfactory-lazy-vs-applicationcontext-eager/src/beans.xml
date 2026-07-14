@@ -6,7 +6,15 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-		<!-- bean definitions here -->
+		<!-- ==== Bean Definitions here: ====== -->
+
 		<bean id="emp" class="com.mainapp.Employee"></bean>
+		
+		<!-- Below two beans are explicitly configured to be lazily initialized,
+			so even if we use ApplicationContext (which by default eagerly
+			initializes beans), they will not be created until they are requested:
+		 -->
+		<bean id="project" class="com.mainapp.Project" lazy-init="true"></bean>
+		<bean id="salary" class="com.mainapp.Salary" lazy-init="true"></bean>
 
 </beans>

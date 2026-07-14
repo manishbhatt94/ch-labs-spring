@@ -19,7 +19,7 @@ public class Launch_ApplicationContext {
 		// --------------- ^^^^^^^^^^^^^^^^^^
 		// Eclipse IDE Warning - Resource leak: 'applicationContext' is never closed.
 
-		System.out.println("[Container Status] ClassPathXmlApplicationContext is fully loaded and ready.");
+		System.out.println("\n[Container Status] ClassPathXmlApplicationContext is fully loaded and ready.");
 
 		System.out.println("\n--- STEP 2: Requesting Employee Bean for the FIRST time ---");
 		Employee employeeInstance = applicationContext.getBean("emp", Employee.class);

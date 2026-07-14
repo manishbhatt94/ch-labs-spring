@@ -62,3 +62,20 @@ new User Library.
 
 Then, as discussed elsewhere, for each of these five (5) binary JARs, link
 their respective javadoc and sources JAR files to them.
+
+After doing that, our newly created Eclipse user library `spring-basic-libs-5.3.39`
+would look like below in Eclipse:
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="./assets/images/fig-01-spring-5-basic-jars-in-eclipse-user-library.png"
+           alt="Spring Basic JARs (5) added to Eclipse Project Buid Path under a User Library"
+           title="Spring Basic JARs (5) added to Eclipse Project Buid Path under a User Library"
+           width="780" height="776" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: Spring Basic JARs (5) added to Eclipse Project Buid Path under a User Library</em>
+    </td>
+  </tr>
+</table>
+

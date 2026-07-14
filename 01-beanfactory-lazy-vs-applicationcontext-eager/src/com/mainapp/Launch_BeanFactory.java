@@ -9,6 +9,8 @@ public class Launch_BeanFactory {
 
 	public static void main(String[] args) {
 
+		System.out.println("===== Lazy Bean Initialization with BeanFactory (XmlBeanFactory impl) =====\n");
+
 		System.out.println("--- STEP 1: Creating Resource Object ---");
 		// Instructs Spring to look inside the Classpath root for beans.xml
 		Resource xmlResource = new ClassPathResource("beans.xml");

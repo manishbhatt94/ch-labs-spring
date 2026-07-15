@@ -14,7 +14,6 @@ public class Launch_ApplicationContext {
 
 		// The below line will eagerly load all beans defined in the XML configuration
 		// file:
-		@SuppressWarnings("resource")
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
 		// --------------- ^^^^^^^^^^^^^^^^^^
 		// Eclipse IDE Warning - Resource leak: 'applicationContext' is never closed.
@@ -31,6 +30,11 @@ public class Launch_ApplicationContext {
 
 		System.out.println("\n--- STEP 4: Executing Business Method ---");
 		employeeInstance.test();
+
+		// ---------------------------------------------------------
+		// Close the context (releases singleton bean resources)
+		// ---------------------------------------------------------
+		((ClassPathXmlApplicationContext) applicationContext).close();
 
 	}
 

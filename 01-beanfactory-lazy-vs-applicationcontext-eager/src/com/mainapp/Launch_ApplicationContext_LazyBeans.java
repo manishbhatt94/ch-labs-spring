@@ -14,7 +14,6 @@ public class Launch_ApplicationContext_LazyBeans {
 
 		// The below line will eagerly load all beans defined in the XML configuration
 		// file:
-		@SuppressWarnings("resource")
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
 		// --------------- ^^^^^^^^^^^^^^^^^^
 		// Eclipse IDE Warning - Resource leak: 'applicationContext' is never closed.
@@ -52,6 +51,11 @@ public class Launch_ApplicationContext_LazyBeans {
 		} else {
 			System.out.println("\n[Access Denied] You do not have permission to access Project and Salary beans.");
 		}
+
+		// ---------------------------------------------------------
+		// Close the context (releases singleton bean resources)
+		// ---------------------------------------------------------
+		((ClassPathXmlApplicationContext) applicationContext).close();
 
 	}
 

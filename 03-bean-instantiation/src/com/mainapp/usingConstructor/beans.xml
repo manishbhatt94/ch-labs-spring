@@ -61,14 +61,59 @@
 			peakTorque -->
 	</bean>
 
-	<bean id="muscleCar"
-		class="com.mainapp.usingConstructor.Engine">
+	<bean id="muscleCar" class="com.mainapp.usingConstructor.Engine">
 		<!-- Using constructor based Dependency Injection (DI) and, -->
 		<!-- Constructor Argument Resolution: Constructor argument name -->
 		<constructor-arg name="numCylinders" value="8"></constructor-arg>
 		<constructor-arg name="totalEngineVolume" value="5038"></constructor-arg>
 		<constructor-arg name="peakHorsePower" value="450"></constructor-arg>
 		<constructor-arg name="peakTorque" value="556"></constructor-arg>
+	</bean>
+
+	<bean id="alto" class="com.mainapp.usingConstructor.Car">
+		<property name="brand" value="Maruti Suzuki"></property>
+		<property name="model" value="Alto K10"></property>
+		<property name="releaseYear" value="2010"></property>
+		<property name="price" value="370000"></property><!-- 3_70_000 -->
+		<property name="engine">
+			<ref bean="economyHatchback" />
+		</property>
+	</bean>
+
+	<bean id="volkswagenVirtus"
+		class="com.mainapp.usingConstructor.Car">
+		<property name="brand" value="Volkswagen"></property>
+		<property name="model" value="Virtus GT Plus Sport DSG"></property>
+		<property name="releaseYear" value="2024"></property>
+		<property name="price" value="1900000"></property><!-- 19_00_000 -->
+		<property name="engine" ref="standardSedan"></property>
+	</bean>
+
+	<bean id="porschePanamera"
+		class="com.mainapp.usingConstructor.Car">
+		<constructor-arg name="brand" value="Porsche"></constructor-arg>
+		<constructor-arg name="model"
+			value="Panamera 2.9 Petrol V6"></constructor-arg>
+		<constructor-arg name="releaseYear" value="2023"></constructor-arg>
+		<constructor-arg name="price" value="17900000"></constructor-arg><!-- 
+			1_79_00_000 -->
+		<constructor-arg name="engine" ref="sportsSedan"></constructor-arg>
+	</bean>
+
+	<bean id="lamborghiniHuracan"
+		class="com.mainapp.usingConstructor.Car">
+		<!-- brand: -->
+		<constructor-arg value="Lamborghini"></constructor-arg>
+		<!-- model: -->
+		<constructor-arg value="Huracan EVO Spyder"></constructor-arg>
+		<!-- releaseYear: -->
+		<constructor-arg value="2019"></constructor-arg>
+		<!-- price: -->
+		<constructor-arg value="46100000"></constructor-arg><!-- 4_61_00_000 -->
+		<!-- engine: -->
+		<constructor-arg>
+			<ref bean="muscleCar" />
+		</constructor-arg>
 	</bean>
 
 </beans>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- ############# Bean Definitions here: ################## -->
+
+	<!-- ========== Bean Instantiation Using Constructor ============== -->
+
+	<!-- Bean with no dependencies (i.e. no instance fields) -->
+	<!-- or with dependencies, but keeping them uninitialized -->
+	<bean id="calc" class="com.mainapp.usingConstructor.Calculator"></bean>
+
+	<!-- === Bean(s) with dependencies (instance fields) ===== -->
+
+	<bean id="economyHatchback"
+		class="com.mainapp.usingConstructor.Engine">
+		<!-- Using Setter based Dependency Injection (DI): -->
+		<property name="numCylinders" value="3"></property>
+		<property name="totalEngineVolume" value="998"></property>
+		<property name="peakHorsePower" value="75"></property>
+		<property name="peakTorque" value="95"></property>
+	</bean>
+
+	<bean id="standardSedan"
+		class="com.mainapp.usingConstructor.Engine">
+		<!-- Using constructor based Dependency Injection (DI) -->
+		<constructor-arg value="4"></constructor-arg><!-- numCylinders -->
+		<constructor-arg value="1998"></constructor-arg><!-- totalEngineVolume -->
+		<constructor-arg value="150"></constructor-arg><!-- peakHorsePower -->
+		<constructor-arg value="200"></constructor-arg><!-- peakTorque -->
+	</bean>
+
+	<bean id="performanceHotHatch"
+		class="com.mainapp.usingConstructor.Engine">
+		<!-- Using constructor based Dependency Injection (DI) and, -->
+		<!-- Constructor Argument Resolution: Constructor argument index -->
+		<constructor-arg index="0" value="4"></constructor-arg><!-- 
+			numCylinders -->
+		<constructor-arg index="1" value="1995"></constructor-arg><!-- 
+			totalEngineVolume -->
+		<constructor-arg index="2" value="250"></constructor-arg><!-- 
+			peakHorsePower -->
+		<constructor-arg index="3" value="350"></constructor-arg><!-- 
+			peakTorque -->
+	</bean>
+
+	<bean id="sportsSedan" class="com.mainapp.usingConstructor.Engine">
+		<!-- Using constructor based Dependency Injection (DI) and, -->
+		<!-- Constructor Argument Resolution: Constructor argument type matching -->
+		<constructor-arg type="int" value="6"></constructor-arg><!-- 
+			numCylinders -->
+		<constructor-arg type="double" value="2998"></constructor-arg><!-- 
+			totalEngineVolume -->
+		<constructor-arg type="double" value="340"></constructor-arg><!-- 
+			peakHorsePower -->
+		<constructor-arg type="double" value="500"></constructor-arg><!-- 
+			peakTorque -->
+	</bean>
+
+	<bean id="muscleCar"
+		class="com.mainapp.usingConstructor.Engine">
+		<!-- Using constructor based Dependency Injection (DI) and, -->
+		<!-- Constructor Argument Resolution: Constructor argument name -->
+		<constructor-arg name="numCylinders" value="8"></constructor-arg>
+		<constructor-arg name="totalEngineVolume" value="5038"></constructor-arg>
+		<constructor-arg name="peakHorsePower" value="450"></constructor-arg>
+		<constructor-arg name="peakTorque" value="556"></constructor-arg>
+	</bean>
+
+</beans>

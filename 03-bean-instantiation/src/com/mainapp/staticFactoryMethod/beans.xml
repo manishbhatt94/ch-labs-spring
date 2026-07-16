@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="onwardTicket"
+		class="com.mainapp.staticFactoryMethod.BusTicket">
+		<constructor-arg name="sourceCity" value="Bengaluru"></constructor-arg>
+		<constructor-arg name="destinationCity"
+			value="Chennai"></constructor-arg>
+		<constructor-arg name="fare" value="2500.00"></constructor-arg>
+		<constructor-arg name="journeyDate">
+			<bean class="java.time.LocalDate" factory-method="of">
+				<constructor-arg value="2026"></constructor-arg>
+				<constructor-arg value="12"></constructor-arg>
+				<constructor-arg value="31"></constructor-arg>
+			</bean>
+		</constructor-arg>
+		<constructor-arg name="bookingTime">
+			<bean class="java.time.LocalDateTime" factory-method="now"></bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="returnTicket"
+		class="com.mainapp.staticFactoryMethod.BusTicket">
+		<constructor-arg name="sourceCity" value="Chennai"></constructor-arg>
+		<constructor-arg name="destinationCity"
+			value="Bengaluru"></constructor-arg>
+		<constructor-arg name="fare" value="2380.00"></constructor-arg>
+		<constructor-arg name="journeyDate">
+			<bean class="java.time.LocalDate" factory-method="of">
+				<constructor-arg value="2027"></constructor-arg>
+				<constructor-arg value="01"></constructor-arg>
+				<constructor-arg value="26"></constructor-arg>
+			</bean>
+		</constructor-arg>
+		<constructor-arg name="bookingTime">
+			<bean class="java.time.LocalDateTime" factory-method="now"></bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="nullUser1"
+		class="com.mainapp.staticFactoryMethod.UserProfile"
+		factory-method="create"></bean>
+
+	<bean id="noob1947"
+		class="com.mainapp.staticFactoryMethod.UserProfile"
+		factory-method="of">
+		<constructor-arg value="noob1947"></constructor-arg>
+	</bean>
+
+	<bean id="nullUser2"
+		class="com.mainapp.staticFactoryMethod.UserProfileFactory"
+		factory-method="create"></bean>
+
+	<bean id="ambedkar1950zyx"
+		class="com.mainapp.staticFactoryMethod.UserProfileFactory"
+		factory-method="of">
+		<constructor-arg value="ambedkar1950zyx"></constructor-arg>
+	</bean>
+
+</beans>

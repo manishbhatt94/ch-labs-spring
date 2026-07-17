@@ -6,6 +6,7 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
+
 	<bean id="onwardTicket"
 		class="com.mainapp.staticFactoryMethod.BusTicket">
 		<constructor-arg name="sourceCity" value="Bengaluru"></constructor-arg>
@@ -13,6 +14,11 @@
 			value="Chennai"></constructor-arg>
 		<constructor-arg name="fare" value="2500.00"></constructor-arg>
 		<constructor-arg name="journeyDate">
+			<!-- We provide the value of "journeyDate" constructor arg as a bean (object) 
+				of type LocalDate which we instantiate using the Static Factory Method Bean 
+				Instantiation, i.e. using the static method LocalDate.of(int year, int month, 
+				int day) - which itself takes parameters, and those are supplied using the 
+				3 <constructor-arg/> tags -->
 			<bean class="java.time.LocalDate" factory-method="of">
 				<constructor-arg value="2026"></constructor-arg>
 				<constructor-arg value="12"></constructor-arg>
@@ -20,9 +26,14 @@
 			</bean>
 		</constructor-arg>
 		<constructor-arg name="bookingTime">
+			<!-- We provide the value of "bookingTime" constructor arg as bean (object) 
+				of type LocalDateTime which we instantiate using the Static Factory Method 
+				Bean Instantiation, i.e. using the static method LocalDateTime.now() - which 
+				itself takes no parameters -->
 			<bean class="java.time.LocalDateTime" factory-method="now"></bean>
 		</constructor-arg>
 	</bean>
+
 
 	<bean id="returnTicket"
 		class="com.mainapp.staticFactoryMethod.BusTicket">
@@ -42,24 +53,46 @@
 		</constructor-arg>
 	</bean>
 
+
+	<!-- Below, we create a bean of type UserProfile, using the Static Factory 
+		Method way. Here, the static factory method is present in the same class 
+		(UserProfile), i.e. UserProfile.create() - and this method takes no parameters. -->
 	<bean id="nullUser1"
 		class="com.mainapp.staticFactoryMethod.UserProfile"
 		factory-method="create"></bean>
 
+
+	<!-- Below, we create a bean of type UserProfile, using the Static Factory 
+		Method way. Here, the static factory method is present in the same class 
+		(UserProfile), i.e. UserProfile.of(String userName) - this method itself 
+		takes a parameter `userName`, which we supply using the nested <constructor-arg/> 
+		tag inside the <bean/> tag. -->
 	<bean id="noob1947"
 		class="com.mainapp.staticFactoryMethod.UserProfile"
 		factory-method="of">
 		<constructor-arg value="noob1947"></constructor-arg>
 	</bean>
 
+
+	<!-- Below, we create a bean of type UserProfile, using the Static Factory 
+		Method way. Here, the static factory method is present in a different class 
+		(UserProfileFactory), i.e. UserProfileFactory.create() - and this method 
+		takes no parameters. -->
 	<bean id="nullUser2"
 		class="com.mainapp.staticFactoryMethod.UserProfileFactory"
 		factory-method="create"></bean>
 
+
+	<!-- Below, we create a bean of type UserProfile, using the Static Factory 
+		Method way. Here, the static factory method is present in a different class 
+		(UserProfileFactory), i.e. UserProfileFactory.of(String userName) - this 
+		method itself takes a parameter `userName`, which we supply using the nested 
+		<constructor-arg/> tag inside the <bean/> tag. -->
 	<bean id="ambedkar1950zyx"
 		class="com.mainapp.staticFactoryMethod.UserProfileFactory"
 		factory-method="of">
 		<constructor-arg value="ambedkar1950zyx"></constructor-arg>
 	</bean>
+
 
 </beans>

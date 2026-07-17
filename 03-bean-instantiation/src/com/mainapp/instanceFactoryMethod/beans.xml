@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- 1. Define the unique Organization Bean -->
+	<bean id="spacexOrg"
+		class="com.mainapp.instanceFactoryMethod.Organization">
+		<property name="orgId" value="ORG-001" />
+		<property name="orgName" value="SpaceX" />
+	</bean>
+
+	<!-- 2. Define the EmployeeFactory Instance for this specific Organization -->
+	<bean id="spacexEmployeeFactory"
+		class="com.mainapp.instanceFactoryMethod.EmployeeFactory">
+		<constructor-arg ref="spacexOrg" />
+	</bean>
+
+	<!-- 3. Helper Bank Account Bean -->
+	<bean id="elonBank"
+		class="com.mainapp.instanceFactoryMethod.BankAccount">
+		<property name="accountNumber" value="99991111" />
+		<property name="bankName" value="Starlink Federal Bank" />
+	</bean>
+
+	<!-- 4. Instantiate Employee Beans using the Instance Factory Method -->
+
+	<!-- Employee 1: Created using createEmployee(String employeeName) -->
+	<bean id="employeeGwynne"
+		class="com.mainapp.instanceFactoryMethod.Employee"
+		factory-bean="spacexEmployeeFactory" factory-method="createEmployee">
+		<constructor-arg value="Gwynne Shotwell" />
+	</bean>
+
+	<!-- Employee 2: Created using createEmployee(String employeeName, BankAccount 
+		bankAccount) -->
+	<bean id="employeeElon"
+		class="com.mainapp.instanceFactoryMethod.Employee"
+		factory-bean="spacexEmployeeFactory" factory-method="createEmployee">
+		<constructor-arg value="Elon Musk" />
+		<constructor-arg ref="elonBank" />
+	</bean>
+
+
+</beans>

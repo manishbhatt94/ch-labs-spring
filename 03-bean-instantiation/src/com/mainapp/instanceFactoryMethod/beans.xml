@@ -31,7 +31,6 @@
 
 	<!-- Employee 1: Created using createEmployee(String employeeName) -->
 	<bean id="employeeGwynne"
-		class="com.mainapp.instanceFactoryMethod.Employee"
 		factory-bean="spacexEmployeeFactory" factory-method="createEmployee">
 		<constructor-arg value="Gwynne Shotwell" />
 	</bean>
@@ -39,7 +38,6 @@
 	<!-- Employee 2: Created using createEmployee(String employeeName, BankAccount 
 		bankAccount) -->
 	<bean id="employeeElon"
-		class="com.mainapp.instanceFactoryMethod.Employee"
 		factory-bean="spacexEmployeeFactory" factory-method="createEmployee">
 		<constructor-arg value="Elon Musk" />
 		<constructor-arg ref="elonBank" />

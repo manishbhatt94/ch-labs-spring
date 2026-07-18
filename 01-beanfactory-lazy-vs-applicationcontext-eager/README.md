@@ -1,6 +1,28 @@
 # Spring IOC Containers Bean Initialization: BeanFactory (Lazy) vs. ApplicationContext (Eager)
 
-## Spring Framework IoC Containers: Core Reference Notes
+## Project Explorer with libraries (JARs) attached
+
+Here is a screenshot of this Eclipse Java Project's *Project Explorer* view, in
+order to cross-check & view the JARs added to the project build path:
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="../assets/images/fig-03-beanfactory-demo-project-explorer.png"
+           alt="Project Explorer view showing JARs required for a simple Spring Eclipse Java project"
+           title="Project Explorer view showing JARs required for a simple Spring Eclipse Java project"
+           width="540" height="439" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: Project Explorer view showing JARs required for a simple Spring Eclipse Java project</em>
+    </td>
+  </tr>
+</table>
+
+---
+
+<br>
+
+# Spring Framework IoC Containers: Core Reference Notes
 
 ## 1. Interface Hierarchy & True Inheritance
 The ApplicationContext interface does not directly extend BeanFactory. Instead, it sits multiple layers deep in the interface hierarchy, inheriting from multiple specialized sub-interfaces to aggregate enterprise capabilities.
@@ -36,7 +58,7 @@ The ApplicationContext interface does not directly extend BeanFactory. Instead, 
 * **BeanFactory**: The root interface providing fundamental bean lifecycle management and direct bean access (`getBean()`).
 * **ListableBeanFactory**: Extends `BeanFactory` to allow querying and enumerating bean instances by type or name, rather than looking them up individually.
 * **HierarchicalBeanFactory**: Extends `BeanFactory` to allow containers to establish parent/child relationships, allowing a bean factory to look up beans in a parent context.
-* **ApplicationContext**: Inherits from `ListableBeanFactory` and `HierarchicalBeanFactory`. It also extends non-factory interfaces like `MessageSource` (for internationalization), `ApplicationEventPublisher`, and `ResourcePatternResolver` to build a complete enterprise runtime platform. [1]
+* **ApplicationContext**: Inherits from `ListableBeanFactory` and `HierarchicalBeanFactory`. It also extends non-factory interfaces like `MessageSource` (for internationalization), `ApplicationEventPublisher`, and `ResourcePatternResolver` to build a complete enterprise runtime platform. [^1]
 
 ------------------------------
 ## 2. Low-Level Component Breakdown (The BeanFactory Eco-system)
@@ -94,19 +116,19 @@ Modern applications utilize concrete implementations of `ApplicationContext` whi
 
 * **Overview**: The modern standard container for standalone and Spring Boot application foundations.
 * **Mechanics**: Accepts Java classes annotated with `@Configuration` as input. It leverages an internal component scanner to detect Spring annotations like `@Component`, `@Service`, `@Repository`, and `@Autowired`.
-* **Use Case**: Production environments where programmatic Java configuration completely replaces XML. [2, 3]
+* **Use Case**: Production environments where programmatic Java configuration completely replaces XML. [^2] [^3]
 
 ### ClassPathXmlApplicationContext
 
 * **Overview**: An XML-based container that looks for files inside the project's compiled build target folder (the classpath).
 * **Mechanics**: Uses a `ResourceLoader` mechanism to find XML files bundled within your JAR/WAR or `src/main/resources` directories.
-* **Use Case**: Standalone desktop utilities or legacy applications where infrastructure properties change without needing code re-compilation. [4, 5] 
+* **Use Case**: Standalone desktop utilities or legacy applications where infrastructure properties change without needing code re-compilation. [^4] [^5] 
 
 ### FileSystemXmlApplicationContext
 
 * **Overview**: An XML-based container that looks for configuration metadata files outside the deployment archive.
 * **Mechanics**: Bypasses the application classpath entirely to query absolute or relative physical paths on the operating system storage layer.
-* **Use Case**: System deployments where system administrators must tweak configuration files located in specific server paths (e.g., `/etc/myapp/beans.xml`). [6]
+* **Use Case**: System deployments where system administrators must tweak configuration files located in specific server paths (e.g., `/etc/myapp/beans.xml`). [^6]
 
 ------------------------------
 
@@ -121,7 +143,7 @@ Modern applications utilize concrete implementations of `ApplicationContext` whi
 `XmlBeanFactory` was officially deprecated in Spring Framework 5.3.
 
 * **Violation of Single Responsibility**: It tightly coupled the bean registry engine logic with the specific file-parsing logic of XML schemas into a single class.
-* **Redundancy**: The underlying framework had already evolved to use a highly modular design where registration and parsing are split. `XmlBeanFactory` was nothing more than a thin, unoptimized wrapper over a combination of `DefaultListableBeanFactory` and `XmlBeanDefinitionReader`. [7] 
+* **Redundancy**: The underlying framework had already evolved to use a highly modular design where registration and parsing are split. `XmlBeanFactory` was nothing more than a thin, unoptimized wrapper over a combination of `DefaultListableBeanFactory` and `XmlBeanDefinitionReader`. [^7]
 * **Evolution of Best Practices**: Modern development shifted entirely away from raw `BeanFactory` usage in favor of `ApplicationContext` implementations, or modular programmatic setups when micro-footprints are necessary.
 
 ### The Modern Alternative and How to Use It
@@ -176,15 +198,17 @@ MyService service = factory.getBean(MyService.class);
 
 ## 6. Reference Links used in this Section
 
-[1] [https://rameshfadatare.medium.com](https://rameshfadatare.medium.com/spring-ioc-container-6cffd00b4b6c)
-[2] [https://medium.com](https://medium.com/@programmingsolutions750/spring-boot-starts-here-mastering-annotations-in-the-main-class-0b6aea664354)
-[3] [https://medium.com](https://medium.com/@pooja_virani/the-magic-of-annotations-in-spring-a14088de164a)
-[4] [https://www.deep-kondah.com](https://www.deep-kondah.com/unpacking-the-apache-activemq-exploit-a-ransomware-delivery-deep-dive-cve-2023-46604/)
-[5] [https://medium.com](https://medium.com/@singh.piyush/spring-6-migration-guide-replacing-xmlbeanfactory-with-classpathxml-vs-f5a276935fbf)
-[6] [https://www.deep-kondah.com](https://www.deep-kondah.com/unpacking-the-apache-activemq-exploit-a-ransomware-delivery-deep-dive-cve-2023-46604/)
-[7] [https://talent500.com](https://talent500.com/blog/spring-boot-4-modularization-benefits/)
+[^1]: [https://rameshfadatare.medium.com](https://rameshfadatare.medium.com/spring-ioc-container-6cffd00b4b6c)
+[^2]: [https://medium.com](https://medium.com/@programmingsolutions750/spring-boot-starts-here-mastering-annotations-in-the-main-class-0b6aea664354)
+[^3]: [https://medium.com](https://medium.com/@pooja_virani/the-magic-of-annotations-in-spring-a14088de164a)
+[^4]: [https://www.deep-kondah.com](https://www.deep-kondah.com/unpacking-the-apache-activemq-exploit-a-ransomware-delivery-deep-dive-cve-2023-46604/)
+[^5]: [https://medium.com](https://medium.com/@singh.piyush/spring-6-migration-guide-replacing-xmlbeanfactory-with-classpathxml-vs-f5a276935fbf)
+[^6]: [https://www.deep-kondah.com](https://www.deep-kondah.com/unpacking-the-apache-activemq-exploit-a-ransomware-delivery-deep-dive-cve-2023-46604/)
+[^7]: [https://talent500.com](https://talent500.com/blog/spring-boot-4-modularization-benefits/)
 
+<br>
 
+---
 
 # Experiment: Compile & Run from CLI (javac & java)
 

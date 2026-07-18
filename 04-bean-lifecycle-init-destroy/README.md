@@ -177,7 +177,8 @@ configure(allprojects) { project ->
 
 <br>
 
-> [!TIP] **Core Requirement:**
+> [!TIP]
+> **Core Requirement:**
 > The `spring-aop` companion JAR is built directly by Spring, meaning it must match
 > your core framework version exactly (`5.3.39`) to prevent catastrophic binary
 > incompatibilities at runtime.
@@ -190,6 +191,26 @@ configure(allprojects) { project ->
 1. `spring-aop` Version 5.3.39 (Group: `org.springframework`)
    - Since we're using Spring Framework 5.3.39
    - mvnrepository.com Link: [org.springframework/spring-aop/5.3.39](https://mvnrepository.com/artifact/org.springframework/spring-aop/5.3.39)
+
+### Eclipse Project Explorer Screenshot with JARs Added
+
+Below is screenshot of Project Explorer view of an Eclipse Java Project with the two JARs
+(viz. `javax.annotation-api` and `spring-aop` JAR files) added to Project Build Path using
+a new custom User Library called `spring-jsr250-annotations-5.3.39`. Check this out:
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="../assets/images/fig-04-jars-for-jsr250-annotations.png"
+           alt="Project Explorer view with JARs for using JSR-250 @PostConstruct & @PreDestroy annotations"
+           title="Project Explorer view with JARs for using JSR-250 @PostConstruct & @PreDestroy annotations"
+           width="580" height="574" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: Project Explorer view with JARs for using JSR-250 @PostConstruct & @PreDestroy annotations</em>
+    </td>
+  </tr>
+</table>
+
 
 
 ------------------------------

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- The custom post-processor engine gets registered in the context -->
+	<bean class="com.study.processor.StringTrimmingPostProcessor" />
+
+	<!-- Application target bean containing messy spaces in property values -->
+	<bean id="myDatabaseConfig" class="com.study.bean.DatabaseConfig"
+		init-method="initConnectionPool">
+		<property name="connectionUrl"
+			value="jdbc:mysql://localhost:3306/prod_db    " />
+		<property name="username" value="  admin_user  " />
+	</bean>
+
+</beans>

@@ -46,6 +46,28 @@ Below are the three (3) ways for specifying bean lifecycle methods for *Initiali
 >
 > *— [jakarta.ee/blogs/javax-jakartaee-namespace-ecosystem-progress/](https://jakarta.ee/blogs/javax-jakartaee-namespace-ecosystem-progress/)*
 
+
+## Prototype Scoped Beans' Destruction Lifecycle Callbacks Are NOT CALLED By Spring
+
+> In contrast to the other scopes, *Spring does not manage the complete lifecycle of a prototype bean*.
+>
+> The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client,
+> with no further record of that prototype instance.
+>
+> Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
+> _**in the case of prototypes, configured destruction lifecycle callbacks are not called**_.
+>
+> The client code must clean up prototype-scoped objects and release expensive resources that the prototype beans hold.
+>
+> To get the Spring container to release resources held by prototype-scoped beans, try using a custom bean
+> post-processor, which holds a reference to beans that need to be cleaned up.
+>
+> In some respects, the Spring container's role in regard to a prototype-scoped bean is a replacement for the
+> Java `new` operator. All lifecycle management past that point must be handled by the client.
+>
+> *— [Spring 5.3.39 Docs &sect; 1.5. Bean Scopes &sect; 1.5.2 The Prototype Scope](https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#beans-factory-scopes-prototype)*
+
+
 <br>
 
 ---

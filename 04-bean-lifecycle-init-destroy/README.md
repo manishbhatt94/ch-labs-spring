@@ -9,6 +9,8 @@ Below are the three (3) ways for specifying bean lifecycle methods for *Initiali
 1. JSR-250 Annotations `@PostConstruct` & `@PreDestroy`
    - Use the JSR-250 `@PostConstruct` and `@PreDestroy` annotations on the
      custom setup & tear-down methods defined on your bean class.
+   - Both these annotations are present in `javax.annotation` package or the `jakarta.annotation`
+     package (from Jakarta EE 9).
    - Sample code in package:
      [com.mainapp.withAnnotationsJSR250](./src/com/mainapp/withAnnotationsJSR250/Launch.java)
 1. XML Metadata Attributes `init-method` & `destroy-method`
@@ -22,6 +24,7 @@ Below are the three (3) ways for specifying bean lifecycle methods for *Initiali
 1. Spring Callback Interfaces
    - Have your bean class implement the `InitializingBean` & `DisposableBean`
      life-cycle callback interfaces provided by Spring.
+   - Both these interfaces are available in `org.springframework.beans.factory` package.
    - Sample code in package:
      [com.mainapp.withSpringCallbackInterfaces](./src/com/mainapp/withSpringCallbackInterfaces/Launch.java)
 
@@ -31,7 +34,19 @@ Below are the three (3) ways for specifying bean lifecycle methods for *Initiali
 > Spring-specific interfaces.
 > If you do not want to use the JSR-250 annotations but you still want to remove coupling, consider `init-method` and
 > `destroy-method` bean definition XML metadata.
+>
 > *— Spring (Latest) Docs*
+
+<br>
+
+> [!NOTE]
+> **Javax to Jakarta Namespace Ecosystem Progress**
+> > From a namespace perspective, Jakarta EE 8 still uses the `javax.*` naming. However, the Jakarta EE 9 release on
+> > Dec 8th, 2020, would introduce `jakarta.*` as the namespace to replace `javax.*` for Jakarta EE specifications.
+>
+> *— [jakarta.ee/blogs/javax-jakartaee-namespace-ecosystem-progress/](https://jakarta.ee/blogs/javax-jakartaee-namespace-ecosystem-progress/)*
+
+<br>
 
 ---
 
@@ -53,7 +68,7 @@ In Java 8, `@PostConstruct` and `@PreDestroy` exist directly in the standard run
 
 While the project compiles fine using standard Java 8 JDK symbols, Spring 5.3.x is intentionally designed to be cross-compatible up to Java 17 and 21.
 
-* Starting with Java 9, these annotations were moved into an isolated module (java.xml.ws.annotation).
+* Starting with Java 9, these annotations were moved into an isolated module (`java.xml.ws.annotation`).
 * In Java 11, they were completely removed from the JDK.
 * To ensure consistent behavior, decouple framework internals from shifting JDK foundations, and prevent runtime ClassNotFoundException issues when upgrading environments, modern framework development patterns expect this library to be provided explicitly as an external classpath component (`javax.annotation-api.jar`).
 
@@ -221,8 +236,8 @@ JSR-250 annotations are not the only choice. There are three total approaches av
 
 | Mechanism | Approach | Pros | Cons |
 |---|---|---|---|
-| 1. JSR-250 Annotations | Use @PostConstruct and @PreDestroy on methods. | Modern, clean, readable, standard Java convention. | Requires registration of explicit BeanPostProcessor and external classpath JAR additions. |
-| 2. XML Metadata Attributes | Define init-method and destroy-method inside the <bean/> tag. | Completely decouples Java classes from Spring/JSR dependencies. Excellent for legacy source code integration. | String-based configuration inside configuration files; prone to typos that break only at runtime. |
+| 1. JSR-250 Annotations | Use @PostConstruct and @PreDestroy on methods. | Modern, clean, readable, standard Java convention. Using these annotations means that your beans are not coupled to Spring-specific interfaces. | Requires registration of explicit BeanPostProcessor (i.e. `CommonAnnotationBeanPostProcessor` bean) and external classpath JAR additions (i.e. `spring-aop` & `javax.annotation-api` JARs). |
+| 2. XML Metadata Attributes | Define init-method and destroy-method inside the <bean/> tag. | Completely decouples Java classes from Spring/JSR dependencies. Excellent for legacy source code integration. Also great for specifying the lifecycle of a bean which is third party. If you do not want to use the JSR-250 annotations but you still want to remove coupling, consider `init-method` and `destroy-method` bean definition metadata. | String-based configuration inside configuration files; prone to typos that break only at runtime. |
 | 3. Spring Callback Interfaces | Implement InitializingBean and DisposableBean interfaces. | Clear compiled contract enforcement. Run natively by container without extra reflection overhead. | Couples your domain POJO classes tightly to proprietary Spring Framework interface APIs. |
 
 ## Technical Implementation Examples

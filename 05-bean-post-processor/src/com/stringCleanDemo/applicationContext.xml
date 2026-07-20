@@ -8,10 +8,12 @@
 
 
 	<!-- The custom post-processor engine gets registered in the context -->
-	<bean class="com.study.processor.StringTrimmingPostProcessor" />
+	<bean
+		class="com.stringCleanDemo.processor.StringTrimmingPostProcessor" />
 
 	<!-- Application target bean containing messy spaces in property values -->
-	<bean id="myDatabaseConfig" class="com.study.bean.DatabaseConfig"
+	<bean id="myDatabaseConfig"
+		class="com.stringCleanDemo.bean.DatabaseConfig"
 		init-method="initConnectionPool">
 		<property name="connectionUrl"
 			value="jdbc:mysql://localhost:3306/prod_db    " />

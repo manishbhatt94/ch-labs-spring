@@ -1,4 +1,4 @@
-package com.study.bean;
+package com.stringCleanDemo.bean;
 
 public class DatabaseConfig {
 

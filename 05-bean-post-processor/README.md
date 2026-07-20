@@ -41,9 +41,9 @@ before the rest of your application ever uses the bean.
 **Sample Demo:**
 
 Check out:
-- Package: [com.study](./src/com/study/)
-- Main class: [com.study.MainApp](./src/com/study/MainApp.java)
-- `BeanPostProcessor` sample implementation: [com.study.processor.StringTrimmingPostProcessor](./src/com/study/processor/StringTrimmingPostProcessor.java)
+- Package: [com.stringCleanDemo](./src/com/stringCleanDemo/)
+- Main class: [com.stringCleanDemo.MainApp](./src/com/stringCleanDemo/MainApp.java)
+- `BeanPostProcessor` sample implementation: [com.stringCleanDemo.processor.StringTrimmingPostProcessor](./src/com/stringCleanDemo/processor/StringTrimmingPostProcessor.java)
 
 
 ### Sample Output

@@ -1,8 +1,8 @@
-package com.study;
+package com.stringCleanDemo;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.study.bean.DatabaseConfig;
+import com.stringCleanDemo.bean.DatabaseConfig;
 
 public class MainApp {
 
@@ -10,7 +10,8 @@ public class MainApp {
 
 		System.out.println("--- Starting Spring Application Context ---");
 
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("com/study/applicationContext.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+				"com/stringCleanDemo/applicationContext.xml");
 
 		System.out.println("--- Context Fully Initialized ---");
 

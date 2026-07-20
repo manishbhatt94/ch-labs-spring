@@ -1,9 +1,9 @@
-package com.study.processor;
+package com.stringCleanDemo.processor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
-import com.study.bean.DatabaseConfig;
+import com.stringCleanDemo.bean.DatabaseConfig;
 
 public class StringTrimmingPostProcessor implements BeanPostProcessor {
 

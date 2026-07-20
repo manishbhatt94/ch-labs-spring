@@ -1,5 +1,6 @@
 package com.study.processor;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import com.study.bean.DatabaseConfig;
@@ -8,7 +9,7 @@ public class StringTrimmingPostProcessor implements BeanPostProcessor {
 
 	// PHASE 1: Runs BEFORE init-method. Perfect for data sanitization.
 	@Override
-	public Object postProcessBeforeInitialization(Object bean, String beanName) {
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 
 		if (bean instanceof DatabaseConfig) {
 			DatabaseConfig config = (DatabaseConfig) bean;
@@ -32,7 +33,7 @@ public class StringTrimmingPostProcessor implements BeanPostProcessor {
 	// PHASE 2: Runs AFTER init-method. Perfect for final verification, logging, or
 	// proxying.
 	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName) {
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
 		if (bean instanceof DatabaseConfig) {
 			DatabaseConfig config = (DatabaseConfig) bean;

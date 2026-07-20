@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- Parent/template bean: abstract, so it can never be instantiated directly. 
+		Notice: no "class" attribute needed here either. -->
+	<bean id="baseAlertService" abstract="true">
+		<property name="smtpHost" value="smtp.company.com" />
+		<property name="smtpPort" value="587" />
+		<property name="fromAddress" value="alerts@company.com" />
+	</bean>
+
+	<!-- ######## Child beans inherit the 3 properties above, and only add the 
+		2 that differ ############## -->
+
+	<bean id="debugAlertService" parent="baseAlertService"
+		class="com.alertsDemo.AlertService">
+		<property name="subjectPrefix" value="[DEBUG]" />
+		<property name="priorityLevel" value="100" />
+	</bean>
+
+	<bean id="infoAlertService" parent="baseAlertService"
+		class="com.alertsDemo.AlertService">
+		<property name="subjectPrefix" value="[INFO]" />
+		<property name="priorityLevel" value="300" />
+	</bean>
+
+	<bean id="criticalAlertService" parent="baseAlertService"
+		class="com.alertsDemo.AlertService">
+		<property name="subjectPrefix" value="[CRITICAL]" />
+		<property name="priorityLevel" value="900" />
+
+		<!-- Override 'fromAddress' for Bean criticalAlertService -->
+		<property name="fromAddress"
+			value="critical-incident-alerts@company.com" />
+	</bean>
+
+</beans>

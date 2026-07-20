@@ -40,6 +40,8 @@ public class StringTrimmingPostProcessor implements BeanPostProcessor {
 			System.out.println("[BPP - After Init] Post-validation check for bean: " + beanName);
 			System.out.println("[BPP - After Init] Final clean username configuration: '" + config.getUsername() + "'");
 		}
+		System.out.println();
+
 		return bean; // Must return the bean instance
 
 	}

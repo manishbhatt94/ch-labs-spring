@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- The custom post-processor engine gets registered in the context -->
+	<!-- Register the global runtime BPP interceptor engine -->
+	<bean
+		class="com.convertIstUtc.processor.TimezoneNormalizationProcessor" />
+
+
+	<!-- Bean 1: Initial payload configured for 6:30 PM IST -->
+	<bean id="orderService"
+		class="com.convertIstUtc.bean.OrderService"
+		init-method="initOrderService" destroy-method="destroyOrderService">
+		<property name="bookingTime">
+			<bean class="java.time.LocalDateTime" factory-method="parse">
+				<constructor-arg value="2026-07-20T18:30:00"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Bean 2: Initial payload configured for 11:45 PM IST -->
+	<bean id="userService" class="com.convertIstUtc.bean.UserService"
+		init-method="initUserService" destroy-method="destroyUserService">
+		<property name="registrationTime">
+			<bean class="java.time.LocalDateTime" factory-method="parse">
+				<constructor-arg value="2026-07-20T23:45:00"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Bean 3: Initial payload configured for 9:00 AM IST -->
+	<bean id="deliveryService"
+		class="com.convertIstUtc.bean.DeliveryService"
+		init-method="initDeliveryService"
+		destroy-method="destroyDeliveryService">
+		<property name="dispatchTime">
+			<bean class="java.time.LocalDateTime" factory-method="parse">
+				<constructor-arg value="2026-07-20T09:00:00"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+
+</beans>

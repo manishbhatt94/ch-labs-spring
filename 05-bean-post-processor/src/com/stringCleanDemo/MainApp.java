@@ -8,15 +8,15 @@ public class MainApp {
 
 	public static void main(String[] args) {
 
-		System.out.println("--- Starting Spring Application Context ---");
+		System.out.println("--- Starting Spring Application Context ---\n");
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				"com/stringCleanDemo/applicationContext.xml");
 
-		System.out.println("--- Context Fully Initialized ---");
+		System.out.println("\n--- Context Fully Initialized ---");
 
 		DatabaseConfig config = context.getBean("myDatabaseConfig", DatabaseConfig.class);
-		System.out.println("Main App Verified URL: '" + config.getConnectionUrl() + "'");
+		System.out.println("\nMain App Verified URL: '" + config.getConnectionUrl() + "'");
 
 		context.close();
 

@@ -1,6 +1,24 @@
 # Bean Scopes: Singleton, Prototype
 
-### Sample run output
+## Short notes
+
+Spring provides many bean scopes like singleton, prototype, request, session, etc.
+But here, we will focus on the two most commonly used scopes:
+
+### Singleton Scope (Default)
+
+- Meaning: Only one object (bean) is created per Spring container.
+- Shared instance is returned every time it is injected or requested.
+- Default scope if you don’t specify any scope.
+
+### Prototype Scope
+
+- Meaning: A new object is created every time the bean is requested.
+- Spring does not manage the full lifecycle beyond creation (destroy callbacks
+are not called by Spring IOC Container).
+
+
+## Sample run output
 
 ```
 ===== Loading Spring IOC container from beans.xml =====

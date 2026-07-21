@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- Parent/template bean: abstract, so it can never be instantiated directly. 
+		Notice: no "class" attribute needed here either. -->
+	<!-- No "class" attribute here — this is legal ONLY if abstract="true" -->
+	<bean id="retryPolicyTemplate" abstract="true">
+		<property name="retryCount" value="3" />
+		<property name="timeoutMillis" value="5000" />
+	</bean>
+
+	<!-- ######## Child beans ############## -->
+
+	<bean id="emailNotifier" class="com.notifyChannels.EmailNotifier"
+		parent="retryPolicyTemplate">
+		<property name="smtpHost" value="smtp.company.com" />
+		<!-- Override 'retryCount' property: -->
+		<property name="retryCount" value="2" />
+	</bean>
+
+	<bean id="smsNotifier" class="com.notifyChannels.SmsNotifier"
+		parent="retryPolicyTemplate">
+		<property name="gatewayNumber" value="+1-800-555-0100" />
+	</bean>
+
+	<bean id="pushNotifier" class="com.notifyChannels.PushNotifier"
+		parent="retryPolicyTemplate">
+		<property name="appId" value="com.company.app" />
+	</bean>
+
+</beans>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- Choosing the implementation of List interface based on requirement: 
+		(Default implementation used by Spring is ArrayList.) -->
+	<!-- Spring's default <list/> element doesn't let us specify the implementation 
+		class we want to use. For that reason, we are using the <util:list /> utility 
+		element which is provided by spring-util. -->
+	<util:list id="planets" list-class="java.util.LinkedList">
+		<value>Mercury</value>
+		<value>Venus</value>
+		<value>Earth</value>
+		<value>Mars</value>
+		<value>Jupiter</value>
+		<value>Saturn</value>
+		<value>Uranus</value>
+		<value>Neptune</value>
+		<value>Pluto</value>
+	</util:list>
+
+	<!-- Spring's default <list /> element is not allowed stand-alone directly 
+		within <beans /> element, instead it should only be nested within a <bean 
+		/> as value of <property /> element, etc. -->
+	<!-- Element name 'list' is invalid. -->
+	<!-- <list></list> -->
+
+	<bean id="studBenefits" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<value>Health Allowance</value>
+				<value>Medical Insurance</value>
+				<value>Meal Coupons</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="courseDatabase" class="com.listInjection.Course">
+		<property name="courseName"
+			value="Database Management Systems"></property>
+		<property name="courseCredits" value="7"></property>
+	</bean>
+
+	<bean id="courseCompiler" class="com.listInjection.Course">
+		<property name="courseName" value="Compiler Design"></property>
+		<property name="courseCredits" value="5"></property>
+	</bean>
+
+	<bean id="courseElectronics" class="com.listInjection.Course">
+		<property name="courseName"
+			value="Electronic Design and Circuits"></property>
+		<property name="courseCredits" value="4"></property>
+	</bean>
+
+	<bean id="courseNetworks" class="com.listInjection.Course">
+		<property name="courseName" value="Computer Networking"></property>
+		<property name="courseCredits" value="6"></property>
+	</bean>
+
+	<bean id="student-1" class="com.listInjection.Student">
+		<property name="studentName" value="Kamal Chandra"></property>
+		<property name="benefits" ref="studBenefits"></property>
+		<property name="courses">
+			<list>
+				<ref bean="courseDatabase" />
+				<ref bean="courseCompiler" />
+				<ref bean="courseElectronics" />
+			</list>
+		</property>
+		<property name="qualifications">
+			<list>
+				<value>B.Tech.</value>
+				<value>B.A. L.L.B.</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="student-2" class="com.listInjection.Student">
+		<property name="studentName" value="R.K. Saurabh"></property>
+		<property name="benefits" ref="studBenefits"></property>
+		<property name="courses">
+			<list>
+				<ref bean="courseCompiler" />
+				<ref bean="courseElectronics" />
+				<ref bean="courseNetworks" />
+			</list>
+		</property>
+		<property name="qualifications">
+			<list>
+				<value>M.Sc.</value>
+				<value>Ph.D.</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

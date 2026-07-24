@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- Choosing the implementation of Set interface based on requirement: 
+		(Default implementation used by Spring's plain <set/> is LinkedHashSet.) -->
+	<!-- Just like <list/>, Spring's default <set/> element doesn't let us specify 
+		the implementation class we want. For that, we use the <util:set /> utility 
+		element provided by spring-util. -->
+
+	<util:set id="uniqueSkillTags" set-class="java.util.HashSet">
+		<value>Java</value>
+		<value>Python</value>
+		<value>C++</value>
+		<value>JavaScript</value>
+	</util:set>
+	<!-- HashSet: use when you ONLY care about uniqueness and want the fastest 
+		possible add/contains/remove (O(1) average). Iteration order is NOT guaranteed 
+		and may even change across JVM runs. -->
+
+	<util:set id="preferredExamCities"
+		set-class="java.util.LinkedHashSet">
+		<value>Bengaluru</value>
+		<value>Chennai</value>
+		<value>Bengaluru</value>
+		<value>Hyderabad</value>
+		<value>Pune</value>
+	</util:set>
+	<!-- LinkedHashSet: use when you need uniqueness AND the original insertion 
+		order preserved for display purposes. Note this is exactly what Spring's 
+		plain <set/> element already gives you by default, so <util:set/> with set-class="java.util.LinkedHashSet" 
+		is only needed here to make that default explicit for learning purposes. 
+		Duplicate "Bengaluru" is dropped, first-seen order is kept. -->
+
+	<util:set id="sortedCourseCodes" set-class="java.util.TreeSet">
+		<value>CS301</value>
+		<value>CS105</value>
+		<value>CS220</value>
+		<value>CS105</value>
+		<value>CS410</value>
+	</util:set>
+	<!-- TreeSet: use when elements must always be iterated in sorted (natural 
+		or Comparator-based) order, e.g. a sorted course-code catalog or a leaderboard. 
+		Duplicate "CS105" is dropped, and results always print as CS105, CS220, CS301, 
+		CS410 regardless of insertion order. -->
+
+	<!-- Spring's default <set /> element is not allowed stand-alone directly 
+		within <beans />, just like <list />; it must be nested within a <bean /> 
+		or <property />. -->
+
+	<bean id="commonHobbies" class="java.util.LinkedHashSet">
+		<constructor-arg>
+			<set>
+				<value>Reading</value>
+				<value>Cricket</value>
+				<value>Reading</value>
+				<value>Chess</value>
+			</set>
+		</constructor-arg>
+	</bean>
+	<!-- Duplicate "Reading" is dropped; Reading, Cricket, Chess order is kept. -->
+
+	<bean id="courseDatabase" class="com.setInjection.Course">
+		<property name="courseName"
+			value="Database Management Systems"></property>
+		<property name="courseCredits" value="7"></property>
+	</bean>
+
+	<bean id="courseDatabaseDuplicate" class="com.setInjection.Course">
+		<property name="courseName"
+			value="Database Management Systems"></property>
+		<property name="courseCredits" value="7"></property>
+	</bean>
+	<!-- A DIFFERENT bean id / object instance from courseDatabase above, but 
+		EQUAL by value. Because Course overrides equals()/hashCode(), when both land 
+		in the same Set only one survives, see student-1 below. -->
+
+	<bean id="courseCompiler" class="com.setInjection.Course">
+		<property name="courseName" value="Compiler Design"></property>
+		<property name="courseCredits" value="5"></property>
+	</bean>
+
+	<bean id="courseElectronics" class="com.setInjection.Course">
+		<property name="courseName"
+			value="Electronic Design and Circuits"></property>
+		<property name="courseCredits" value="4"></property>
+	</bean>
+
+	<bean id="courseNetworks" class="com.setInjection.Course">
+		<property name="courseName" value="Computer Networking"></property>
+		<property name="courseCredits" value="6"></property>
+	</bean>
+
+	<bean id="student-1" class="com.setInjection.Student">
+		<property name="studentName" value="Kamal Chandra"></property>
+		<property name="hobbies" ref="commonHobbies"></property>
+		<property name="enrolledCourses">
+			<set>
+				<ref bean="courseDatabase" />
+				<ref bean="courseDatabaseDuplicate" /> <!-- value-equal duplicate -> dropped -->
+				<ref bean="courseCompiler" />
+				<ref bean="courseElectronics" />
+				<ref bean="courseDatabase" />          <!-- literal repeat -> dropped -->
+			</set>
+		</property>
+		<property name="certifications">
+			<bean class="java.util.TreeSet">
+				<constructor-arg>
+					<set>
+						<value>Java EE</value>
+						<value>Analytics for Dummies</value>
+						<value>Java Database Connectivity</value>
+					</set>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="student-2" class="com.setInjection.Student">
+		<property name="studentName" value="R.K. Saurabh"></property>
+		<property name="hobbies" ref="commonHobbies"></property>
+		<property name="enrolledCourses">
+			<set>
+				<ref bean="courseCompiler" />
+				<ref bean="courseElectronics" />
+				<ref bean="courseNetworks" />
+			</set>
+		</property>
+		<property name="certifications">
+			<bean class="java.util.TreeSet">
+				<constructor-arg>
+					<set>
+						<value>Matrix Computations on GPU</value>
+						<value>OpenGL Introduction</value>
+						<value>Machine Learning</value>
+						<value>CUDA Programming</value>
+					</set>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

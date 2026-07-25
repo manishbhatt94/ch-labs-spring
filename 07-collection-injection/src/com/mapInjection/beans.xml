@@ -7,5 +7,122 @@
 		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
 
+	<!-- Choosing the implementation of Map interface based on requirement: 
+		(Default implementation used by Spring's plain <map/> is LinkedHashMap.) -->
+	<!-- Just like <list/> and <set/>, the plain <map/> element doesn't let 
+		us specify the implementation class we want. In order to do that, we use 
+		the <util:map /> utility element provided by spring-util. -->
+
+	<util:map id="pincodeToCity" map-class="java.util.HashMap">
+		<entry key="560001" value="Bengaluru" />
+		<entry key="600001" value="Chennai" />
+		<entry key="500001" value="Hyderabad" />
+		<entry key="226001" value="Lucknow" />
+	</util:map>
+	<!-- HashMap: use when you ONLY need fast key -> value lookup and don't 
+		care about iteration order at all (a pure lookup table). -->
+
+	<util:map id="sortedSubjectAverages"
+		map-class="java.util.TreeMap">
+		<entry key="Science" value="88.5" />
+		<entry key="Math" value="92.0" />
+		<entry key="English" value="79.0" />
+	</util:map>
+	<!-- TreeMap: use when entries must always be iterated in sorted key order, 
+		e.g. an alphabetically sorted report. Keys here are Strings, which are naturally 
+		Comparable, so no extra Comparator is needed. Regardless of insertion order 
+		above, iteration always yields English, Math, Science. -->
+
+	<!-- Spring's default <map /> element is not allowed stand-alone directly 
+		within <beans />, just like <list /> and <set />; it must be nested within 
+		a <bean /> or <property />. -->
+
+	<bean id="courseDatabase" class="com.mapInjection.Course">
+		<property name="courseName"
+			value="Database Management Systems"></property>
+		<property name="courseCredits" value="7"></property>
+	</bean>
+
+	<bean id="courseDatabaseDuplicate" class="com.mapInjection.Course">
+		<property name="courseName"
+			value="Database Management Systems"></property>
+		<property name="courseCredits" value="7"></property>
+	</bean>
+	<!-- A DIFFERENT bean id / object instance from courseDatabase above, but 
+		EQUAL by value. Used as a Map KEY below to show key-overwrite behaviour. -->
+
+	<bean id="courseCompiler" class="com.mapInjection.Course">
+		<property name="courseName" value="Compiler Design"></property>
+		<property name="courseCredits" value="5"></property>
+	</bean>
+
+	<bean id="courseElectronics" class="com.mapInjection.Course">
+		<property name="courseName"
+			value="Electronic Design and Circuits"></property>
+		<property name="courseCredits" value="4"></property>
+	</bean>
+
+	<bean id="courseCoordinators" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key-ref="courseDatabase" value="Prof. Anita Rao" />
+				<entry key-ref="courseCompiler" value="Prof. Suresh Iyer" />
+				<entry key-ref="courseDatabaseDuplicate"
+					value="Prof. Spoorthy Udayakumar Kulkarni" />
+				<entry key-ref="courseElectronics"
+					value="Prof. Rashmi Balakrishnan" />
+			</map>
+		</constructor-arg>
+	</bean>
+	<!-- 4 <entry> lines declared, but courseDatabase and courseDatabaseDuplicate 
+		are EQUAL keys (per Course#equals()/#hashCode()), so the 3rd entry's value 
+		"Prof. Spoorthy Udayakumar Kulkarni" silently OVERWRITES the 1st entry's 
+		value for that same logical key. Final map size = 3, and the coordinator 
+		for "Database Management Systems" ends up as Prof. Spoorthy Udayakumar Kulkarni. 
+		See MainApp's size check and printed value for this. -->
+
+	<bean id="student-1" class="com.mapInjection.Student">
+		<property name="studentName" value="Kamal Chandra"></property>
+		<property name="subjectMarks">
+			<map>
+				<entry key="Math" value="85" />
+				<entry key="Science" value="90" />
+				<entry key="English" value="70" />
+				<entry key="English" value="75" /> <!-- duplicate key -> overwrites previous entry -->
+			</map>
+		</property>
+		<!-- Result: 3 entries only, in order Math, Science, English (insertion 
+			order preserved -> LinkedHashMap), and English's marks = 75, not 70, because 
+			a Map (any implementation) never allows duplicate keys - the LAST value for 
+			a repeated key always wins. -->
+		<property name="weeklyTimetable">
+			<map>
+				<entry key="Monday" value-ref="courseDatabase" />
+				<entry key="Wednesday" value-ref="courseCompiler" />
+				<entry key="Friday" value-ref="courseElectronics" />
+				<entry key="Sunday">
+					<null />
+				</entry>
+			</map>
+		</property>
+		<!-- Sunday deliberately maps to <null/> - no class scheduled - to show 
+			that Map values (unlike Set elements) can legally be null. -->
+	</bean>
+
+	<bean id="student-2" class="com.mapInjection.Student">
+		<property name="studentName" value="R.K. Saurabh"></property>
+		<property name="subjectMarks">
+			<map>
+				<entry key="Science" value="95" />
+				<entry key="Math" value="80" />
+			</map>
+		</property>
+		<property name="weeklyTimetable">
+			<map>
+				<entry key="Tuesday" value-ref="courseCompiler" />
+				<entry key="Thursday" value-ref="courseElectronics" />
+			</map>
+		</property>
+	</bean>
 
 </beans>

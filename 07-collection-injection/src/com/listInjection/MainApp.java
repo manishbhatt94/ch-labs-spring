@@ -11,6 +11,8 @@ public class MainApp {
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("com/listInjection/beans.xml");
 
+		System.out.println("######### List Injection (XML) Demo ################\n\n");
+
 		@SuppressWarnings("unchecked")
 		LinkedList<String> planets = context.getBean("planets", LinkedList.class);
 

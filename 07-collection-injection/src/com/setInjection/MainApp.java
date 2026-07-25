@@ -13,6 +13,8 @@ public class MainApp {
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("com/setInjection/beans.xml");
 
+		System.out.println("######### Set Injection (XML) Demo ################\n\n");
+
 		@SuppressWarnings("unchecked")
 		HashSet<String> skillTags = context.getBean("uniqueSkillTags", HashSet.class);
 		System.out.println("skillTags.getClass() => " + skillTags.getClass());

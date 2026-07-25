@@ -41,6 +41,10 @@ appDefaults: {app.version=1.4.2, app.timezone=Asia/Kolkata, app.environment=prod
 appDefaults.getProperty("app.version") => 1.4.2
 appDefaults.getProperty("app.region", "ap-south-1") => ap-south-1   (key doesn't exist -> falls back to the supplied default)
 
+appDefaultsDevelopment: {app.version=1.4.2, app.timezone=Asia/Kolkata, app.strictAuth=disabled, app.environment=production, app.logLevel=debug}
+
+databaseConfig: {mysql.password=manish, mysql.url=jdbc://mysql:localhost:3306/users_db, mysql.username=root}
+
 MailSender [mailServerSettings={mail.smtp.starttls.enable=true, mail.smtp.port=2525, mail.smtp.host=smtp.mailtrap.io, mail.smtp.auth=true}, featureFlags={betaSearch=false, darkMode=true, maxUploadSizeMB=25}]
 
 mailSettings.getProperty("mail.smtp.port") => 2525   (2 <prop key="mail.smtp.port"> entries declared in XML -> last one, 2525, wins)
@@ -50,3 +54,4 @@ featureFlags.getProperty("darkMode") => true
 
 
 ```
+

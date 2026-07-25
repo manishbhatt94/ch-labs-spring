@@ -23,6 +23,16 @@ public class MainApp {
 
 		System.out.println();
 
+		Properties appDefaultsDevelopment = context.getBean("appDefaultsDevelopment", Properties.class);
+		System.out.println("appDefaultsDevelopment: " + appDefaultsDevelopment);
+
+		System.out.println();
+
+		Properties databaseConfig = context.getBean("databaseConfig", Properties.class);
+		System.out.println("databaseConfig: " + databaseConfig);
+
+		System.out.println();
+
 		MailSender mailSender = context.getBean("mailSender", MailSender.class);
 		System.out.println(mailSender);
 

@@ -16,6 +16,25 @@
 		resource location: a URL, a "classpath:" pseudo URL, or a relative file path. 
 		Multiple locations may be specified, separated by commas. Data Type : string -->
 
+
+	<util:properties id="appDefaultsDevelopment"
+		location="classpath:com/propsInjection/app.properties">
+		<!-- Note: Overridding doesn't seem to work: -->
+		<prop key="app.environment">development</prop> <!-- Try to override existing prop. Doesn't work! -->
+		<prop key="app.version">1.4.2-dev</prop> <!-- Try to override existing prop. Doesn't work! -->
+
+		<prop key="app.logLevel">debug</prop> <!-- Add new prop. Works! -->
+		<prop key="app.strictAuth">disabled</prop> <!-- Add new prop. Works! -->
+	</util:properties>
+
+
+	<util:properties id="databaseConfig">
+		<prop key="mysql.url">jdbc://mysql:localhost:3306/users_db</prop>
+		<prop key="mysql.username">root</prop>
+		<prop key="mysql.password">manish</prop>
+	</util:properties>
+
+
 	<bean id="mailSender" class="com.propsInjection.MailSender">
 
 		<!-- Structured form: <props>/<prop key="..."> - String key/value pairs 

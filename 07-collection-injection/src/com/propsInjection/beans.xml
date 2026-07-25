@@ -7,5 +7,44 @@
 		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
 
+	<!-- Loading an entire Properties object straight from an external .properties 
+		file on the classpath - the realistic way environment-specific config (dev/staging/prod) 
+		is usually handled, instead of hardcoding it in XML. -->
+	<util:properties id="appDefaults"
+		location="classpath:com/propsInjection/app.properties" />
+	<!-- Attribute : location - The location of the properties file, as a Spring 
+		resource location: a URL, a "classpath:" pseudo URL, or a relative file path. 
+		Multiple locations may be specified, separated by commas. Data Type : string -->
+
+	<bean id="mailSender" class="com.propsInjection.MailSender">
+
+		<!-- Structured form: <props>/<prop key="..."> - String key/value pairs 
+			only. NOTE: unlike <map>, there is no key-ref / value-ref here - you simply 
+			cannot inject a bean reference through <props>. -->
+		<property name="mailServerSettings">
+			<props>
+				<prop key="mail.smtp.host">smtp.mailtrap.io</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.port">25</prop>
+				<prop key="mail.smtp.port">2525</prop> <!-- duplicate key -> overwrites 25 -->
+			</props>
+		</property>
+		<!-- Result: mail.smtp.port ends up as 2525, same last-value-wins rule 
+			as Map. -->
+
+		<!-- Shortcut form: a plain multi-line <value>, parsed the same way Properties.load() 
+			reads a .properties file - handy when you just want to paste key=value lines 
+			directly. -->
+		<property name="featureFlags">
+			<value>
+				darkMode=true
+				betaSearch=false
+				maxUploadSizeMB=25
+			</value>
+		</property>
+
+	</bean>
+
 
 </beans>

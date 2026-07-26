@@ -26,6 +26,10 @@ loaded via `<util:properties />`.
 - **`<util:properties>` with a `location` attribute** loads an entire external
   `.properties` file from the classpath — the realistic way config is usually
   done, rather than hardcoding every key in XML.
+- **`location-override` attribute used in `<util:properties location=".."`:**
+  Default value of this attribute, is "false", and which means properties from
+  file(s) at `location` override local defaults. If set to "true", local
+  properties will override defaults from file(s).
 - **getProperty(key, default)** — a convenience Properties gives you over plain
   `Map.get()`, useful for optional/missing config.
 
@@ -42,6 +46,8 @@ appDefaults.getProperty("app.version") => 1.4.2
 appDefaults.getProperty("app.region", "ap-south-1") => ap-south-1   (key doesn't exist -> falls back to the supplied default)
 
 appDefaultsDevelopment: {app.version=1.4.2, app.timezone=Asia/Kolkata, app.strictAuth=disabled, app.environment=production, app.logLevel=debug}
+
+appDefaultsDevOverriden: {app.version=1.4.2-dev, app.timezone=Asia/Kolkata, app.strictAuth=disabled, app.environment=development, app.logLevel=debug}
 
 databaseConfig: {mysql.password=manish, mysql.url=jdbc://mysql:localhost:3306/users_db, mysql.username=root}
 

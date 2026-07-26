@@ -28,6 +28,11 @@ public class MainApp {
 
 		System.out.println();
 
+		Properties appDefaultsDevOverriden = context.getBean("appDefaultsDevOverriden", Properties.class);
+		System.out.println("appDefaultsDevOverriden: " + appDefaultsDevOverriden);
+
+		System.out.println();
+
 		Properties databaseConfig = context.getBean("databaseConfig", Properties.class);
 		System.out.println("databaseConfig: " + databaseConfig);
 

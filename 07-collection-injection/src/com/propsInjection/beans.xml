@@ -17,11 +17,39 @@
 		Multiple locations may be specified, separated by commas. Data Type : string -->
 
 
+	<!-- <util:properties>'s attribute [local-override]'s default value is "false" -->
+	<!-- Attribute : local-override - Specifies whether local properties override 
+		properties from files. Default is "false": properties from files override 
+		local defaults. If set to "true", local properties will override defaults 
+		from files. Data Type : boolean. Default Value : false -->
 	<util:properties id="appDefaultsDevelopment"
 		location="classpath:com/propsInjection/app.properties">
-		<!-- Note: Overridding doesn't seem to work: -->
-		<prop key="app.environment">development</prop> <!-- Try to override existing prop. Doesn't work! -->
-		<prop key="app.version">1.4.2-dev</prop> <!-- Try to override existing prop. Doesn't work! -->
+		<!-- Note: Here <util:properties>'s [local-override] attribute's default 
+			value "false" is applied. So, it means, the local properties are set first, 
+			then the .properties file at [location] is loaded, and then the properties 
+			in the file override the local properties. -->
+		<prop key="app.environment">development</prop> <!-- Overridden by property from file -->
+		<prop key="app.version">1.4.2-dev</prop> <!-- Overridden by property from file -->
+
+		<!-- Add new prop. Works! - This property doesn't exist in file, so it's 
+			not overridden. -->
+		<prop key="app.logLevel">debug</prop>
+		<!-- Add new prop. Works! - This property doesn't exist in file, so it's 
+			not overridden. -->
+		<prop key="app.strictAuth">disabled</prop>
+	</util:properties>
+
+
+	<util:properties id="appDefaultsDevOverriden"
+		location="classpath:com/propsInjection/app.properties"
+		local-override="true">
+		<!-- Note: Here <util:properties>'s [local-override] attribute has been 
+			explicitly set to value "true". So, it means, the .properties file at [location] 
+			is loaded & those properties are set, then the local properties are set, 
+			and so the local properties will override the properties specified in the 
+			file. -->
+		<prop key="app.environment">development</prop> <!-- Overrides the file's respective property value -->
+		<prop key="app.version">1.4.2-dev</prop> <!-- Overrides the file's respective property value -->
 
 		<prop key="app.logLevel">debug</prop> <!-- Add new prop. Works! -->
 		<prop key="app.strictAuth">disabled</prop> <!-- Add new prop. Works! -->

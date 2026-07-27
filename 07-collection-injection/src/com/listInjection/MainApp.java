@@ -2,6 +2,7 @@ package com.listInjection;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -24,6 +25,20 @@ public class MainApp {
 
 		System.out.println("planets == planets2 ---> " + (planets == planets2) + ". (i.e. singleton)");
 
+		System.out.println();
+
+		@SuppressWarnings("unchecked")
+		Stack<String> browserBackButtonStack = context.getBean("browserBackButtonStack", Stack.class);
+
+		System.out.println("browserBackButtonStack.getClass() => " + browserBackButtonStack.getClass());
+		System.out.println("browserBackButtonStack: " + browserBackButtonStack);
+		System.out.println();
+
+		System.out.println("Stack popped & printed:");
+		while (!browserBackButtonStack.empty()) {
+			String pageUrl = browserBackButtonStack.pop();
+			System.out.println("  • " + pageUrl);
+		}
 		System.out.println();
 
 		@SuppressWarnings("unchecked")

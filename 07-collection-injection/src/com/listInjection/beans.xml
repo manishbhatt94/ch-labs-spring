@@ -24,6 +24,15 @@
 		<value>Pluto</value>
 	</util:list>
 
+	<util:list id="browserBackButtonStack"
+		list-class="java.util.Stack">
+		<value>https://www.google.com</value>
+		<value>https://www.google.com/search?q=hibernate+docs</value>
+		<value>https://hibernate.org/orm/documentation/</value>
+		<value>https://docs.hibernate.org/orm/7.4/userguide/html_single/</value>
+		<value>https://docs.hibernate.org/orm/7.4/userguide/html_single/#_statelesssession</value>
+	</util:list>
+
 	<!-- Spring's default <list /> element is not allowed stand-alone directly 
 		within <beans /> element, instead it should only be nested within a <bean 
 		/> as value of <property /> element, etc. -->

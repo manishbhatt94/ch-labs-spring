@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+
+    <!-- default-autowire on the top-level <beans/> element sets the
+         fallback autowire mode for every <bean/> in this file that
+         either omits the "autowire" attribute entirely, or sets it to
+         the explicit value "default". Per-bean "autowire" always wins
+         when it names an actual mode (byName/byType/constructor/no). -->
+
+    <bean id="engine" class="byName.carDekho.parts.StandardEngine">
+        <property name="engineBeanId" value="engine" />
+    </bean>
+    <bean id="transmission" class="byName.carDekho.parts.AutomaticTransmission">
+        <property name="transmissionBeanId" value="transmission" />
+    </bean>
+
+
+    <!-- No "autowire" attribute at all -> inherits default-autowire="byName"
+         from <beans/>. engine/transmission still get wired. -->
+    <bean id="carInheritedDefault" class="byName.carDekho.car.Car">
+        <property name="color" value="Teal"/>
+    </bean>
+
+    <!-- autowire="default" is the explicit spelling of the same thing -
+         functionally identical to omitting the attribute above. -->
+    <bean id="carExplicitDefault" class="byName.carDekho.car.Car" autowire="default">
+        <property name="color" value="Maroon"/>
+    </bean>
+
+    <!-- A per-bean "autowire" value always overrides the container-wide
+         default. Here autowire="no" opts this bean OUT of autowiring
+         entirely, even though the <beans/> default is "byName". -->
+    <bean id="carOptedOut" class="byName.carDekho.car.Car" autowire="no">
+        <property name="color" value="White"/>
+    </bean>
+
+</beans>

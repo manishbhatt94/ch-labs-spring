@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire-candidates="engine,transmission">
+
+
+	<!-- default-autowire-candidates is set once on the top-level
+		<beans/> element and applies to every bean definition in this
+		file. Only beans whose name matches one of the given patterns
+		are eligible as autowiring candidates anywhere in this file.
+		Patterns support a leading/trailing "*" wildcard (e.g. "*Dao");
+		here we list exact names for clarity.
+
+		This is a bulk, file-wide alternative to sprinkling
+		autowire-candidate="false" on individual <bean/> elements. -->
+
+	<bean id="engine" class="byName.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="engine" />
+	</bean>
+	<bean id="transmission" class="byName.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmission" />
+	</bean>
+
+	<!-- "gpsWired" matches neither "engine" nor "transmission", so it is
+		excluded from autowiring container-wide in this file - even
+		though it carries no autowire-candidate attribute of its own.
+		When auto-wiring byName, if property name & bean id match, despite,
+		the bean not being an autowire candidate, even then the matched
+		bean (by name) gets auto-wired.
+		Here the bean id "gpsWired" doesn't match the property name "gps",
+		so the "gps" field in the Car bean must remain null, unless we
+		explicitly use a <property name="gps" ref="gpsBeanId" /> -->
+	<bean id="gpsWired" class="byName.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="HARDWIRED"/>
+	</bean>
+
+	<bean id="gpsPlugPlay" class="byName.carDekho.parts.GpsSystem" autowire-candidate="false">
+		<property name="gpsModuleType" value="OBD_PLUG_PLAY"></property>
+	</bean>
+
+	<!-- ========================================================= -->
+
+	<bean id="car5" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="color" value="Yellow"/>
+	</bean>
+
+	<!-- Same rule as autowire-candidate="false": the pattern-based
+		exclusion only affects the autowiring infrastructure. Explicit
+		refs still resolve the bean. -->
+	<bean id="car6" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="gps" ref="gpsPlugPlay"/>
+		<property name="color" value="Purple"/>
+	</bean>
+
+
+</beans>

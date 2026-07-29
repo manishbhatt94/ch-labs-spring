@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- ================================================================
+		Supporting parts (redeclared here since this is a separate,
+		standalone ApplicationContext from beans-byname-main.xml).
+
+		IMPORTANT, and easy to get wrong: the XML container parses and
+		registers every <bean/> DEFINITION in this file before it
+		instantiates any singleton. That means a Car bean declared near
+		the TOP of this file is just as able to get byName-wired to a
+		bean declared near the BOTTOM of the file as one declared right
+		next to it - declaration order plays no part in byName matching.
+		Several beans below (car_simple1, car_arrays1, car_collections1)
+		are deliberately declared before their matching-named
+		collaborator beans, precisely to make this visible.
+		================================================================ -->
+	<bean id="engine" class="byName.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="engine" />
+	</bean>
+	<bean id="transmission" class="byName.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmission" />
+	</bean>
+
+
+	<!-- ================================================================
+		Simple types are NEVER autowire candidates.
+		To prove this isn't just "no bean happened to match", we define
+		beans literally named "color" and "dealershipPrice" whose types
+		match the Car properties exactly. Even so, byName will not touch
+		them, because String/BigDecimal properties are excluded from the
+		autowiring candidate scan entirely (see Car.java's isSimpleProperty
+		note) - they're never even considered, match or no match.
+		================================================================ -->
+	<bean id="color" class="java.lang.String">
+		<constructor-arg value="Silver (Stand-alone Bean 'color' of Type String)"/>
+	</bean>
+
+	<bean id="dealershipPrice" class="java.math.BigDecimal">
+		<constructor-arg value="24999.99"/>
+	</bean>
+
+	<!-- car_simple1 leaves color/dealershipPrice unset on purpose, to show
+		they stay null. Its engine/transmission properties are wired by
+		name as usual. Its spareEngines/accessories/vehicleId properties
+		will ALSO end up wired further down this file's beans, once
+		those bean definitions are introduced below - see the note at
+		the top of this file about declaration order. -->
+	<bean id="car_simple1" class="byName.carDekho.car.Car" autowire="byName"/>
+
+	<!-- car_simple2 shows the only way to populate a simple-typed property:
+		set it explicitly. The same applies to an array of a simple type
+		(serviceHistory, String[]) - byName can't wire it automatically,
+		but a literal, nested <array> element inside <property> works
+		fine, because that's explicit configuration, not autowiring. -->
+	<bean id="car_simple2" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="color" value="Red"/>
+		<property name="dealershipPrice" value="27999.50"/>
+		<property name="serviceHistory">
+			<array value-type="java.lang.String">
+				<value>2019-12-31: In warranty Service #1 - Handle-bars alignment</value>
+				<value>2020-02-25: In warranty Service #2 - Throttle cable choking</value>
+				<value>2020-05-12: In warranty Service #3 - Engine knocking problem</value>
+			</array>
+		</property>
+	</bean>
+
+	<!-- car_simple3 shows overriding the auto-wired (by name) fields , i.e.
+		spareEngines/accessories/vehicleId using <property />. Also, we
+		pass a value for the field "gps". -->
+	<bean id="car_simple3" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="spareEngines">
+			<list>
+				<ref bean="spareTurboEngine" />
+			</list>
+		</property>
+		<property name="accessories">
+			<set>
+				<bean class="byName.carDekho.parts.Accessory">
+					<constructor-arg value="Air Conditioning" />
+				</bean>
+				<bean class="byName.carDekho.parts.Accessory">
+					<constructor-arg value="Touchscreen Instrument Cluster" />
+				</bean>
+				<bean class="byName.carDekho.parts.Accessory">
+					<constructor-arg value="Infotainment System Dashboard" />
+				</bean>
+			</set>
+		</property>
+		<property name="gps" ref="gpsPlugPlay" />
+    </bean>
+
+	<bean id="gpsPlugPlay" class="byName.carDekho.parts.GpsSystem" autowire-candidate="false">
+		<property name="gpsModuleType" value="OBD_PLUG_PLAY"></property>
+	</bean>
+
+
+	<!-- ================================================================
+		Array of a SIMPLE type is excluded too (the docs call this out
+		explicitly: "primitives, Strings, and Class's (and arrays of
+		such simple properties)"). Even though "serviceHistory" below is
+		a proper bean with the right name and the right type (String[]),
+		it stays unwired by byName on every Car in this file that
+		doesn't set it explicitly (car_simple2 is the only one that does).
+
+		Note on how this bean is built: Spring's util namespace has
+		standalone-bean support for <util:list>, <util:set>, <util:map>,
+		and <util:properties> - but there is no <util:array>. The plain
+		<array> element only exists nested inside <property>/
+		<constructor-arg>, so to get a genuine standalone array-typed
+		bean out of pure XML, we build a List first and then obtain an
+		array from it via ArrayList#toArray(T[]), used here as an
+		instance factory method.
+		================================================================ -->
+	<util:list id="serviceHistoryList"
+			value-type="java.lang.String"
+			list-class="java.util.ArrayList">
+		<value>2023-01-10: Oil change</value>
+		<value>2023-06-22: Tire rotation</value>
+	</util:list>
+
+	<bean id="serviceHistory" class="java.lang.String[]"
+			factory-bean="serviceHistoryList"
+			factory-method="toArray">
+		<constructor-arg>
+			<array value-type="java.lang.String"></array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="car_arrays1" class="byName.carDekho.car.Car" autowire="byName"/>
+
+
+	<!-- ================================================================
+		Array of a COMPLEX (non-simple) type is a different story:
+		isSimpleProperty() only special-cases arrays of simple value
+		types, so Engine[] is a perfectly normal autowire candidate.
+		byName just needs a bean named "spareEngines" of a compatible
+		type - it doesn't care that the type happens to be an array.
+
+		car_arrays1 above was declared before this "spareEngines" bean
+		even existed in the file, and car_arrays2 below is declared
+		after it - both end up wired identically, since bean
+		registration (not bean position) is what byName consults.
+		================================================================ -->
+	<!-- Define spare engine beans: -->
+	<bean id="spareStandardEngine" class="byName.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="spareStandardEngine" />
+	</bean>
+	<bean id="spareTurboEngine" class="byName.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="spareTurboEngine" />
+	</bean>
+
+	<util:list id="spareEnginesList"
+			value-type="byName.carDekho.parts.Engine"
+			list-class="java.util.ArrayList">
+		<ref bean="spareStandardEngine" />
+		<ref bean="spareTurboEngine" />
+	</util:list>
+
+	<bean id="spareEngines" class="byName.carDekho.parts.Engine[]"
+			factory-bean="spareEnginesList"
+			factory-method="toArray">
+		<constructor-arg>
+			<array value-type="byName.carDekho.parts.Engine"></array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="car_arrays2" class="byName.carDekho.car.Car" autowire="byName"/>
+
+
+	<!-- ================================================================
+		Collections behave like arrays-of-complex-type above, not like
+		simple types - byName is free to wire a Set/List/Map property,
+		provided a bean of that exact name exists somewhere in this
+		context. What byName never does is aggregate every bean of a
+		matching element type into a collection automatically - that
+		aggregation is exclusive to byType/constructor mode.
+
+		The two Accessory beans just below are NOT named "accessories",
+		so on their own they satisfy nothing. It's only the explicitly
+		assembled <util:set id="accessories"> further down that gives
+		"accessories" a bean to match against - and once it exists in
+		the registry, BOTH car_collections1 (declared above it) and
+		car_collections2 (declared below it) get it wired identically.
+		================================================================ -->
+	<bean id="sunroofAccessory" class="byName.carDekho.parts.Accessory">
+		<constructor-arg value="Sunroof"/>
+	</bean>
+	<bean id="leatherSeatsAccessory" class="byName.carDekho.parts.Accessory">
+		<constructor-arg value="Leather Seats"/>
+	</bean>
+
+	<!-- Declared before "accessories" exists as a bean definition below -
+		still gets it auto-wired by name, for the reason explained above. -->
+	<bean id="car_collections1" class="byName.carDekho.car.Car" autowire="byName"/>
+
+	<util:set id="accessories" set-class="java.util.LinkedHashSet">
+		<ref bean="sunroofAccessory"/>
+		<ref bean="leatherSeatsAccessory"/>
+	</util:set>
+
+	<!-- Declared after "accessories" - wired identically to car_collections1. -->
+	<bean id="car_collections2" class="byName.carDekho.car.Car" autowire="byName"/>
+
+
+	<!-- ================================================================
+		A prototype bean created via a static factory method
+		(UUID.randomUUID()), bean name identical to the property name.
+		Because the bean is scope="prototype", every getBean("vehicleId")
+		call - i.e. every byName injection into a distinct Car - returns
+		a freshly generated UUID rather than a shared singleton instance.
+		This is the one property in this file where car_uuid1 and
+		car_uuid2 genuinely differ from each other.
+		================================================================ -->
+	<bean id="vehicleId" class="java.util.UUID" factory-method="randomUUID" scope="prototype"/>
+
+	<bean id="car_uuid1" class="byName.carDekho.car.Car" autowire="byName"/>
+	<bean id="car_uuid2" class="byName.carDekho.car.Car" autowire="byName"/>
+
+
+</beans>

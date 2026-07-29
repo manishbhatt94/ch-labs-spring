@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- @formatter:off -->
+
+
+	<!-- ================================================================
+		PART BEANS - the "collaborators" pool that byName autowiring
+		picks candidates from. For byName, the container looks for a
+		bean whose id/name is IDENTICAL to the property name it is
+		trying to satisfy.
+		================================================================ -->
+
+	<bean id="engine" class="byName.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="engine" />
+	</bean>
+
+	<!-- Not named "engine", so plain byName autowiring will never pick
+		this one up automatically. We wire it in explicitly in car2. -->
+	<bean id="turboEngine" class="byName.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="turboEngine" />
+	</bean>
+
+	<bean id="transmission" class="byName.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmission" />
+	</bean>
+
+	<!-- autowire-candidate="false" removes this bean from the pool that
+		the autowiring infrastructure considers (byName and byType alike).
+		It does NOT stop the bean from being referenced explicitly by
+		name elsewhere - see car4. -->
+	<bean id="gps" class="byName.carDekho.parts.GpsSystem" autowire-candidate="false"/>
+
+	<bean id="gpsWired" class="byName.carDekho.parts.GpsSystem" autowire-candidate="false">
+		<property name="gpsModuleType" value="HARDWIRED"></property>
+	</bean>
+
+	<bean id="gpsPlugPlay" class="byName.carDekho.parts.GpsSystem" autowire-candidate="false">
+		<property name="gpsModuleType" value="OBD_PLUG_PLAY"></property>
+	</bean>
+
+
+	<!-- ================================================================
+		DEMO 1 - plain byName autowiring, per-bean opt-in via the
+		"autowire" attribute on <bean/>.
+			engine       -> bean id "engine"        MATCH -> wired
+			transmission -> bean id "transmission"  MATCH -> wired
+			gps          -> bean id "gps"           MATCH -> wired
+							(autowire-candidate="false") takes effect
+							only in type-based auto-wiring (i.e byType, &
+							constructor modes).  Auto-wiring by name
+							nevertheless injects a bean if the name matches,
+							despite the bean not marked as an autowire candidate
+							using (autowire-candidate="false").
+			color        -> String is a simple type, never
+							autowired -> must be set explicitly
+		No exception is thrown for the unresolved "gps" property;
+		byName simply leaves it unset.
+		================================================================ -->
+	<bean id="car1" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="color" value="Red"/>
+	</bean>
+
+
+	<!-- ================================================================
+		DEMO 2 - explicit <property> always overrides autowiring.
+		Bean "engine" would normally satisfy the "engine" property by
+		name, but the explicit ref below wins instead. "transmission"
+		is still resolved automatically, showing the two mechanisms
+		can be mixed freely on the same bean definition.
+		================================================================ -->
+	<bean id="car2" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="engine" ref="turboEngine"/>
+		<property name="color" value="Blue"/>
+	</bean>
+
+
+	<!-- ================================================================
+		DEMO 3 - autowire-candidate="false" in isolation.
+		Same shape as car1: engine/transmission wired by name, gps
+		stays null purely because of the flag on the "gps" bean
+		definition above, color set explicitly.
+		================================================================ -->
+	<bean id="car3" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="color" value="Green"/>
+		<property name="gps">
+			<ref bean="gpsPlugPlay" />
+		</property>
+	</bean>
+
+
+	<!-- ================================================================
+		DEMO 4 - autowire-candidate="false" beans only affects type-based
+		auto-wiring, not named-based auto-wiring (i.e. "byName" mode), nor
+		explicit references. We can use an explicit reference
+		<property ref="gps"> to override the (by name) auto-wired "gps"
+		field.
+		================================================================ -->
+	<bean id="car4" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="gps" ref="gpsWired"/>
+		<property name="color" value="Black"/>
+	</bean>
+
+
+</beans>

@@ -13,6 +13,8 @@ public class MainDemo {
 
 	public static void main(String[] args) {
 
+		System.out.println("####### Auto-wiring mode \"byName\" Demo (XML config) ###########\n");
+
 		System.out.println("\n=== 1) beans-byname-main.xml ===");
 		System.out.println("================================\n\n");
 		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(

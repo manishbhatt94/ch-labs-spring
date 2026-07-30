@@ -13,6 +13,8 @@
 ## Sample run output
 
 ```txt
+####### Auto-wiring mode "byName" Demo (XML config) ###########
+
 
 === 1) beans-byname-main.xml ===
 ================================
@@ -110,7 +112,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : a9209d3e-7793-4a3c-b11a-4a7484febb6f
+  vehicleId       : 75cadfd8-f4eb-4d2d-9b61-1d2f151d4049
 
 ---- car_simple2 - color/dealershipPrice/serviceHistory set explicitly, including a literal nested <array> for the String[] property ----
   engine          : Standard Engine (bean id = 'engine')
@@ -121,7 +123,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : [2019-12-31: In warranty Service #1 - Handle-bars alignment, 2020-02-25: In warranty Service #2 - Throttle cable choking, 2020-05-12: In warranty Service #3 - Engine knocking problem]
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 4dd104e0-da33-449c-a0b1-d89ce34b0e47
+  vehicleId       : e24461ae-f1e6-446b-99a8-461db79f123b
 
 ---- car_simple3 - spareEngines/accessories/vehicleId auto-wired fields overridden using <property>, and field 'gps' also manually wired ----
   engine          : Standard Engine (bean id = 'engine')
@@ -132,7 +134,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Air Conditioning], Accessory[Touchscreen Instrument Cluster], Accessory[Infotainment System Dashboard]]
-  vehicleId       : d3d4b029-0f90-4b72-b0e8-0bcd7139737f
+  vehicleId       : dee4c9f5-2350-44a3-9eec-f131bdcf3703
 
 ---- car_arrays1 - declared before the 'spareEngines' bean definition; still gets it wired (declaration order doesn't matter for byName) ----
   engine          : Standard Engine (bean id = 'engine')
@@ -143,7 +145,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : f6acf221-50f8-4d9c-b1ae-a34cff0ec8ba
+  vehicleId       : 979cccc0-967d-40ad-bb2f-15b79f97d8d1
 
 ---- car_arrays2 - declared after the 'spareEngines' bean definition; wired identically to car_arrays1 ----
   engine          : Standard Engine (bean id = 'engine')
@@ -154,7 +156,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : b1676df9-eacc-4570-8dca-222a8511f2a4
+  vehicleId       : d492e5ad-a842-4de1-8c2d-74b705b130b2
 
 ---- car_collections1 - declared before the 'accessories' bean definition; still gets it wired, same reason as car_arrays1 ----
   engine          : Standard Engine (bean id = 'engine')
@@ -165,7 +167,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 639a8b7c-49d3-4637-a7a6-5c03903dbd23
+  vehicleId       : b6dce868-0f30-4186-b3ec-7c02791c6d3c
 
 ---- car_collections2 - declared after the 'accessories' bean definition; wired identically to car_collections1 ----
   engine          : Standard Engine (bean id = 'engine')
@@ -176,7 +178,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 43e9aa18-89a4-41a8-82cb-397ff089fbde
+  vehicleId       : 340ce6a4-0560-4844-852e-afc421488168
 
 ---- car_uuid1 - vehicleId from the prototype UUID.randomUUID() bean ----
   engine          : Standard Engine (bean id = 'engine')
@@ -187,7 +189,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : ff79ceb4-0ca4-4741-bdc5-71fa40366aa6
+  vehicleId       : a4d80f48-5e6a-45fb-81d1-47bf59b549a1
 
 ---- car_uuid2 - a DIFFERENT UUID: the only property in this file where the two cars genuinely differ, thanks to prototype scope ----
   engine          : Standard Engine (bean id = 'engine')
@@ -198,7 +200,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 81ceb8c4-5df1-4deb-95ea-1ca8b79f7d32
+  vehicleId       : e1cd15af-dd86-4552-a3b7-3506559718e0
 
 
 

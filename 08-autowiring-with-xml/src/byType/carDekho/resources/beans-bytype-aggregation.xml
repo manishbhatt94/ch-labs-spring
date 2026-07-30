@@ -6,6 +6,54 @@
 
 
 
+	<!-- ================================================================
+		Three ordinary Engine-typed beans - no primary, no exclusion,
+		nothing special. For array/Collection/Map properties, byType
+		doesn't need to pick just one candidate the way it does for a
+		single-valued property; it aggregates EVERY eligible bean of the
+		matching type. That's the opposite instinct from the ambiguity
+		demos in the other files, where 2+ candidates was a problem to
+		be resolved.
+		================================================================ -->
+	<bean id="fleetEngineAlpha" class="byType.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="fleetEngineAlpha" />
+	</bean>
+	<bean id="fleetEngineBravo" class="byType.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="fleetEngineBravo" />
+	</bean>
+	<bean id="fleetEngineCharlie" class="byType.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="fleetEngineCharlie" />
+	</bean>
+
+
+	<!-- engineList (List<Engine>)       -> all three Engine beans
+		engineSet  (Set<Engine>)         -> all three Engine beans
+		engineMap  (Map<String,Engine>)  -> keyed by bean id
+			(fleetEngineAlpha/fleetEngineBravo/fleetEngineCharlie), values
+			are the matching Engine instances - this only works because
+			the Map's key type is String, per the docs
+		accessoryFleet (Set<Accessory>)  -> null, and specifically NOT an
+			empty Set. Zero Accessory beans exist anywhere in this file,
+			and byType's array/Collection/Map aggregation resolves to
+			null (not an empty collection) whenever there are zero
+			matches and the dependency isn't marked required - which a
+			classic autowire="byType" property never is. -->
+	<bean id="engineFleet" class="byType.carDekho.fleet.EngineFleet" autowire="byType"/>
+
+
+	<!-- Explicit <property> still overrides autowiring per-property, even
+		for collection-typed properties: engineList is pinned to just two
+		of the three engines here, while engineSet/engineMap are still
+		auto-wired with all three via byType on this very same bean. -->
+	<bean id="engineFleetExplicitOverride" class="byType.carDekho.fleet.EngineFleet" autowire="byType">
+		<property name="engineList">
+			<list>
+				<ref bean="fleetEngineAlpha"/>
+				<ref bean="fleetEngineBravo"/>
+			</list>
+		</property>
+	</bean>
+
 
 
 </beans>

@@ -134,11 +134,29 @@
 ==============================================================
 
 
-Jul 30, 2026 5:59:43 PM org.springframework.context.support.AbstractApplicationContext refresh
+Jul 31, 2026 12:30:05 AM org.springframework.context.support.AbstractApplicationContext refresh
 WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'car_ambiguousEngineFails' defined in class path resource [byType/carDekho/resources/beans-bytype-ambiguous-fails.xml]: Unsatisfied dependency expressed through bean property 'engine'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'byType.carDekho.parts.Engine' available: expected single matching bean but found 2: ambiguousEngineA,ambiguousEngineB
 Got the EXPECTED exception while creating 'car_ambiguousEngineFails':
   UnsatisfiedDependencyException: Error creating bean with name 'car_ambiguousEngineFails' defined in class path resource [byType/carDekho/resources/beans-bytype-ambiguous-fails.xml]: Unsatisfied dependency expressed through bean property 'engine'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'byType.carDekho.parts.Engine' available: expected single matching bean but found 2: ambiguousEngineA,ambiguousEngineB
 This is exactly the documented behavior: "If no unique bean definition is available, an exception is thrown."
+
+
+
+=== 5) beans-bytype-aggregation.xml ===
+=======================================
+
+
+---- engineFleet - engineList/engineSet/engineMap all auto-aggregate every Engine bean in the file; accessoryFleet stays null (not an empty Set) since zero Accessory beans exist anywhere here ----
+  engineList     : [Standard Engine (bean id = 'fleetEngineAlpha'), Turbo Engine (bean id = 'fleetEngineBravo'), Standard Engine (bean id = 'fleetEngineCharlie')]
+  engineSet      : [Standard Engine (bean id = 'fleetEngineAlpha'), Turbo Engine (bean id = 'fleetEngineBravo'), Standard Engine (bean id = 'fleetEngineCharlie')]
+  engineMap      : {fleetEngineAlpha=Standard Engine (bean id = 'fleetEngineAlpha'), fleetEngineBravo=Turbo Engine (bean id = 'fleetEngineBravo'), fleetEngineCharlie=Standard Engine (bean id = 'fleetEngineCharlie')}
+  accessoryFleet : null (NOT wired)
+
+---- engineFleetExplicitOverride - engineList pinned explicitly to just 2 of the 3 engines, while engineSet/engineMap are still auto-wired with all 3 via byType ----
+  engineList     : [Standard Engine (bean id = 'fleetEngineAlpha'), Turbo Engine (bean id = 'fleetEngineBravo')]
+  engineSet      : [Standard Engine (bean id = 'fleetEngineAlpha'), Turbo Engine (bean id = 'fleetEngineBravo'), Standard Engine (bean id = 'fleetEngineCharlie')]
+  engineMap      : {fleetEngineAlpha=Standard Engine (bean id = 'fleetEngineAlpha'), fleetEngineBravo=Turbo Engine (bean id = 'fleetEngineBravo'), fleetEngineCharlie=Standard Engine (bean id = 'fleetEngineCharlie')}
+  accessoryFleet : null (NOT wired)
 
 
 

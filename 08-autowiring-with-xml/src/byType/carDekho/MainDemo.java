@@ -5,6 +5,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import byType.carDekho.car.Car;
+import byType.carDekho.fleet.EngineFleet;
 
 public class MainDemo {
 
@@ -81,6 +82,20 @@ public class MainDemo {
 			System.out.println("  " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
 			System.out.println("This is exactly the documented behavior: \"If no unique bean definition "
 					+ "is available, an exception is thrown.\"\n");
+		}
+		System.out.println();
+
+		System.out.println("\n=== 5) beans-bytype-aggregation.xml ===");
+		System.out.println("=======================================\n\n");
+		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"byType/carDekho/resources/beans-bytype-aggregation.xml")) {
+			ctx.getBean("engineFleet", EngineFleet.class)
+					.describe("engineFleet - engineList/engineSet/engineMap all auto-aggregate every Engine bean "
+							+ "in the file; accessoryFleet stays null (not an empty Set) since zero "
+							+ "Accessory beans exist anywhere here");
+			ctx.getBean("engineFleetExplicitOverride", EngineFleet.class)
+					.describe("engineFleetExplicitOverride - engineList pinned explicitly to just 2 of the 3 engines, "
+							+ "while engineSet/engineMap are still auto-wired with all 3 via byType");
 		}
 		System.out.println();
 

@@ -102,5 +102,33 @@
 
 
 
+=== 3) beans-bytype-default-candidates.xml ===
+==============================================
+
+
+---- car_patternResolves - 'engine' resolved because 'engineExcludedByPattern' doesn't match default-autowire-candidates="engine,transmission"; 'gps' stays null because 'gps' doesn't match the pattern either, leaving zero eligible candidates ----
+  engine          : Standard Engine (bean id = 'engine')
+  transmission    : Automatic Transmission (bean id = 'transmission')
+  gps             : null (NOT wired)
+  color           : null (NOT wired)
+  dealershipPrice : null (NOT wired)
+  serviceHistory  : null (NOT wired)
+  spareEngines    : [Standard Engine (bean id = 'engine')]
+  accessories     : null (NOT wired)
+  vehicleId       : null (NOT wired)
+
+---- car_explicitRefBypassesPattern - explicit refs still reach both pattern-excluded beans ('engineExcludedByPattern' and 'gps') ----
+  engine          : Turbo Engine (bean id = 'engineExcludedByPattern')
+  transmission    : Automatic Transmission (bean id = 'transmission')
+  gps             : GpsSystem [gpsModuleType=HARDWIRED]
+  color           : null (NOT wired)
+  dealershipPrice : null (NOT wired)
+  serviceHistory  : null (NOT wired)
+  spareEngines    : [Standard Engine (bean id = 'engine')]
+  accessories     : null (NOT wired)
+  vehicleId       : null (NOT wired)
+
+
+
 ```
 

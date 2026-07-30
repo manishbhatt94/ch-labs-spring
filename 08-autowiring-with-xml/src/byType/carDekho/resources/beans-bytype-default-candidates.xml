@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire-candidates="engine,transmission">
+
+	<!-- ================================================================
+		default-autowire-candidates on the top-level <beans/> element
+		restricts type-based (byType/constructor) autowiring container-
+		wide to only beans whose name matches one of the given patterns
+		- here, exact names "engine" and "transmission". Any OTHER bean,
+		regardless of its type, is invisible to type-based autowiring,
+		even if it is the only bean of that type and would otherwise be
+		a perfectly unambiguous match.
+
+		Two consequences shown below:
+		(a) "engineExcludedByPattern" doesn't match the pattern, so it's
+			removed from Engine-typed candidacy, resolving what would
+			otherwise be an ambiguous two-Engine situation down to a
+			single clean candidate: "engine".
+         (b) "gps" ALSO doesn't match the pattern (only "engine" and
+			"transmission" do) - so even though it is the ONLY
+			GpsSystem-typed bean in this file, it is excluded from
+			type-based autowiring entirely. That is not ambiguity being
+			resolved; it's the property having zero eligible candidates,
+			so it's silently left null - the same silent-skip behavior
+			from beans-bytype-basics.xml, just reached by exclusion
+			instead of genuine absence.
+		================================================================ -->
+	<bean id="engine" class="byType.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="engine" />
+	</bean>
+	<bean id="engineExcludedByPattern" class="byType.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="engineExcludedByPattern" />
+	</bean>
+
+	<bean id="transmission" class="byType.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmission" />
+	</bean>
+
+	<bean id="gps" class="byType.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="HARDWIRED" />
+	</bean>
+
+	<!-- engine       -> resolved to "engine" (the only pattern-eligible candidate)
+		 transmission -> wired normally (matches the pattern, unambiguous anyway)
+		 gps          -> null; "gps" doesn't match the pattern, so it's excluded,
+							and there's no other GpsSystem bean to fall back on
+		 spareEngines (Engine[]) -> [engine] only; "engineExcludedByPattern" is
+							excluded from aggregation too, same as from
+							single-valued resolution -->
+	<bean id="car_patternResolves" class="byType.carDekho.car.Car" autowire="byType"/>
+
+	<!-- default-autowire-candidates, like autowire-candidate="false", only
+		affects the autowiring infrastructure - explicit refs still reach
+		beans excluded by the pattern. -->
+	<bean id="car_explicitRefBypassesPattern" class="byType.carDekho.car.Car" autowire="byType">
+		<property name="engine" ref="engineExcludedByPattern"/>
+		<property name="gps" ref="gps"/>
+	</bean>
+
+</beans>

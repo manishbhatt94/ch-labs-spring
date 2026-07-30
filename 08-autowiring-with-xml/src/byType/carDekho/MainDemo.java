@@ -51,6 +51,20 @@ public class MainDemo {
 		}
 		System.out.println();
 
+		System.out.println("\n=== 3) beans-bytype-default-candidates.xml ===");
+		System.out.println("==============================================\n\n");
+		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"byType/carDekho/resources/beans-bytype-default-candidates.xml")) {
+			ctx.getBean("car_patternResolves", Car.class)
+					.describe("car_patternResolves - 'engine' resolved because 'engineExcludedByPattern' doesn't match "
+							+ "default-autowire-candidates=\"engine,transmission\"; 'gps' stays null because "
+							+ "'gps' doesn't match the pattern either, leaving zero eligible candidates");
+			ctx.getBean("car_explicitRefBypassesPattern", Car.class)
+					.describe("car_explicitRefBypassesPattern - explicit refs still reach both pattern-excluded beans "
+							+ "('engineExcludedByPattern' and 'gps')");
+		}
+		System.out.println();
+
 	}
 
 }

@@ -2,10 +2,10 @@
 
 - Main class: [byName.carDekho.MainDemo](./MainDemo.java)
 - Bean definition XML files:
-    - 1) [beans-byname-main.xml](./resources/beans-byname-main.xml)
-    - 2) [beans-byname-default-candidates.xml](./resources/beans-byname-default-candidates.xml)
-    - 3) [beans-byname-simple-and-collections.xml](./resources/beans-byname-simple-and-collections.xml)
-    - 4) [beans-byname-default-autowire.xml](./resources/beans-byname-default-autowire.xml)
+    - ( 1 ) [beans-byname-main.xml](./resources/beans-byname-main.xml)
+    - ( 2 ) [beans-byname-default-candidates.xml](./resources/beans-byname-default-candidates.xml)
+    - ( 3 ) [beans-byname-simple-and-collections.xml](./resources/beans-byname-simple-and-collections.xml)
+    - ( 4 ) [beans-byname-default-autowire.xml](./resources/beans-byname-default-autowire.xml)
 
 
 ---

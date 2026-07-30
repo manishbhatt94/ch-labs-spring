@@ -6,6 +6,17 @@
 - [Spring Latest - &sect; Fine-tuning Annotation-based Autowiring with Qualifiers](https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/autowired-qualifiers.html)
 
 
+
+## Code Examples
+
+- Auto-wiring mode **"byName"**
+    - Package [byName.carDekho](./src/byName/carDekho/README.md)
+- Auto-wiring mode **"byType"**
+    - Package [byType.carDekho](./src/byType/carDekho/README.md)
+
+
+---
+
 ## Rough Notes
 
 - You can let Spring resolve collaborators (other beans) automatically for your
@@ -61,10 +72,4 @@
 | `byName` | Autowiring by property name. Spring looks for a bean with the same name as the property that needs to be autowired. For example, if a bean definition is set to autowire by name and it contains a `master` property (that is, it has a `setMaster(..)` method), Spring looks for a bean definition named `master` and uses it to set the property. |
 | `byType` | Lets a property be autowired if exactly one bean of the property type exists in the container. If more than one exists, a fatal exception is thrown, which indicates that you may not use `byType` autowiring for that bean. If there are no matching beans, nothing happens (the property is not set). |
 | `constructor` | Analogous to `byType` but applies to constructor arguments. If there is not exactly one bean of the constructor argument type in the container, a fatal error is raised. |
-
-
-## Code Examples
-
-- Auto-wiring mode **"byName"**
-    - Package [byName.carDekho](./src/byName/carDekho/README.md)
 

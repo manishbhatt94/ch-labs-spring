@@ -5,7 +5,51 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+	<!-- ================================================================
+		Two Engine-typed beans exist, which alone makes byType wiring of
+		a single-valued "engine" property ambiguous. "enginePrimaryA" is
+		marked primary="true", so DefaultListableBeanFactory's ambiguity
+		resolution picks it deterministically - no annotations, no
+		<context:annotation-config/> needed for this mechanism.
 
+		NOTE: "primary" is a property of the BEAN ITSELF, not of any one
+		consumer - so it applies to EVERY ambiguous byType resolution of
+		this type anywhere in this file, not just car_resolvedByPrimary.
+		That is exactly why this pair of Engine beans lives in its own
+		file, isolated from the autowire-candidate="false" pair in
+		beans-bytype-ambiguity-exclusion.xml - combining both pairs in
+		one file would let this primary bean "leak" into that other
+		demo's resolution too.
+		================================================================ -->
+	<bean id="enginePrimaryA" class="byType.carDekho.parts.StandardEngine" primary="true">
+		<property name="engineBeanId" value="enginePrimaryA" />
+	</bean>
+	<bean id="enginePrimaryB" class="byType.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="enginePrimaryB" />
+	</bean>
+
+	<bean id="transmission" class="byType.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmission" />
+	</bean>
+	<bean id="gps" class="byType.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="BATTERY_POWERED" />
+	</bean>
+
+	<!-- engine -> resolved to enginePrimaryA via the primary flag.
+		spareEngines (Engine[]) -> BOTH enginePrimaryA and enginePrimaryB
+		get aggregated here; array/collection aggregation collects every
+		eligible candidate regardless of which one "primary" designates
+		for single-valued resolution. -->
+	<bean id="car_resolvedByPrimary" class="byType.carDekho.car.Car" autowire="byType"/>
+
+	<!-- Explicit <property> still overrides autowiring even when the
+		property would otherwise resolve cleanly via "primary" - proving
+		explicit wiring outranks every autowiring mechanism, not just
+		plain type matching. Deliberately points at the NON-primary bean
+		to make the override visible. -->
+	<bean id="car_explicitOverridesPrimary" class="byType.carDekho.car.Car" autowire="byType">
+		<property name="engine" ref="enginePrimaryB"/>
+	</bean>
 
 
 </beans>

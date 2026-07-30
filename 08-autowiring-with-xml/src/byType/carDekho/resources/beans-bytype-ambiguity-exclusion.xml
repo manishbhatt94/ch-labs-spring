@@ -5,7 +5,48 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+	<!-- ================================================================
+		Same ambiguity shape as beans-bytype-ambiguity-primary.xml, but
+		resolved differently: "engineExcludeA" is marked
+		autowire-candidate="false", which - per the official docs -
+		"is designed to only affect type-based autowiring". That removes
+		it from the candidate pool entirely, leaving "engineExcludeB" as
+		the ONLY remaining Engine-typed candidate, so byType resolves it
+		cleanly - not because it "won" a tie-break, but because there is
+		no longer any ambiguity to resolve.
 
+		Kept in its own file, with no "primary"-marked bean anywhere in
+		it, so this demo isn't affected by the other file's primary
+		flag (which - as noted there - is global to the container it
+		lives in, not scoped to one consumer).
+		================================================================ -->
+	<bean id="engineExcludeA" class="byType.carDekho.parts.StandardEngine" autowire-candidate="false">
+		<property name="engineBeanId" value="engineExcludeA" />
+	</bean>
+	<bean id="engineExcludeB" class="byType.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="engineExcludeB" />
+	</bean>
+
+	<bean id="transmission" class="byType.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmission" />
+	</bean>
+	<bean id="gps" class="byType.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="CAN_BUS_TELEMATICS" />
+	</bean>
+
+	<!-- engine -> resolved to engineExcludeB, the only true candidate.
+		spareEngines (Engine[]) -> ONLY engineExcludeB is aggregated;
+		engineExcludeA is excluded from type-based autowiring entirely,
+		which includes array/collection aggregation, not just
+		single-valued resolution. -->
+	<bean id="car_resolvedByExclusion" class="byType.carDekho.car.Car" autowire="byType"/>
+
+	<!-- autowire-candidate="false" only affects the autowiring
+		infrastructure - an explicit ref still resolves the excluded
+		bean directly, same rule proven earlier for byName. -->
+	<bean id="car_explicitRefToExcludedEngine" class="byType.carDekho.car.Car" autowire="byType">
+		<property name="engine" ref="engineExcludeA"/>
+	</bean>
 
 
 </beans>

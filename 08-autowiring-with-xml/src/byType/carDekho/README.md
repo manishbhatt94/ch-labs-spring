@@ -2,12 +2,12 @@
 
 - Main class: [byType.carDekho.MainDemo](./MainDemo.java)
 - Bean definition XML files:
-    - 1) [beans-bytype-basics.xml](./resources/beans-bytype-basics.xml)
-    - 2a) [beans-bytype-ambiguity-primary.xml](./resources/beans-bytype-ambiguity-primary.xml)
-    - 2b) [beans-bytype-ambiguity-exclusion.xml](./resources/beans-bytype-ambiguity-exclusion.xml)
-    - 3) [beans-bytype-default-candidates.xml](./resources/beans-bytype-default-candidates.xml)
-    - 4) [beans-bytype-ambiguous-fails.xml](./resources/beans-bytype-ambiguous-fails.xml)
-    - 5) [beans-bytype-aggregation.xml](./resources/beans-bytype-aggregation.xml)
+    - ( 1) [beans-bytype-basics.xml](./resources/beans-bytype-basics.xml)
+    - (2a) [beans-bytype-ambiguity-primary.xml](./resources/beans-bytype-ambiguity-primary.xml)
+    - (2b) [beans-bytype-ambiguity-exclusion.xml](./resources/beans-bytype-ambiguity-exclusion.xml)
+    - ( 3) [beans-bytype-default-candidates.xml](./resources/beans-bytype-default-candidates.xml)
+    - ( 4) [beans-bytype-ambiguous-fails.xml](./resources/beans-bytype-ambiguous-fails.xml)
+    - ( 5) [beans-bytype-aggregation.xml](./resources/beans-bytype-aggregation.xml)
 
 
 ---
@@ -127,6 +127,18 @@
   spareEngines    : [Standard Engine (bean id = 'engine')]
   accessories     : null (NOT wired)
   vehicleId       : null (NOT wired)
+
+
+
+=== 4) beans-bytype-ambiguous-fails.xml (expected to fail) ===
+==============================================================
+
+
+Jul 30, 2026 5:59:43 PM org.springframework.context.support.AbstractApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'car_ambiguousEngineFails' defined in class path resource [byType/carDekho/resources/beans-bytype-ambiguous-fails.xml]: Unsatisfied dependency expressed through bean property 'engine'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'byType.carDekho.parts.Engine' available: expected single matching bean but found 2: ambiguousEngineA,ambiguousEngineB
+Got the EXPECTED exception while creating 'car_ambiguousEngineFails':
+  UnsatisfiedDependencyException: Error creating bean with name 'car_ambiguousEngineFails' defined in class path resource [byType/carDekho/resources/beans-bytype-ambiguous-fails.xml]: Unsatisfied dependency expressed through bean property 'engine'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'byType.carDekho.parts.Engine' available: expected single matching bean but found 2: ambiguousEngineA,ambiguousEngineB
+This is exactly the documented behavior: "If no unique bean definition is available, an exception is thrown."
 
 
 

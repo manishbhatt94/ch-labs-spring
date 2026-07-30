@@ -1,5 +1,6 @@
 package byType.carDekho;
 
+import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -62,6 +63,24 @@ public class MainDemo {
 			ctx.getBean("car_explicitRefBypassesPattern", Car.class)
 					.describe("car_explicitRefBypassesPattern - explicit refs still reach both pattern-excluded beans "
 							+ "('engineExcludedByPattern' and 'gps')");
+		}
+		System.out.println();
+
+		System.out.println("\n=== 4) beans-bytype-ambiguous-fails.xml (expected to fail) ===");
+		System.out.println("==============================================================\n\n");
+		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"byType/carDekho/resources/beans-bytype-ambiguous-fails.xml")) {
+			// We should never actually reach this line - the context above is
+			// expected to fail to refresh before getBean() is even reachable.
+			ctx.getBean("car_ambiguousEngineFails", Car.class)
+					.describe("car_ambiguousEngineFails - should not have gotten this far");
+			ctx.getBean("car_engineResolvedByExplicitRef", Car.class).describe(
+					"car_engineResolvedByExplicitRef - explicitly sets ref on the 'engine' ambiguous property");
+		} catch (UnsatisfiedDependencyException ex) {
+			System.out.println("Got the EXPECTED exception while creating 'car_ambiguousEngineFails':");
+			System.out.println("  " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+			System.out.println("This is exactly the documented behavior: \"If no unique bean definition "
+					+ "is available, an exception is thrown.\"\n");
 		}
 		System.out.println();
 

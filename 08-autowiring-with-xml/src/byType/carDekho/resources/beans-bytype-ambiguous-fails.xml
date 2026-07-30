@@ -5,7 +5,41 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+	<!-- ================================================================
+		Deliberately minimal and deliberately broken: two Engine-typed
+		beans, no primary, no autowire-candidate exclusion, no
+		default-autowire-candidates pattern, no explicit <property> ref
+		for "engine" - nothing to resolve the ambiguity. This file's
+		ApplicationContext is EXPECTED to fail to refresh, reproducing
+		the documented behavior word for word: "for dependencies that
+		expect a single value, this ambiguity is not arbitrarily
+		resolved. If no unique bean definition is available, an
+		exception is thrown."
 
+		No Transmission/Gps/Accessory/UUID beans are declared here on
+		purpose, to keep the failure attributable to exactly one thing.
+		MainDemo wraps just this context's construction in a try/catch
+		so the expected failure doesn't take down the rest of the demo.
+		================================================================ -->
+	<bean id="ambiguousEngineA" class="byType.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="ambiguousEngineA" />
+	</bean>
+	<bean id="ambiguousEngineB" class="byType.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="ambiguousEngineB" />
+	</bean>
 
+	<!-- Context fails to be created because of below "car_ambiguousEngineFails"
+		bean, whose dependency "engine" fails to get resolved due to
+		UnsatisfiedDependencyException.
+	-->
+	<bean id="car_ambiguousEngineFails" class="byType.carDekho.car.Car" autowire="byType"/>
+
+	<!-- If the context would have been created, then below bean with id
+		"car_engineResolvedByExplicitRef" resolves the ambiguity by explicitly
+		setting the "engine" dependency using <property ref="..." />
+	-->
+	<bean id="car_engineResolvedByExplicitRef" class="byType.carDekho.car.Car" autowire="byType">
+		<property name="engine" ref="ambiguousEngineB" />
+	</bean>
 
 </beans>

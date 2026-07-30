@@ -27,10 +27,10 @@
 		<property name="engineBeanId" value="engineExcludeB" />
 	</bean>
 
-	<bean id="transmission" class="byType.carDekho.parts.AutomaticTransmission">
-		<property name="transmissionBeanId" value="transmission" />
+	<bean id="noManualGearShifting" class="byType.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="noManualGearShifting" />
 	</bean>
-	<bean id="gps" class="byType.carDekho.parts.GpsSystem">
+	<bean id="gpsTelematics" class="byType.carDekho.parts.GpsSystem">
 		<property name="gpsModuleType" value="CAN_BUS_TELEMATICS" />
 	</bean>
 

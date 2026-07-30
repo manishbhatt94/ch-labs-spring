@@ -28,10 +28,10 @@
 		<property name="engineBeanId" value="enginePrimaryB" />
 	</bean>
 
-	<bean id="transmission" class="byType.carDekho.parts.AutomaticTransmission">
-		<property name="transmissionBeanId" value="transmission" />
+	<bean id="autoTransmission" class="byType.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="autoTransmission" />
 	</bean>
-	<bean id="gps" class="byType.carDekho.parts.GpsSystem">
+	<bean id="batteryGps" class="byType.carDekho.parts.GpsSystem">
 		<property name="gpsModuleType" value="BATTERY_POWERED" />
 	</bean>
 

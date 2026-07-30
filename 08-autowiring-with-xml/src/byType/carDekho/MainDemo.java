@@ -11,6 +11,20 @@ public class MainDemo {
 
 		System.out.println("####### Auto-wiring mode \"byType\" Demo (XML config) ###########\n");
 
+		System.out.println("\n=== 1) beans-bytype-basics.xml ===");
+		System.out.println("==================================\n\n");
+		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"byType/carDekho/resources/beans-bytype-basics.xml")) {
+			ctx.getBean("car_basic", Car.class)
+					.describe("car_basic - single unambiguous candidate per type wired automatically; "
+							+ "spareEngines picks up the same 'engine' instance as a 1-element array; "
+							+ "color/dealershipPrice/serviceHistory stay null despite matching-typed beans existing");
+			ctx.getBean("car_simpleTypesExplicit", Car.class)
+					.describe("car_simpleTypesExplicit - color/dealershipPrice/serviceHistory set explicitly, "
+							+ "the only way to populate a simple type or an array of one");
+		}
+		System.out.println();
+
 		System.out.println("\n=== 2a) beans-bytype-ambiguity-primary.xml ===");
 		System.out.println("==============================================\n\n");
 		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
@@ -22,6 +36,7 @@ public class MainDemo {
 					.describe("car_explicitOverridesPrimary - explicit <property ref=\"enginePrimaryB\"/> "
 							+ "overrides even primary-based autowiring");
 		}
+		System.out.println();
 
 		System.out.println("\n=== 2b) beans-bytype-ambiguity-exclusion.xml ===");
 		System.out.println("================================================\n\n");
@@ -34,6 +49,7 @@ public class MainDemo {
 					.describe("car_explicitRefToExcludedEngine - explicit ref still resolves the "
 							+ "autowire-candidate=\"false\" bean, same as byName");
 		}
+		System.out.println();
 
 	}
 

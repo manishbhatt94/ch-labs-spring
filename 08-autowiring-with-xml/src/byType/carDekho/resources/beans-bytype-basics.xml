@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+	<!-- ================================================================
+		Exactly one bean of each type below - byType's simplest case:
+		no ambiguity, no exclusion mechanism needed, just a clean
+		single-candidate match per property.
+		================================================================ -->
+	<bean id="myEngine" class="byType.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="myEngine" />
+	</bean>
+	<bean id="transmissionAuto" class="byType.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="transmissionAuto" />
+	</bean>
+	<bean id="gpsPlugPlay" class="byType.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="OBD_PLUG_PLAY" />
+	</bean>
+
+
+	<!-- ================================================================
+		Simple types (String, BigDecimal) and arrays of simple types
+		(String[]) are excluded from byType's candidate scan entirely -
+		the exact same isSimpleProperty()-based filter byName uses,
+		since it's shared code (unsatisfiedNonSimpleProperties), not
+		mode-specific. To prove this isn't a coincidence of "no bean of
+		that type exists", each bean below is the ONLY bean of its type
+		in this file - if these properties were NOT excluded, byType
+		would have one completely unambiguous match for each and wire
+		it without complaint. It doesn't even look.
+		================================================================ -->
+	<bean id="colorValue" class="java.lang.String">
+		<constructor-arg value="Graphite" />
+	</bean>
+
+	<bean id="dealershipPriceValue" class="java.math.BigDecimal">
+		<constructor-arg value="31999.00" />
+	</bean>
+
+	<util:list id="serviceHistoryList" value-type="java.lang.String" list-class="java.util.ArrayList">
+		<value>2024-03-02: Brake pad replacement</value>
+		<value>2024-09-14: Annual inspection</value>
+	</util:list>
+
+	<bean id="serviceHistoryValue" class="java.lang.String[]"
+			factory-bean="serviceHistoryList"
+			factory-method="toArray">
+		<constructor-arg>
+			<array value-type="java.lang.String"></array>
+		</constructor-arg>
+	</bean>
+
+
+	<!-- car_basic - no <property> elements at all.
+
+		engine/transmission/gps      -> wired, exactly one candidate each
+
+		spareEngines (Engine[])      -> [myEngine], a ONE-element array;
+			byType's array/collection aggregation sweeps up every
+			Engine-typed bean in the container, including the very same
+			instance already used to satisfy "engine" above - aggregation
+			does not "reserve" a bean once it's used elsewhere.
+
+		accessories (Set<Accessory>) -> null - genuinely zero Accessory
+			beans exist anywhere in this file
+
+		vehicleId (UUID)             -> null - genuinely zero UUID beans
+			exist anywhere in this file
+
+		color / dealershipPrice /
+		serviceHistory               -> null, DESPITE colorValue /
+			dealershipPriceValue / serviceHistoryValue existing above
+			with exactly matching types - proof that simple types (and
+			arrays of simple types) are excluded from consideration,
+			not just unmatched. -->
+	<bean id="car_basic" class="byType.carDekho.car.Car" autowire="byType"/>
+
+
+	<!-- car_simpleTypesExplicit - the only way to populate a simple-typed
+		property (or an array of one): set it explicitly. Everything
+		else is wired identically to car_basic, since it's the same
+		shared registry. -->
+	<bean id="car_simpleTypesExplicit" class="byType.carDekho.car.Car" autowire="byType">
+		<property name="color" value="Pearl White" />
+		<property name="dealershipPrice" value="33499.75" />
+		<property name="serviceHistory">
+			<array value-type="java.lang.String">
+				<value>2025-01-20: Pre-delivery inspection</value>
+			</array>
+		</property>
+	</bean>
+
+
+
+</beans>

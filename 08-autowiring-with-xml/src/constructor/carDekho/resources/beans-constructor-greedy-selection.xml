@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- Beans exist to satisfy BOTH Car constructors. This file tests
+		whether Spring picks the 3-arg constructor (greediest satisfiable)
+		over the 2-arg constructor when both are fully resolvable. -->
+
+
+	<bean id="v8Engine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="v8Engine"/>
+	</bean>
+
+	<bean id="autoTrans" class="constructor.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="autoTrans"/>
+	</bean>
+
+	<bean id="navPro" class="constructor.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="BATTERY_POWERED"/>
+	</bean>
+
+
+	<bean id="myCar" class="constructor.carDekho.car.Car" autowire="constructor"/>
+
+
+
+</beans>

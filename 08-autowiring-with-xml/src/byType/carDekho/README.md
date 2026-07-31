@@ -2,12 +2,12 @@
 
 - Main class: [byType.carDekho.MainDemo](./MainDemo.java)
 - Bean definition XML files:
-    - (  1 ) [beans-bytype-basics.xml](./resources/beans-bytype-basics.xml)
+    - ( 1 &nbsp;) [beans-bytype-basics.xml](./resources/beans-bytype-basics.xml)
     - ( 2a ) [beans-bytype-ambiguity-primary.xml](./resources/beans-bytype-ambiguity-primary.xml)
     - ( 2b ) [beans-bytype-ambiguity-exclusion.xml](./resources/beans-bytype-ambiguity-exclusion.xml)
-    - (  3 ) [beans-bytype-default-candidates.xml](./resources/beans-bytype-default-candidates.xml)
-    - (  4 ) [beans-bytype-ambiguous-fails.xml](./resources/beans-bytype-ambiguous-fails.xml)
-    - (  5 ) [beans-bytype-aggregation.xml](./resources/beans-bytype-aggregation.xml)
+    - ( 3 &nbsp;) [beans-bytype-default-candidates.xml](./resources/beans-bytype-default-candidates.xml)
+    - ( 4 &nbsp;) [beans-bytype-ambiguous-fails.xml](./resources/beans-bytype-ambiguous-fails.xml)
+    - ( 5 &nbsp;) [beans-bytype-aggregation.xml](./resources/beans-bytype-aggregation.xml)
 
 
 ---

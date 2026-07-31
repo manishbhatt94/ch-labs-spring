@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<bean id="raceEngine" class="constructor.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="raceEngine"/>
+	</bean>
+
+	<bean id="econoEngine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="econoEngine"/>
+	</bean>
+
+	<bean id="sportTrans" class="constructor.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="sportTrans"/>
+	</bean>
+
+	<bean id="plugPlayGps" class="constructor.carDekho.parts.GpsSystem">
+		<property name="gpsModuleType" value="OBD_PLUG_PLAY"/>
+	</bean>
+
+
+	<!-- Explicit constructor-arg targeting by index. No autowire attribute
+		needed since every parameter is explicitly supplied. -->
+	<bean id="car_byIndex" class="constructor.carDekho.car.Car">
+		<constructor-arg index="0" ref="raceEngine"/>
+		<constructor-arg index="1" ref="sportTrans"/>
+		<constructor-arg index="2" ref="plugPlayGps"/>
+	</bean>
+
+	<!-- Explicit constructor-arg targeting by declared parameter type. -->
+	<bean id="car_byType" class="constructor.carDekho.car.Car">
+		<constructor-arg type="constructor.carDekho.parts.Engine" ref="raceEngine"/>
+		<constructor-arg type="constructor.carDekho.parts.AutomaticTransmission" ref="sportTrans"/>
+		<constructor-arg type="constructor.carDekho.parts.GpsSystem" ref="plugPlayGps"/>
+	</bean>
+
+	<!-- Explicit constructor-arg targeting by parameter name (relies on
+		debug info / parameter name discovery being available). -->
+	<bean id="car_byName" class="constructor.carDekho.car.Car">
+		<constructor-arg name="engine" ref="raceEngine"/>
+		<constructor-arg name="transmission" ref="sportTrans"/>
+		<constructor-arg name="gps" ref="plugPlayGps"/>
+	</bean>
+
+	<!-- Mixed: 'engine' is explicitly wired to econoEngine (overriding
+		whatever autowiring would have picked), while 'transmission' and
+		'gps' are left to constructor-mode autowiring to resolve. Only
+		one AutomaticTransmission and one GpsSystem bean exist above, so
+		autowiring for those two should be unambiguous. -->
+	<bean id="car_mixedExplicitAndAutowired" class="constructor.carDekho.car.Car"
+			autowire="constructor">
+		<constructor-arg name="engine" ref="econoEngine"/>
+	</bean>
+
+
+
+</beans>

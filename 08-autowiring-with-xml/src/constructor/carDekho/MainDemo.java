@@ -74,6 +74,18 @@ public class MainDemo {
 		}
 		System.out.println();
 
+		System.out.println("\n=== 6) beans-constructor-explicit-arg-overrides.xml ===");
+		System.out.println("========================================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-explicit-arg-overrides.xml")) {
+			ctx.getBean("car_byIndex", Car.class).describe("car_byIndex - explicit constructor-arg by index");
+			ctx.getBean("car_byType", Car.class).describe("car_byType - explicit constructor-arg by type");
+			ctx.getBean("car_byName", Car.class).describe("car_byName - explicit constructor-arg by name");
+			ctx.getBean("car_mixedExplicitAndAutowired", Car.class)
+					.describe("car_mixedExplicitAndAutowired - engine explicit, transmission/gps autowired");
+		}
+		System.out.println();
+
 	}
 
 }

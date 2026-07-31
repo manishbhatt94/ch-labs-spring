@@ -2,12 +2,13 @@
 
 - Main class: [constructor.carDekho.MainDemo](./MainDemo.java)
 - Bean definition XML files:
-    - ( 1  ) [beans-constructor-basics.xml](./resources/beans-constructor-basics.xml)
-    - ( 2  ) [beans-constructor-greedy-selection.xml](./resources/beans-constructor-greedy-selection.xml)
-    - ( 3  ) [beans-constructor-partial-match-forces-lesser-ctor.xml](./resources/beans-constructor-partial-match-forces-lesser-ctor.xml)
-    - ( 4  ) [beans-constructor-zero-match-single-ctor.xml](./resources/beans-constructor-zero-match-single-ctor.xml)
+    - ( 1 &nbsp;) [beans-constructor-basics.xml](./resources/beans-constructor-basics.xml)
+    - ( 2 &nbsp;) [beans-constructor-greedy-selection.xml](./resources/beans-constructor-greedy-selection.xml)
+    - ( 3 &nbsp;) [beans-constructor-partial-match-forces-lesser-ctor.xml](./resources/beans-constructor-partial-match-forces-lesser-ctor.xml)
+    - ( 4 &nbsp;) [beans-constructor-zero-match-single-ctor.xml](./resources/beans-constructor-zero-match-single-ctor.xml)
     - ( 5a ) [beans-constructor-ambiguity-primary.xml](./resources/beans-constructor-ambiguity-primary.xml)
     - ( 5b ) [beans-constructor-ambiguity-exclusion.xml](./resources/beans-constructor-ambiguity-exclusion.xml)
+    - ( 6 &nbsp;) [beans-constructor-explicit-arg-overrides.xml](./resources/beans-constructor-explicit-arg-overrides.xml)
 
 
 ---
@@ -62,7 +63,7 @@
 =======================================================
 
 
-Jul 31, 2026 6:14:39 PM org.springframework.context.support.AbstractApplicationContext refresh
+Jul 31, 2026 11:12:21 PM org.springframework.context.support.AbstractApplicationContext refresh
 WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'myCar' defined in class path resource [constructor/carDekho/resources/beans-constructor-zero-match-single-ctor.xml]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'constructor.carDekho.parts.AutomaticTransmission' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 
 Context refresh failed as expected -- exception below:
@@ -102,6 +103,40 @@ Context refresh failed as expected -- exception below:
 --- car_explicitRefToExcludedEngine - explicit ref still resolves to the excluded autowire-candidate="false" ('economyEngine') bean ---
   engine       : Standard Engine (bean id = 'economyEngine')
   transmission : Automatic Transmission (bean id = 'myTransmission')
+
+
+
+=== 6) beans-constructor-explicit-arg-overrides.xml ===
+========================================================
+
+
+[~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps)
+
+[~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps)
+
+[~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps)
+
+[~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps)
+
+--- car_byIndex - explicit constructor-arg by index ---
+  engine       : Turbo Engine (bean id = 'raceEngine')
+  transmission : Automatic Transmission (bean id = 'sportTrans')
+  gps          : GpsSystem [gpsModuleType=OBD_PLUG_PLAY]
+
+--- car_byType - explicit constructor-arg by type ---
+  engine       : Turbo Engine (bean id = 'raceEngine')
+  transmission : Automatic Transmission (bean id = 'sportTrans')
+  gps          : GpsSystem [gpsModuleType=OBD_PLUG_PLAY]
+
+--- car_byName - explicit constructor-arg by name ---
+  engine       : Turbo Engine (bean id = 'raceEngine')
+  transmission : Automatic Transmission (bean id = 'sportTrans')
+  gps          : GpsSystem [gpsModuleType=OBD_PLUG_PLAY]
+
+--- car_mixedExplicitAndAutowired - engine explicit, transmission/gps autowired ---
+  engine       : Standard Engine (bean id = 'econoEngine')
+  transmission : Automatic Transmission (bean id = 'sportTrans')
+  gps          : GpsSystem [gpsModuleType=OBD_PLUG_PLAY]
 
 
 

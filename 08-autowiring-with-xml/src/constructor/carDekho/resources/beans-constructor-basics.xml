@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- Exactly one constructor on EntryLevelCar; both parameters are
+		resolved purely by type, since exactly one bean of each type
+		exists in this container. -->
+
+	<bean id="myCar" class="constructor.carDekho.car.EntryLevelCar" autowire="constructor"/>
+
+
+	<bean id="myTransmission" class="constructor.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="myTransmission"/>
+	</bean>
+
+	<bean id="myEngine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="myEngine"/>
+	</bean>
+
+
+
+
+</beans>

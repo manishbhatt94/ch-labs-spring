@@ -6,6 +6,7 @@
     - ( 2 ) [beans-byname-default-candidates.xml](./resources/beans-byname-default-candidates.xml)
     - ( 3 ) [beans-byname-simple-and-collections.xml](./resources/beans-byname-simple-and-collections.xml)
     - ( 4 ) [beans-byname-default-autowire.xml](./resources/beans-byname-default-autowire.xml)
+    - ( 5 ) [beans-byname-name-matched-type-mismatch.xml](./resources/beans-byname-name-matched-type-mismatch.xml)
 
 
 ---

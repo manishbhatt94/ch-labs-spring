@@ -3,6 +3,7 @@ package byName.carDekho;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -86,6 +87,27 @@ public class MainDemo {
 					.describe("carExplicitDefault - autowire=\"default\", same effect as omitting it");
 			ctx.getBean("carOptedOut", Car.class)
 					.describe("carOptedOut - autowire=\"no\" overrides the container-wide default");
+		}
+		System.out.println();
+
+		System.out.println("\n=== 5) beans-byname-name-matched-type-mismatch.xml ===");
+		System.out.println("============================================\n\n");
+		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"byName/carDekho/resources/beans-byname-name-matched-type-mismatch.xml")) {
+			// We should never actually reach this line - the context above is
+			// expected to fail to refresh before getBean() is even reachable.
+			ctx.getBean("carDependencyTypeMismatch", Car.class)
+					.describe("carDependencyTypeMismatch - should not have gotten this far");
+		} catch (BeanCreationException ex) { // BeanCreationException caused by TypeMismatchException
+			// Caught exception org.springframework.beans.factory.BeanCreationException:
+			// Error creating bean with name 'carDependencyTypeMismatch'
+			// .. Caused by: org.springframework.beans.TypeMismatchException: Failed to
+			// convert property value of type 'java.time.LocalDate' to required type
+			// 'java.util.UUID' for property 'vehicleId';
+			System.out.println("\nGot the EXPECTED exception while creating 'carDependencyTypeMismatch':");
+			System.out.println("  " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+			System.out.println("\nProblem with by name matched bean, having type that mismatches "
+					+ "with the type of the field.\n");
 		}
 		System.out.println();
 

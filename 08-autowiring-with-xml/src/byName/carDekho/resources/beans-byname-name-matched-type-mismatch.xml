@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- @formatter:off -->
+
+	<!-- ================================================================
+		DEMO 5 - Test behaviour when a bean with name/id matching the Car
+		bean's dependency field's name, exists in the container, but the
+		type of that bean is completely different than the type of the
+		Car object's field.
+		Declare a bean named "vehicleId" (which matches the name of the
+		field `private UUID vehicleId;` in Car class), but make this bean
+		of a completely different type than the type of the field.
+		================================================================ -->
+
+
+	<!-- Below we declare a bean called "vehicleId" (which matches the name
+		of field `private UUID vehicleId;` in Car class), but below bean
+		is defined of a completely different type of LocalDate.`private UUID vehicleId;` in Car class
+	 -->
+	<bean id="vehicleId" class="java.time.LocalDate" factory-method="now" />
+
+	<bean id="carDependencyTypeMismatch" class="byName.carDekho.car.Car" autowire="byName">
+		<property name="color" value="Aquamarine"/>
+	</bean>
+
+
+</beans>

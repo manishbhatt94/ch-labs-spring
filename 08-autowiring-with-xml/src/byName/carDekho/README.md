@@ -160,7 +160,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 75cadfd8-f4eb-4d2d-9b61-1d2f151d4049
+  vehicleId       : ec036573-4536-49f5-b8e4-f83c1f5ca072
 
 ---- car_simple2 - color/dealershipPrice/serviceHistory set explicitly, including a literal nested <array> for the String[] property ----
   engine          : Standard Engine (bean id = 'engine')
@@ -171,7 +171,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : [2019-12-31: In warranty Service #1 - Handle-bars alignment, 2020-02-25: In warranty Service #2 - Throttle cable choking, 2020-05-12: In warranty Service #3 - Engine knocking problem]
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : e24461ae-f1e6-446b-99a8-461db79f123b
+  vehicleId       : 1d646236-9e8e-4f65-83c3-8fe887530e2b
 
 ---- car_simple3 - spareEngines/accessories/vehicleId auto-wired fields overridden using <property>, and field 'gps' also manually wired ----
   engine          : Standard Engine (bean id = 'engine')
@@ -182,7 +182,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Air Conditioning], Accessory[Touchscreen Instrument Cluster], Accessory[Infotainment System Dashboard]]
-  vehicleId       : dee4c9f5-2350-44a3-9eec-f131bdcf3703
+  vehicleId       : 4eaa50e9-bb1d-4e6a-9d36-d29e792d3136
 
 ---- car_arrays1 - declared before the 'spareEngines' bean definition; still gets it wired (declaration order doesn't matter for byName) ----
   engine          : Standard Engine (bean id = 'engine')
@@ -193,7 +193,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 979cccc0-967d-40ad-bb2f-15b79f97d8d1
+  vehicleId       : 1e50fb43-b3f3-49d2-ba47-f94f49d5de27
 
 ---- car_arrays2 - declared after the 'spareEngines' bean definition; wired identically to car_arrays1 ----
   engine          : Standard Engine (bean id = 'engine')
@@ -204,7 +204,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : d492e5ad-a842-4de1-8c2d-74b705b130b2
+  vehicleId       : f8a69bc6-b76f-45c0-a547-3bc1be6e3d2f
 
 ---- car_collections1 - declared before the 'accessories' bean definition; still gets it wired, same reason as car_arrays1 ----
   engine          : Standard Engine (bean id = 'engine')
@@ -215,7 +215,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : b6dce868-0f30-4186-b3ec-7c02791c6d3c
+  vehicleId       : f4b7c3d3-dbb7-41ac-9573-9364aa1e0789
 
 ---- car_collections2 - declared after the 'accessories' bean definition; wired identically to car_collections1 ----
   engine          : Standard Engine (bean id = 'engine')
@@ -226,7 +226,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : 340ce6a4-0560-4844-852e-afc421488168
+  vehicleId       : 0c2baf81-4495-4312-909a-85e87e91e5a5
 
 ---- car_uuid1 - vehicleId from the prototype UUID.randomUUID() bean ----
   engine          : Standard Engine (bean id = 'engine')
@@ -237,7 +237,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : a4d80f48-5e6a-45fb-81d1-47bf59b549a1
+  vehicleId       : 226b3049-069f-48ac-9aa1-fd9adaaca357
 
 ---- car_uuid2 - a DIFFERENT UUID: the only property in this file where the two cars genuinely differ, thanks to prototype scope ----
   engine          : Standard Engine (bean id = 'engine')
@@ -248,7 +248,7 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   serviceHistory  : null (NOT wired)
   spareEngines    : [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (bean id = 'spareTurboEngine')]
   accessories     : [Accessory[Sunroof], Accessory[Leather Seats]]
-  vehicleId       : e1cd15af-dd86-4552-a3b7-3506559718e0
+  vehicleId       : a416ea02-3bba-47e0-8fec-9134767959e1
 
 
 
@@ -288,6 +288,20 @@ spareEngines: [Standard Engine (bean id = 'spareStandardEngine'), Turbo Engine (
   spareEngines    : null (NOT wired)
   accessories     : null (NOT wired)
   vehicleId       : null (NOT wired)
+
+
+
+=== 5) beans-byname-name-matched-type-mismatch.xml ===
+============================================
+
+
+Jul 31, 2026 1:53:32 PM org.springframework.context.support.AbstractApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'carDependencyTypeMismatch' defined in class path resource [byName/carDekho/resources/beans-byname-name-matched-type-mismatch.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.time.LocalDate' to required type 'java.util.UUID' for property 'vehicleId'; nested exception is java.lang.IllegalArgumentException: Cannot convert value of type 'java.time.LocalDate' to required type 'java.util.UUID' for property 'vehicleId': PropertyEditor [org.springframework.beans.propertyeditors.UUIDEditor] returned inappropriate value of type 'java.time.LocalDate'
+
+Got the EXPECTED exception while creating 'carDependencyTypeMismatch':
+  BeanCreationException: Error creating bean with name 'carDependencyTypeMismatch' defined in class path resource [byName/carDekho/resources/beans-byname-name-matched-type-mismatch.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.time.LocalDate' to required type 'java.util.UUID' for property 'vehicleId'; nested exception is java.lang.IllegalArgumentException: Cannot convert value of type 'java.time.LocalDate' to required type 'java.util.UUID' for property 'vehicleId': PropertyEditor [org.springframework.beans.propertyeditors.UUIDEditor] returned inappropriate value of type 'java.time.LocalDate'
+
+Problem with by name matched bean, having type that mismatches with the type of the field.
 
 
 

@@ -1,5 +1,6 @@
 package constructor.carDekho;
 
+import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import constructor.carDekho.car.Car;
@@ -32,6 +33,20 @@ public class MainDemo {
 		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"constructor/carDekho/resources/beans-constructor-partial-match-forces-lesser-ctor.xml")) {
 			ctx.getBean("myCar", Car.class).describe("Partial Match Fallback Demo");
+		}
+		System.out.println();
+
+		System.out.println("\n=== 4) beans-constructor-zero-match-single-ctor.xml ===");
+		System.out.println("=======================================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-zero-match-single-ctor.xml")) {
+			// We should never actually reach this line - the context above is
+			// expected to fail to refresh before getBean() is even reachable.
+			ctx.getBean("myCar", EntryLevelCar.class).describe("Zero Match on Single Constructor Demo");
+		} catch (UnsatisfiedDependencyException ex) { // UnsatisfiedDependencyException caused by
+														// NoSuchBeanDefinitionException
+			System.out.println("\nContext refresh failed as expected -- exception below:");
+			System.out.println("  " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
 		}
 		System.out.println();
 

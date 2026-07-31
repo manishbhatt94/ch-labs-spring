@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- EntryLevelCar has exactly one constructor: (Engine, AutomaticTransmission).
+		No AutomaticTransmission bean exists in this container, so the second
+		constructor parameter has zero matching candidates. Per the constructor
+		autowiring mode's documented contract, this is expected to be a fatal
+		error at context refresh - not a silent null, unlike byType's setter
+		injection zero-match behavior. -->
+
+	<bean id="soloEngine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="soloEngine"/>
+	</bean>
+
+	<bean id="myCar" class="constructor.carDekho.car.EntryLevelCar" autowire="constructor"/>
+
+
+
+</beans>

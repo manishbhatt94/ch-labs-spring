@@ -7,6 +7,7 @@
     - ( 3  ) [beans-constructor-partial-match-forces-lesser-ctor.xml](./resources/beans-constructor-partial-match-forces-lesser-ctor.xml)
     - ( 4  ) [beans-constructor-zero-match-single-ctor.xml](./resources/beans-constructor-zero-match-single-ctor.xml)
     - ( 5a ) [beans-constructor-ambiguity-primary.xml](./resources/beans-constructor-ambiguity-primary.xml)
+    - ( 5b ) [beans-constructor-ambiguity-exclusion.xml](./resources/beans-constructor-ambiguity-exclusion.xml)
 
 
 ---
@@ -61,7 +62,7 @@
 =======================================================
 
 
-Jul 31, 2026 6:03:28 PM org.springframework.context.support.AbstractApplicationContext refresh
+Jul 31, 2026 6:14:39 PM org.springframework.context.support.AbstractApplicationContext refresh
 WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'myCar' defined in class path resource [constructor/carDekho/resources/beans-constructor-zero-match-single-ctor.xml]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'constructor.carDekho.parts.AutomaticTransmission' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 
 Context refresh failed as expected -- exception below:
@@ -81,6 +82,24 @@ Context refresh failed as expected -- exception below:
   transmission : Automatic Transmission (bean id = 'myTransmission')
 
 --- car_explicitOverridesPrimary - explicit <constructor-arg ref="economyEngine"/> overrides even primary-based autowiring ---
+  engine       : Standard Engine (bean id = 'economyEngine')
+  transmission : Automatic Transmission (bean id = 'myTransmission')
+
+
+
+=== 5b) beans-constructor-ambiguity-exclusion.xml ===
+======================================================
+
+
+[~~ CTOR called: EntryLevelCar(Engine engine, AutomaticTransmission transmission). ~~]
+
+[~~ CTOR called: EntryLevelCar(Engine engine, AutomaticTransmission transmission). ~~]
+
+--- car_resolvedByExclusion - ambiguous by type (2 Engine beans), resolved because autowire-candidate="false" removes 'economyEngine' from candidacy entirely ---
+  engine       : Turbo Engine (bean id = 'sportEngine')
+  transmission : Automatic Transmission (bean id = 'myTransmission')
+
+--- car_explicitRefToExcludedEngine - explicit ref still resolves to the excluded autowire-candidate="false" ('economyEngine') bean ---
   engine       : Standard Engine (bean id = 'economyEngine')
   transmission : Automatic Transmission (bean id = 'myTransmission')
 

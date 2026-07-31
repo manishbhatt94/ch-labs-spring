@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- Two Engine beans exist - normally ambiguous for a constructor
+		parameter of type Engine. 'economyEngine' is excluded from
+		autowiring via autowire-candidate="false", shrinking the
+		candidate pool to just 'sportEngine'. -->
+
+	<bean id="economyEngine" class="constructor.carDekho.parts.StandardEngine"
+			autowire-candidate="false">
+		<property name="engineBeanId" value="economyEngine"/>
+	</bean>
+
+	<bean id="sportEngine" class="constructor.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="sportEngine"/>
+	</bean>
+
+	<bean id="myTransmission" class="constructor.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="myTransmission"/>
+	</bean>
+
+
+	<bean id="car_resolvedByExclusion" class="constructor.carDekho.car.EntryLevelCar" autowire="constructor"/>
+
+
+	<bean id="car_explicitRefToExcludedEngine" class="constructor.carDekho.car.EntryLevelCar"
+			autowire="constructor">
+		<constructor-arg index="0" ref="economyEngine"/>
+	</bean>
+
+
+
+</beans>

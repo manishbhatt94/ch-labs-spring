@@ -61,6 +61,19 @@ public class MainDemo {
 		}
 		System.out.println();
 
+		System.out.println("\n=== 5b) beans-constructor-ambiguity-exclusion.xml ===");
+		System.out.println("======================================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-ambiguity-exclusion.xml")) {
+			ctx.getBean("car_resolvedByExclusion", EntryLevelCar.class)
+					.describe("car_resolvedByExclusion - ambiguous by type (2 Engine beans), "
+							+ "resolved because autowire-candidate=\"false\" removes 'economyEngine' from candidacy entirely");
+			ctx.getBean("car_explicitRefToExcludedEngine", EntryLevelCar.class)
+					.describe("car_explicitRefToExcludedEngine - explicit ref still resolves to the excluded "
+							+ "autowire-candidate=\"false\" ('economyEngine') bean");
+		}
+		System.out.println();
+
 	}
 
 }

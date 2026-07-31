@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- Two Engine beans exist - normally ambiguous for a constructor
+		parameter of type Engine. 'sportEngine' is marked primary, so it
+		is expected to win constructor-arg resolution over 'economyEngine'. -->
+
+	<bean id="economyEngine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="economyEngine"/>
+	</bean>
+
+	<!-- Below Engine type bean 'sportEngine' uses primary="true" to disambiguate
+		which Engine type bean is used by the type based auto-wiring (i.e. byType or
+		constructor) mechanism.
+	 -->
+	<bean id="sportEngine" class="constructor.carDekho.parts.TurboEngine" primary="true">
+		<property name="engineBeanId" value="sportEngine"/>
+	</bean>
+
+	<bean id="myTransmission" class="constructor.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="myTransmission"/>
+	</bean>
+
+
+	<bean id="car_resolvedByPrimary" class="constructor.carDekho.car.EntryLevelCar" autowire="constructor"/>
+
+
+	<bean id="car_explicitOverridesPrimary" class="constructor.carDekho.car.EntryLevelCar" autowire="constructor">
+		<constructor-arg ref="economyEngine" />
+		<!-- Or: -->
+		<!-- <constructor-arg name="engine" ref="economyEngine" /> -->
+		<!-- Or: -->
+		<!-- <constructor-arg index="0" ref="economyEngine" /> -->
+	</bean>
+
+
+
+</beans>

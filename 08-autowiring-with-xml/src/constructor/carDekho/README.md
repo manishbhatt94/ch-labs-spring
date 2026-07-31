@@ -6,6 +6,7 @@
     - ( 2  ) [beans-constructor-greedy-selection.xml](./resources/beans-constructor-greedy-selection.xml)
     - ( 3  ) [beans-constructor-partial-match-forces-lesser-ctor.xml](./resources/beans-constructor-partial-match-forces-lesser-ctor.xml)
     - ( 4  ) [beans-constructor-zero-match-single-ctor.xml](./resources/beans-constructor-zero-match-single-ctor.xml)
+    - ( 5a ) [beans-constructor-ambiguity-primary.xml](./resources/beans-constructor-ambiguity-primary.xml)
 
 
 ---

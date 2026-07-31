@@ -50,6 +50,17 @@ public class MainDemo {
 		}
 		System.out.println();
 
+		System.out.println("\n=== 5a) beans-constructor-ambiguity-primary.xml ===");
+		System.out.println("===================================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-ambiguity-primary.xml")) {
+			ctx.getBean("car_resolvedByPrimary", EntryLevelCar.class)
+					.describe("car_resolvedByPrimary - Ambiguity Resolved via primary Demo");
+			ctx.getBean("car_explicitOverridesPrimary", EntryLevelCar.class).describe(
+					"car_explicitOverridesPrimary - explicit <constructor-arg ref=\"economyEngine\"/> overrides even primary-based autowiring");
+		}
+		System.out.println();
+
 	}
 
 }

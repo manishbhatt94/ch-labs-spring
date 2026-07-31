@@ -16,8 +16,8 @@ public class EntryLevelCar {
 
 	public void describe(String label) {
 		System.out.println("--- " + label + " ---");
-		System.out.println("Engine: " + (engine != null ? engine : "null (NOT wired)"));
-		System.out.println("Transmission: " + (transmission != null ? transmission : "null (NOT wired)"));
+		System.out.println("  engine       : " + (engine != null ? engine : "null (NOT wired)"));
+		System.out.println("  transmission : " + (transmission != null ? transmission : "null (NOT wired)"));
 		System.out.println();
 	}
 

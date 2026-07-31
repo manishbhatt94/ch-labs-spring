@@ -28,9 +28,9 @@ public class Car {
 
 	public void describe(String label) {
 		System.out.println("--- " + label + " ---");
-		System.out.println("Engine: " + (engine != null ? engine : "null (NOT wired)"));
-		System.out.println("Transmission: " + (transmission != null ? transmission : "null (NOT wired)"));
-		System.out.println("GPS: " + (gps != null ? gps : "null (NOT wired)"));
+		System.out.println("  engine       : " + (engine != null ? engine : "null (NOT wired)"));
+		System.out.println("  transmission : " + (transmission != null ? transmission : "null (NOT wired)"));
+		System.out.println("  gps          : " + (gps != null ? gps : "null (NOT wired)"));
 		System.out.println();
 	}
 

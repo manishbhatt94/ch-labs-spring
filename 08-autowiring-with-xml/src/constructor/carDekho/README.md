@@ -26,8 +26,8 @@
 [~~ CTOR called: EntryLevelCar(Engine engine, AutomaticTransmission transmission). ~~]
 
 --- Basic Constructor Autowiring Demo ---
-Engine: Standard Engine (bean id = 'myEngine')
-Transmission: Automatic Transmission (bean id = 'myTransmission')
+  engine       : Standard Engine (bean id = 'myEngine')
+  transmission : Automatic Transmission (bean id = 'myTransmission')
 
 
 
@@ -38,9 +38,9 @@ Transmission: Automatic Transmission (bean id = 'myTransmission')
 [~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps)
 
 --- Greedy Constructor Selection Demo ---
-Engine: Standard Engine (bean id = 'v8Engine')
-Transmission: Automatic Transmission (bean id = 'autoTrans')
-GPS: GpsSystem [gpsModuleType=BATTERY_POWERED]
+  engine       : Standard Engine (bean id = 'v8Engine')
+  transmission : Automatic Transmission (bean id = 'autoTrans')
+  gps          : GpsSystem [gpsModuleType=BATTERY_POWERED]
 
 
 
@@ -51,9 +51,9 @@ GPS: GpsSystem [gpsModuleType=BATTERY_POWERED]
 [~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission). ~~]
 
 --- Partial Match Fallback Demo ---
-Engine: Standard Engine (bean id = 'baseEngine')
-Transmission: Automatic Transmission (bean id = 'baseTrans')
-GPS: null (NOT wired)
+  engine       : Standard Engine (bean id = 'baseEngine')
+  transmission : Automatic Transmission (bean id = 'baseTrans')
+  gps          : null (NOT wired)
 
 
 
@@ -61,11 +61,29 @@ GPS: null (NOT wired)
 =======================================================
 
 
-Jul 31, 2026 5:23:35 PM org.springframework.context.support.AbstractApplicationContext refresh
+Jul 31, 2026 6:03:28 PM org.springframework.context.support.AbstractApplicationContext refresh
 WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'myCar' defined in class path resource [constructor/carDekho/resources/beans-constructor-zero-match-single-ctor.xml]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'constructor.carDekho.parts.AutomaticTransmission' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 
 Context refresh failed as expected -- exception below:
   UnsatisfiedDependencyException: Error creating bean with name 'myCar' defined in class path resource [constructor/carDekho/resources/beans-constructor-zero-match-single-ctor.xml]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'constructor.carDekho.parts.AutomaticTransmission' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+
+
+=== 5a) beans-constructor-ambiguity-primary.xml ===
+===================================================
+
+
+[~~ CTOR called: EntryLevelCar(Engine engine, AutomaticTransmission transmission). ~~]
+
+[~~ CTOR called: EntryLevelCar(Engine engine, AutomaticTransmission transmission). ~~]
+
+--- car_resolvedByPrimary - Ambiguity Resolved via primary Demo ---
+  engine       : Turbo Engine (bean id = 'sportEngine')
+  transmission : Automatic Transmission (bean id = 'myTransmission')
+
+--- car_explicitOverridesPrimary - explicit <constructor-arg ref="economyEngine"/> overrides even primary-based autowiring ---
+  engine       : Standard Engine (bean id = 'economyEngine')
+  transmission : Automatic Transmission (bean id = 'myTransmission')
+
 
 
 ```

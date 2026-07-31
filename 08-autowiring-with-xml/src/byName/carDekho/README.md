@@ -10,6 +10,54 @@
 
 ---
 
+**XML-based auto-wiring using `autowire="byName"`.**
+
+## Concepts covered
+
+- Spring matches a property to a bean whose `id`/`name` is an **exact** match
+  to the property name — pure name lookup, no type-aware filtering beyond
+  excluding simple types.
+- No matching bean by name → property silently left `null`, no exception, no
+  ambiguity possible (`byName` never faces the "multiple candidates" problem
+  `byType` does).
+- Explicit `<property>`/`<constructor-arg>` always overrides auto-wiring.
+- Simple types (`String`, `BigDecimal`, etc.) and arrays of simple types are
+  excluded from the auto-wiring candidate scan entirely, regardless of whether
+  a matching-named bean of the right type exists.
+- Collections/arrays of a **complex** type are ordinary candidates for
+  `byName` — if a bean's id matches the property name, it gets wired like any
+  other single object reference, even though its runtime type happens to be a
+  `Set`/`List`/array.
+- byName never aggregates multiple same-typed beans into a collection
+  automatically — that's exclusively a `byType`/`constructor` behavior. A
+  collection-typed property only gets wired if a bean *literally named* the
+  same as the property exists.
+- `autowire-candidate="false"` and `default-autowire-candidates` do **not**
+  affect `byName` — both are documented as affecting only *type-based*
+  auto-wiring (`byType`/`constructor`). A bean excluded this way still gets
+  wired by `byName` if its name matches.
+- Bean **declaration order in the XML has no effect** on `byName` matching —
+  all `<bean/>` definitions are registered before any singleton is
+  instantiated, so a bean declared later in the file can still satisfy a
+  property on a bean declared earlier.
+- A prototype-scoped bean (e.g. built via a static factory method) wired by
+  name gives each consuming bean its own fresh instance, not a shared
+  singleton.
+- `<beans default-autowire="byName">` sets a container-wide default; a `<bean>`
+  with no `autowire` attribute (or `autowire="default"`) inherits it, while an
+  explicit per-bean `autowire` attribute still overrides the default mode on
+  `<beans />`.
+- `<qualifier>` and ambiguity-resolution mechanisms (`primary`, etc.) are not
+  applicable to `byName` — it never has ambiguity to resolve in the first
+  place.
+- Injection happens exclusively through setter methods — no field or
+  constructor injection under this mode.
+
+
+<br>
+
+---
+
 ## Sample run output
 
 ```txt

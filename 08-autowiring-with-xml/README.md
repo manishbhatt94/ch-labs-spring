@@ -73,3 +73,35 @@
 | `byType` | Lets a property be autowired if exactly one bean of the property type exists in the container. If more than one exists, a fatal exception is thrown, which indicates that you may not use `byType` autowiring for that bean. If there are no matching beans, nothing happens (the property is not set). |
 | `constructor` | Analogous to `byType` but applies to constructor arguments. If there is not exactly one bean of the constructor argument type in the container, a fatal error is raised. |
 
+
+---
+
+## What is "field injection"?
+
+It's when `@Autowired` is placed directly on the field declaration itself, and
+Spring sets that field via reflection — no setter, no constructor involved at
+all:
+
+```java
+public class Car {
+    @Autowired
+    private Engine engine;   // no setEngine() needed
+}
+```
+
+Spring makes the field accessible (`Field.setAccessible(true)`) and assigns it
+directly, even if it's `private`.
+
+This is purely an **annotation-driven capability**
+(`AutowiredAnnotationBeanPostProcessor`) — it has no XML equivalent at all.
+
+XML-based `autowire="byName"`/`"byType"`/`"constructor"` can only ever call
+setters or constructors, because that's all the container can discover through
+plain JavaBean/constructor introspection; it has no annotation to tell it:
+"reach into this private field directly."
+
+That's exactly why I called it out as the thing XML auto-wiring *doesn't* do —
+it's a capability unique to `@Autowired`, sitting alongside setter injection
+and constructor injection as the third injection style, but reachable only via
+annotations, never via `<bean autowire="...">`.
+

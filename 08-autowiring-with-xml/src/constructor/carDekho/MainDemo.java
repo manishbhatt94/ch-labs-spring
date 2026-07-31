@@ -27,6 +27,14 @@ public class MainDemo {
 		}
 		System.out.println();
 
+		System.out.println("\n=== 3) beans-constructor-partial-match-forces-lesser-ctor.xml ===");
+		System.out.println("=================================================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-partial-match-forces-lesser-ctor.xml")) {
+			ctx.getBean("myCar", Car.class).describe("Partial Match Fallback Demo");
+		}
+		System.out.println();
+
 	}
 
 }

@@ -9,6 +9,7 @@ public class EntryLevelCar {
 	private final AutomaticTransmission transmission;
 
 	public EntryLevelCar(Engine engine, AutomaticTransmission transmission) {
+		System.out.println("[~~ CTOR called: EntryLevelCar(Engine engine, AutomaticTransmission transmission). ~~]\n");
 		this.engine = engine;
 		this.transmission = transmission;
 	}

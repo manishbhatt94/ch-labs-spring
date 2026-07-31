@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- No GpsSystem bean exists in this container. Car's 3-arg
+		constructor cannot be satisfied; only the 2-arg constructor
+		can. This file tests whether Spring falls back to the lesser
+		constructor, or fails outright. -->
+
+	<bean id="baseEngine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="baseEngine"/>
+	</bean>
+
+	<bean id="baseTrans" class="constructor.carDekho.parts.AutomaticTransmission">
+		<property name="transmissionBeanId" value="baseTrans"/>
+	</bean>
+
+
+	<bean id="myCar" class="constructor.carDekho.car.Car" autowire="constructor" />
+
+
+
+</beans>

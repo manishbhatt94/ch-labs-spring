@@ -12,6 +12,7 @@ public class Car {
 
 	// Ctor A: 2 dependencies
 	public Car(Engine engine, AutomaticTransmission transmission) {
+		System.out.println("[~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission). ~~]\n");
 		this.engine = engine;
 		this.transmission = transmission;
 	}
@@ -19,6 +20,7 @@ public class Car {
 	// Ctor B: 3 dependencies -- the "greediest" satisfiable constructor
 	// when a GpsSystem bean is also present in the container.
 	public Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps) {
+		System.out.println("[~~ CTOR called: Car(Engine engine, AutomaticTransmission transmission, GpsSystem gps)\n");
 		this.engine = engine;
 		this.transmission = transmission;
 		this.gps = gps;

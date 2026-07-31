@@ -13,6 +13,8 @@
     - Package [byName.carDekho](./src/byName/carDekho/README.md)
 - Auto-wiring mode **"byType"**
     - Package [byType.carDekho](./src/byType/carDekho/README.md)
+- Auto-wiring mode **"constructor"**
+    - Package [constructor.carDekho](./src/constructor/carDekho/README.md)
 
 
 ---

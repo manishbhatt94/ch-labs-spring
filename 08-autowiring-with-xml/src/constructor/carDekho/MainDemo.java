@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import constructor.carDekho.car.BudgetCar;
 import constructor.carDekho.car.Car;
 import constructor.carDekho.car.EntryLevelCar;
+import constructor.carDekho.car.FleetCar;
 
 public class MainDemo {
 
@@ -92,7 +93,7 @@ public class MainDemo {
 		System.out.println();
 
 		System.out.println("\n=== 7) beans-constructor-simple-type-excluded.xml ===");
-		System.out.println("======================================================\n\n");
+		System.out.println("=====================================================\n\n");
 		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"constructor/carDekho/resources/beans-constructor-simple-type-excluded.xml")) {
 			String carColor = ctx.getBean("carColor", String.class);
@@ -112,6 +113,17 @@ public class MainDemo {
 			System.out.println();
 
 			ctx.getBean("myCar", BudgetCar.class).describe("Simple-Type Constructor Param Exclusion Demo");
+		}
+		System.out.println();
+
+		System.out.println("\n=== 8) beans-constructor-aggregation.xml ===");
+		System.out.println("============================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-aggregation.xml")) {
+			ctx.getBean("fleetCar_allAutowired", FleetCar.class)
+					.describe("fleetCar_allAutowired - array/List/Map/Set aggregation, all via autowiring");
+			ctx.getBean("fleetCar_explicitSpareEngines", FleetCar.class)
+					.describe("fleetCar_explicitSpareEngines - spareEngines explicit, rest autowired");
 		}
 		System.out.println();
 

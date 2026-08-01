@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+	<!-- Three Engine beans in the container. engine_v8 is marked primary,
+		so it resolves the scalar 'primaryEngine' parameter unambiguously.
+		All three are also candidates for the array/List/Map aggregation
+		parameters - this tests whether a bean already used to satisfy a
+		single-valued constructor parameter can simultaneously appear in
+		an aggregated collection parameter too, same as the established
+		byType finding for setter-injected properties. -->
+
+	<bean id="engine_v8" class="constructor.carDekho.parts.StandardEngine" primary="true">
+		<property name="engineBeanId" value="engine_v8"/>
+	</bean>
+
+	<bean id="engine_turbo" class="constructor.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="engine_turbo"/>
+	</bean>
+
+	<bean id="engine_rally" class="constructor.carDekho.parts.TurboEngine">
+		<property name="engineBeanId" value="engine_rally"/>
+	</bean>
+
+
+	<!-- No Accessory beans exist anywhere in this container. Tests
+		whether a zero-match bean-typed (complex) Set parameter behaves
+		like the zero-match simple-typed array parameters confirmed in
+		File 7 - expected: empty Set, not null, not a fatal error. -->
+
+	<!-- Case 1-5: everything left to constructor-mode auto-wiring. -->
+	<bean id="fleetCar_allAutowired" class="constructor.carDekho.car.FleetCar" autowire="constructor"/>
+
+	<!-- Case 6: spareEngines is explicitly supplied (only 2 of the 3
+		Engine beans, deliberately excluding engine_v8), while every
+		other parameter is still left to auto-wiring. Tests explicit
+		collection override coexisting with auto-wiring on other params
+		of the same bean, extending the File 6 scalar-ref finding to a
+		collection-shaped constructor-arg. -->
+	<bean id="fleetCar_explicitSpareEngines" class="constructor.carDekho.car.FleetCar" autowire="constructor">
+		<constructor-arg name="spareEngines">
+			<array value-type="constructor.carDekho.parts.Engine">
+				<ref bean="engine_turbo"/>
+				<ref bean="engine_rally"/>
+			</array>
+		</constructor-arg>
+	</bean>
+
+
+
+</beans>

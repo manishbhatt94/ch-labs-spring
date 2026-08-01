@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+	<!-- For field: `private final Engine engine;` -->
+	<bean id="hatchEngine" class="constructor.carDekho.parts.StandardEngine">
+		<property name="engineBeanId" value="hatchEngine"/>
+	</bean>
+
+	<!-- For field: `private final String color;` -->
+	<bean id="carColor" class="java.lang.String">
+		<constructor-arg value="Sinister Bronze" />
+	</bean>
+	<!-- Note: Above String typed bean "carColor" does get 'constructor'
+		auto-wired into the BudgetCar field `private final String color;`
+		through BudgetCar's constructor.
+
+		So, with XML "constuctor" auto-wiring mode, simple types are NOT
+		excluded from the candidate scan entirely, but they are excluded
+		from the candidate scan for "byType" auto-wiring mode.
+
+		Also note that if we neither had any String typed bean in the container,
+		nor a <constructor-arg> element in the BudgetCar typed "myCar" bean,
+		then the ApplicationContext would throw a fatal exception, because the
+		BudgetCar constructor has a String typed parameter, and no candidate
+		bean of that type exists in the container.
+		
+		Contrast with byType (setter-based) autowiring: byType mode only
+		autowires setter-injected properties, not constructor parameters,
+		so this exact scenario doesn't arise there. But if 'color' were
+		instead a setter-injected String property on a byType-autowired
+		bean, that property would be silently skipped and left null
+		regardless of whether a String bean exists in the container -
+		simple-typed properties are excluded from byType's candidate scan
+		entirely (see byType chapter). Constructor mode has no such
+		exclusion for simple-typed constructor parameters.
+	 -->
+
+	<!-- For field: `private final String[] features;` -->
+	<util:list id="featuresList" value-type="java.lang.String" list-class="java.util.ArrayList">
+		<value>Power windows</value>
+		<value>Advanced Driver Assistance System (ADAS)</value>
+		<value>Sports Mode</value>
+	</util:list>
+	<bean id="featuresArray" class="java.lang.String[]"
+			factory-bean="featuresList"
+			factory-method="toArray">
+		<constructor-arg>
+			<array value-type="java.lang.String"></array>
+		</constructor-arg>
+	</bean>
+
+	<!-- For field: `private final BigDecimal[] tripDistances;` -->
+	<util:list id="tripDistancesList" value-type="java.math.BigDecimal"
+			list-class="java.util.ArrayList">
+		<bean class="java.math.BigDecimal">
+			<constructor-arg value="89.46" />
+		</bean>
+		<bean class="java.math.BigDecimal">
+			<constructor-arg value="97.20" />
+		</bean>
+		<bean class="java.math.BigDecimal">
+			<constructor-arg value="81.52" />
+		</bean>
+	</util:list>
+	<bean id="tripDistancesArray" class="java.math.BigDecimal[]"
+			factory-bean="tripDistancesList"
+			factory-method="toArray">
+		<constructor-arg>
+			<array value-type="java.math.BigDecimal"></array>
+		</constructor-arg>
+	</bean>
+	
+	<!-- Two stray BigDecimal typed beans, to see if constructor auto-wiring
+		aggregates them into an array for the BudgetCar field
+		`private final BigDecimal[] tripDistances;`
+	 -->
+	<bean id="tripDistance1" class="java.math.BigDecimal">
+		<constructor-arg value="33" />
+	</bean>
+	<bean id="tripDistance2" class="java.math.BigDecimal">
+		<constructor-arg value="55" />
+	</bean>
+	
+	<!-- No LocalDate bean of any kind exists in this container. Field
+		`private final LocalDate[] serviceDates;` is left entirely to
+		constructor-mode auto-wiring, with zero candidates of the element
+		type LocalDate. Expected: empty array, not null, not fatal -
+		consistent with the BigDecimal[] zero-match case seen earlier
+		with no BigDecimal beans present. -->
+
+
+	<bean id="myCar" class="constructor.carDekho.car.BudgetCar" autowire="constructor">
+		<!-- <constructor-arg type="java.lang.String" value="Midnight Purple (Explicit)" /> -->
+	</bean>
+
+
+
+</beans>

@@ -1,8 +1,13 @@
 package constructor.carDekho;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import constructor.carDekho.car.BudgetCar;
 import constructor.carDekho.car.Car;
 import constructor.carDekho.car.EntryLevelCar;
 
@@ -83,6 +88,30 @@ public class MainDemo {
 			ctx.getBean("car_byName", Car.class).describe("car_byName - explicit constructor-arg by name");
 			ctx.getBean("car_mixedExplicitAndAutowired", Car.class)
 					.describe("car_mixedExplicitAndAutowired - engine explicit, transmission/gps autowired");
+		}
+		System.out.println();
+
+		System.out.println("\n=== 7) beans-constructor-simple-type-excluded.xml ===");
+		System.out.println("======================================================\n\n");
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"constructor/carDekho/resources/beans-constructor-simple-type-excluded.xml")) {
+			String carColor = ctx.getBean("carColor", String.class);
+			System.out.println("'carColor' bean from context: " + carColor);
+			String[] featuresArray = ctx.getBean("featuresArray", String[].class);
+			System.out.println("'featuresArray' bean from context: " + Arrays.toString(featuresArray) + " (type: "
+					+ featuresArray.getClass().getName() + ")");
+			List<BigDecimal> tripDistancesList = ctx.getBean("tripDistancesList", List.class);
+			System.out.println("'tripDistancesList' bean from context: " + tripDistancesList + " (type: "
+					+ tripDistancesList.getClass().getName() + ")");
+			tripDistancesList.forEach(distance -> {
+				System.out.println("    Distance: " + distance + " (type: " + distance.getClass().getName() + ")");
+			});
+			BigDecimal[] tripDistancesArray = ctx.getBean("tripDistancesArray", BigDecimal[].class);
+			System.out.println("'tripDistancesArray' bean from context: " + Arrays.toString(tripDistancesArray)
+					+ " (type: " + tripDistancesArray.getClass().getName() + ")");
+			System.out.println();
+
+			ctx.getBean("myCar", BudgetCar.class).describe("Simple-Type Constructor Param Exclusion Demo");
 		}
 		System.out.println();
 

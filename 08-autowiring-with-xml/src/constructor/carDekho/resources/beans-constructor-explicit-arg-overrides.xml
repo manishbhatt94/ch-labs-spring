@@ -54,6 +54,14 @@
 	<bean id="car_mixedExplicitAndAutowired" class="constructor.carDekho.car.Car"
 			autowire="constructor">
 		<constructor-arg name="engine" ref="econoEngine"/>
+		<!-- In fact, if we wouldn't have provided the explicit constructor-arg
+	        for field 'engine', then since there are two Engine type beans defined
+	        above in this XML, application context initialization would have failed
+	        with exception:
+	        NoUniqueBeanDefinitionException: No qualifying bean of type
+	        'constructor.carDekho.parts.Engine' available: expected single matching
+	        bean but found 2: raceEngine,econoEngine
+        -->
 	</bean>
 
 

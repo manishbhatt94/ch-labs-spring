@@ -1,5 +1,7 @@
 package byType.carDekho;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,6 +19,15 @@ public class MainDemo {
 		System.out.println("==================================\n\n");
 		try (ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"byType/carDekho/resources/beans-bytype-basics.xml")) {
+			String colorValue = ctx.getBean("colorValue", String.class);
+			System.out.println("'colorValue' bean from context: " + colorValue);
+			System.out.println("    (Note: the 'colorValue' bean is NOT autowired \"byType\" into the Car field\n"
+					+ "     `private String color;` because simple types are excluded from \"byType\" autowiring.)\n");
+			String[] serviceHistoryValue = ctx.getBean("serviceHistoryValue", String[].class);
+			System.out.println("'serviceHistoryValue' bean from context: " + Arrays.toString(serviceHistoryValue));
+			System.out.println("    (Note: the 'serviceHistoryValue' bean is NOT autowired \"byType\" into the\n"
+					+ "     Car field `private String[] serviceHistoryValue;` because arrays of simple\n"
+					+ "     types are excluded from \"byType\" autowiring.)\n");
 			ctx.getBean("car_basic", Car.class)
 					.describe("car_basic - single unambiguous candidate per type wired automatically; "
 							+ "spareEngines picks up the same 'engine' instance as a 1-element array; "

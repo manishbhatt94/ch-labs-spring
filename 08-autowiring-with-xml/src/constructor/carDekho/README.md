@@ -9,6 +9,7 @@
     - ( 5a ) [beans-constructor-ambiguity-primary.xml](./resources/beans-constructor-ambiguity-primary.xml)
     - ( 5b ) [beans-constructor-ambiguity-exclusion.xml](./resources/beans-constructor-ambiguity-exclusion.xml)
     - ( 6 &nbsp;) [beans-constructor-explicit-arg-overrides.xml](./resources/beans-constructor-explicit-arg-overrides.xml)
+    - ( 7 &nbsp;) [beans-constructor-simple-type-excluded.xml](./resources/beans-constructor-simple-type-excluded.xml)
 
 
 ---
@@ -63,7 +64,7 @@
 =======================================================
 
 
-Jul 31, 2026 11:12:21 PM org.springframework.context.support.AbstractApplicationContext refresh
+Aug 01, 2026 4:07:16 PM org.springframework.context.support.AbstractApplicationContext refresh
 WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'myCar' defined in class path resource [constructor/carDekho/resources/beans-constructor-zero-match-single-ctor.xml]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'constructor.carDekho.parts.AutomaticTransmission' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 
 Context refresh failed as expected -- exception below:
@@ -137,6 +138,30 @@ Context refresh failed as expected -- exception below:
   engine       : Standard Engine (bean id = 'econoEngine')
   transmission : Automatic Transmission (bean id = 'sportTrans')
   gps          : GpsSystem [gpsModuleType=OBD_PLUG_PLAY]
+
+
+
+=== 7) beans-constructor-simple-type-excluded.xml ===
+======================================================
+
+
+[~~ CTOR called: BudgetCar(Engine engine, String color, String[] features,
+                         BigDecimal[] tripDistances, LocalDate[] serviceDates). ~~]
+
+'carColor' bean from context: Sinister Bronze
+'featuresArray' bean from context: [Power windows, Advanced Driver Assistance System (ADAS), Sports Mode] (type: [Ljava.lang.String;)
+'tripDistancesList' bean from context: [89.46, 97.20, 81.52] (type: java.util.ArrayList)
+    Distance: 89.46 (type: java.math.BigDecimal)
+    Distance: 97.20 (type: java.math.BigDecimal)
+    Distance: 81.52 (type: java.math.BigDecimal)
+'tripDistancesArray' bean from context: [89.46, 97.20, 81.52] (type: [Ljava.math.BigDecimal;)
+
+--- Simple-Type Constructor Param Exclusion Demo ---
+  engine        : Standard Engine (bean id = 'hatchEngine')
+  color         : Sinister Bronze
+  features      : [Sinister Bronze]
+  tripDistances : [33, 55]
+  serviceDates  : []
 
 
 

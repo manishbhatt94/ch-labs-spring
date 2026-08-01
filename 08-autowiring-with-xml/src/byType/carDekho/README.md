@@ -92,6 +92,15 @@ building one.
 ==================================
 
 
+'colorValue' bean from context: Graphite
+    (Note: the 'colorValue' bean is NOT autowired "byType" into the Car field
+     `private String color;` because simple types are excluded from "byType" autowiring.)
+
+'serviceHistoryValue' bean from context: [2024-03-02: Brake pad replacement, 2024-09-14: Annual inspection]
+    (Note: the 'serviceHistoryValue' bean is NOT autowired "byType" into the
+     Car field `private String[] serviceHistoryValue;` because arrays of simple
+     types are excluded from "byType" autowiring.)
+
 ---- car_basic - single unambiguous candidate per type wired automatically; spareEngines picks up the same 'engine' instance as a 1-element array; color/dealershipPrice/serviceHistory stay null despite matching-typed beans existing ----
   engine          : Standard Engine (bean id = 'myEngine')
   transmission    : Automatic Transmission (bean id = 'transmissionAuto')
@@ -204,7 +213,7 @@ building one.
 ==============================================================
 
 
-Jul 31, 2026 12:30:05 AM org.springframework.context.support.AbstractApplicationContext refresh
+Aug 01, 2026 4:13:53 PM org.springframework.context.support.AbstractApplicationContext refresh
 WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'car_ambiguousEngineFails' defined in class path resource [byType/carDekho/resources/beans-bytype-ambiguous-fails.xml]: Unsatisfied dependency expressed through bean property 'engine'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'byType.carDekho.parts.Engine' available: expected single matching bean but found 2: ambiguousEngineA,ambiguousEngineB
 Got the EXPECTED exception while creating 'car_ambiguousEngineFails':
   UnsatisfiedDependencyException: Error creating bean with name 'car_ambiguousEngineFails' defined in class path resource [byType/carDekho/resources/beans-bytype-ambiguous-fails.xml]: Unsatisfied dependency expressed through bean property 'engine'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'byType.carDekho.parts.Engine' available: expected single matching bean but found 2: ambiguousEngineA,ambiguousEngineB

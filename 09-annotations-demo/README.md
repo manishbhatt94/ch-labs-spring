@@ -15,15 +15,15 @@ as `@Autowired` does, without needing an `@Autowired` field or constructor anywh
 
 ## 0. Notes
 
-- Spring XML Syntax - Annotations Sytax -- Concepts Map
+- Spring XML Syntax - Annotations Sytax -- Concepts Map\
   [spring-xml-to-annotations.md](./spring-xml-to-annotations.md)
-- Spring Docs - Annotations related points - Explanations
+- Spring Docs - Annotations related points - Explanations\
   [annotation-config-notes-explained.md](./annotation-config-notes-explained.md)
-- @Configuration attribute "proxyBeanMethods"
-  Proxying of @Configuration class, @Bean Lite Mode
+- @Configuration attribute "proxyBeanMethods"\
+  Proxying of @Configuration class, @Bean Lite Mode\
   [study-notes-configuration-proxying-and-lite-mode.md](./study-notes-configuration-proxying-and-lite-mode.md)
-- Example project code - sample runs - output
-  [sample_runs_outputs.md](./sample_runs_outputs.md)
+- Example project code - sample runs - output\
+  [sample-runs-outputs.md](./sample-runs-outputs.md)
 
 
 ---

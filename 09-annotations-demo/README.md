@@ -13,17 +13,38 @@ as `@Autowired` does, without needing an `@Autowired` field or constructor anywh
 
 ---
 
-## 1. Import into Eclipse
+## 0. Notes
 
-1. Download/copy this whole folder somewhere on disk.
-2. Download the 7 JARs listed in `lib/PUT_JARS_HERE.txt` into the `lib/` folder — the
-   exact filenames matter, since `.classpath` references them by name.
-3. Eclipse → `File` → `Import...` → `General` → `Existing Projects into Workspace` →
-   select this folder → `Finish`.
-4. Right-click the project → `Properties` → `Java Build Path` → `Libraries` tab —
-   confirm the 7 JARs show up (they will, automatically, via the checked-in `.classpath`).
-5. Run any `Main0X_*` class as a **Java Application** (right-click → `Run As` →
-   `Java Application`). Each one is self-contained and prints its own labeled output.
+- Spring XML Syntax - Annotations Sytax -- Concepts Map
+  [spring-xml-to-annotations.md](./spring-xml-to-annotations.md)
+- Spring Docs - Annotations related points - Explanations
+  [annotation-config-notes-explained.md](./annotation-config-notes-explained.md)
+- @Configuration attribute "proxyBeanMethods"
+  Proxying of @Configuration class, @Bean Lite Mode
+  [study-notes-configuration-proxying-and-lite-mode.md](./study-notes-configuration-proxying-and-lite-mode.md)
+- Example project code - sample runs - output
+  [sample_runs_outputs.md](./sample_runs_outputs.md)
+
+
+---
+
+
+## 1. JARs Required
+
+Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version`:
+
+- **For Spring Core (5 JARs):**
+  (Placed under custom User Library titled: "spring-basics-libs-5.3.39")
+  1. `org.springframework:spring-beans:5.3.39`
+  1. `org.springframework:spring-context:5.3.39`
+  1. `org.springframework:spring-core:5.3.39`
+  1. `org.springframework:spring-expression:5.3.39`
+  1. `org.springframework:spring-jcl:5.3.39`
+- **For JSR-250 Annotations @PostConstruct, @PreDestroy:**
+  (Placed under custom User Library titled: "spring-jsr250-annotations-5.3.39")
+  1. `javax.annotation:javax.annotation-api:1.3.2`
+  1. `org.springframework:spring-aop:5.3.39`
+
 
 ---
 

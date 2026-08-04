@@ -118,3 +118,82 @@ Now calling getBean("demoWidgetBean") ...
 ---
 
 
+## 4. Main04_InstantiationMethods.java
+
+- Main class: [com.example.annodemo.mains.Main04_InstantiationMethods](./src/com/example/annodemo/mains/Main04_InstantiationMethods.java)
+- Configuration class(es):
+    - [com.example.annodemo.config.InstantiationConfig](./src/com/example/annodemo/config/InstantiationConfig.java)
+    - [com.example.annodemo.config.InstantiationConfigLiteMode](./src/com/example/annodemo/config/InstantiationConfigLiteMode.java)
+- Components package:
+  [com.example.annodemo.instantiation](./src/com/example/annodemo/instantiation/)
+
+
+### 4.1. Output
+
+```txt
+=== Main04a: constructor / static-factory / instance-factory (proxyBeanMethods=true, default) ===
+############################################################
+# PART A - proxyBeanMethods = true (the default, "full" mode)
+############################################################
+
+[instantiation] {!= WidgetStaticFactory.createWidget() =!} -- WidgetStaticFactory.createWidget() invoked
+[instantiation] {!= Widget#Widget(String orging) =!} -- Widget object created, origin=static-factory-method, identityHash=1161667116
+[instantiation] {!= WidgetInstanceFactory#WidgetInstanceFactory() =!} -- WidgetInstanceFactory constructed (identityHash=1898220577)
+[instantiation] {!= WidgetInstanceFactory.createWidget() =!} -- WidgetInstanceFactory#createWidget() invoked
+[instantiation] {!= Widget#Widget(String orging) =!} -- Widget object created, origin=instance-factory-method, identityHash=1143371233
+
+>> Listing all user-defined beans in the context:
+   - instantiationConfig [ Class -> com.example.annodemo.config.InstantiationConfig$$EnhancerBySpringCGLIB$$3526c02d ]
+   - widgetFromStaticFactory [ Class -> com.example.annodemo.instantiation.Widget ]
+   - widgetInstanceFactory [ Class -> com.example.annodemo.instantiation.WidgetInstanceFactory ]
+   - widgetFromInstanceFactory [ Class -> com.example.annodemo.instantiation.Widget ]
+
+>> @Configuration(proxyBeanMethods = true) class InstantiationConfig -> CGLIB proxy class =
+   --> com.example.annodemo.config.InstantiationConfig$$EnhancerBySpringCGLIB$$3526c02d
+
+>> Fetching bean 'widgetFromStaticFactory' (built via a plain static factory method)
+   -> origin = static-factory-method
+
+>> Fetching bean 'widgetFromInstanceFactory' (built by calling widgetInstanceFactory().createWidget()
+   from WITHIN another @Bean method - watch: NO extra 'WidgetInstanceFactory constructed'
+   line appears above, because the CGLIB proxy redirected that call to the SAME
+   already-registered singleton instead of re-running the method body.)
+   -> origin = instance-factory-method
+
+>> Proof the factory itself stayed a true singleton across both direct-lookup
+   and in-code self-call:
+   identityHash of the registered 'widgetInstanceFactory' bean = 1898220577
+   which matches the identityHash printed in the 'WidgetInstanceFactory constructed' line above.
+
+
+
+--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--
+
+
+=== Main04b: proxyBeanMethods=false ("lite mode") - self-call is a PLAIN java call now ===
+############################################################
+# PART B - proxyBeanMethods = false ("lite" mode)
+############################################################
+
+[instantiation] {!= WidgetInstanceFactory#WidgetInstanceFactory() =!} -- WidgetInstanceFactory constructed (identityHash=758013696)
+[instantiation] {!= WidgetInstanceFactory#WidgetInstanceFactory() =!} -- WidgetInstanceFactory constructed (identityHash=1279309678)
+
+>> Listing all user-defined beans in the context:
+   - instantiationConfigLiteMode [ Class -> com.example.annodemo.config.InstantiationConfigLiteMode ]
+   - widgetInstanceFactory [ Class -> com.example.annodemo.instantiation.WidgetInstanceFactory ]
+   - anotherBeanThatCallsFactory [ Class -> com.example.annodemo.instantiation.WidgetInstanceFactory ]
+
+>> @Configuration(proxyBeanMethods = false) class InstantiationConfigLiteMode -> NON-CGLIB proxy class =
+   --> com.example.annodemo.config.InstantiationConfigLiteMode
+
+>> Notice TWO separate 'WidgetInstanceFactory constructed' lines printed above:
+   1st = the container building the registered 'widgetInstanceFactory' bean
+   2nd = 'anotherBeanThatCallsFactory' calling widgetInstanceFactory() as a
+         PLAIN Java method (no interception in lite mode) -> re-runs the body
+         -> builds a brand-new, UNTRACKED WidgetInstanceFactory.
+
+>> registeredBean  identityHash = 758013696
+>> viaSelfCall     identityHash = 1279309678
+>> same object?    false   <-- singleton guarantee is BROKEN for this call path under lite mode
+
+```

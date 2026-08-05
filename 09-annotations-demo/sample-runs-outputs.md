@@ -197,3 +197,44 @@ Now calling getBean("demoWidgetBean") ...
 >> same object?    false   <-- singleton guarantee is BROKEN for this call path under lite mode
 
 ```
+
+<br>
+
+---
+
+
+## 5. Main05_Scopes.java
+
+- Main class: [com.example.annodemo.mains.Main05_Scopes](./src/com/example/annodemo/mains/Main05_Scopes.java)
+- Configuration class(es):
+    - [com.example.annodemo.config.ScopeConfig](./src/com/example/annodemo/config/ScopeConfig.java)
+- Components package:
+  [com.example.annodemo.scope](./src/com/example/annodemo/scope/)
+
+
+### 5.1. Output
+
+```txt
+=== Main05: singleton vs prototype scope ===
+============================================
+
+[scope] {! SingletonScopedBean#SingletonScopedBean() !} -- SingletonScopedBean constructed
+
+-- context refreshed, singleton bean(s) have been constructed --
+
+
+>> Calling getBean(SingletonScopedBean.class) twice -- Note that constructor WON'T be called at all.
+
+> Singleton: s1==s2 ? true  (expect true).
+
+
+>> Calling getBean(PrototypeScopedBean.class) twice -- Note that constructor GETS CALLED twice.
+
+[scope] {! PrototypeScopedBean#PrototypeScopedBean() !} -- PrototypeScopedBean constructed
+[scope] {! PrototypeScopedBean#PrototypeScopedBean() !} -- PrototypeScopedBean constructed
+
+> Prototype: p1==p2 ? false  (expect false).
+
+
+```
+

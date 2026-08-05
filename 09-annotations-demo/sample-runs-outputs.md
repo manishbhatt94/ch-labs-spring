@@ -1,5 +1,6 @@
 # Outputs for Sample Code Runs
 
+
 ## 1. Main01_Stereotypes_ComponentScan.java
 
 - Main class: [com.example.annodemo.mains.Main01_Stereotypes_ComponentScan](./src/com/example/annodemo/mains/Main01_Stereotypes_ComponentScan.java)
@@ -38,6 +39,7 @@ Registered bean names found by scanning:
 
 ---
 
+
 ## 2. Main02_ComponentScanFilters.java
 
 - Main class: [com.example.annodemo.mains.Main02_ComponentScanFilters](./src/com/example/annodemo/mains/Main02_ComponentScanFilters.java)
@@ -64,6 +66,7 @@ Registered bean names:
 <br>
 
 ---
+
 
 ## 3. Main03_EagerVsLazy.java
 
@@ -270,10 +273,10 @@ Registered bean names:
 
 ```
 
-
 <br>
 
 ---
+
 
 ## 6. Main06_LifecycleCallbackOrder.java
 
@@ -332,6 +335,58 @@ Registered bean names:
 [lifecycle] InitializingDisposableBean: destroy()
 
 --- Done with destroy callbacks. Program execution finished ---
+
+
+```
+
+<br>
+
+---
+
+
+## 7. Main07_BeanPostProcessors.java
+
+- Main class: [com.example.annodemo.mains.Main07_BeanPostProcessors](./src/com/example/annodemo/mains/Main07_BeanPostProcessors.java)
+- Configuration class(es):
+    - [com.example.annodemo.config.BppConfig](./src/com/example/annodemo/config/BppConfig.java)
+- Components package:
+  [com.example.annodemo.bpp](./src/com/example/annodemo/bpp/)
+
+
+### 7.1. Output
+
+```txt
+=== Main07: BeanPostProcessor before/after wrapping ===
+=======================================================
+
+
+[bpp] BppTargetBean: constructor
+
+[bpp] (Ordered:100) GammaPostProcessor.postProcessBeforeInitialization runs (on beanName: bppTargetBean)
+[bpp] (Ordered:200) BetaPostProcessor.postProcessBeforeInitialization runs (on beanName: bppTargetBean)
+[bpp] (Ordered:300) AlphaPostProcessor.postProcessBeforeInitialization runs (on beanName: bppTargetBean)
+[bpp] AuditPostProcessor.postProcessBeforeInitialization runs (on beanName: bppTargetBean)
+[bpp] OrderPostProcessor.postProcessBeforeInitialization runs (on beanName: bppTargetBean)
+
+[bpp] BppTargetBean: @PostConstruct init()    <-- runs BETWEEN the two BPP phases
+
+[bpp] (Ordered:100) GammaPostProcessor.postProcessAfterInitialization runs (on beanName: bppTargetBean)
+[bpp] (Ordered:200) BetaPostProcessor.postProcessAfterInitialization runs (on beanName: bppTargetBean)
+[bpp] (Ordered:300) AlphaPostProcessor.postProcessAfterInitialization runs (on beanName: bppTargetBean)
+[bpp] AuditPostProcessor.postProcessAfterInitialization runs (on beanName: bppTargetBean)
+[bpp] OrderPostProcessor.postProcessAfterInitialization runs (on beanName: bppTargetBean)
+
+--- context ready ---
+
+
+>> Listing all user-defined beans in the context:
+   - bppConfig [ Class -> com.example.annodemo.config.BppConfig$$EnhancerBySpringCGLIB$$b1a56be2 ]
+   - auditPostProcessor [ Class -> com.example.annodemo.bpp.AuditPostProcessor ]
+   - bppTargetBean [ Class -> com.example.annodemo.bpp.BppTargetBean ]
+   - orderPostProcessor [ Class -> com.example.annodemo.bpp.OrderPostProcessor ]
+   - alphaPostProcessor [ Class -> com.example.annodemo.bpp.ordered.AlphaPostProcessor ]
+   - betaPostProcessor [ Class -> com.example.annodemo.bpp.ordered.BetaPostProcessor ]
+   - gammaPostProcessor [ Class -> com.example.annodemo.bpp.ordered.GammaPostProcessor ]
 
 
 ```

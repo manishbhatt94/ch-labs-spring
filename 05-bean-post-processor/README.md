@@ -12,6 +12,33 @@ Brief notes:
     - `public Object postProcessBeforeInitialization(Object bean, String beanName);`
     - `public Object postProcessAfterInitialization(Object bean, String beanName);`
 
+<br>
+
+---
+
+## Control the order in which BeanPostProcessor instances run
+
+Documentation advises to have the BeanPostProcessor implementation classes also
+implement the `org.springframework.core.Ordered` interface, and override its method:
+`int getOrder();` - providing an integer order value, which signifies priority as
+mentioned in Ordered interface JavaDoc:
+
+> Higher values are interpreted as lower priority. As a consequence,
+> the object with the lowest value has the highest priority.
+
+Below is the text snippet from Spring Documentation which mentions about
+the order in which the BeanPostProcessor instances are run:
+
+> You can configure multiple `BeanPostProcessor` instances, and you can control
+> the order in which these `BeanPostProcessor` instances run by setting the
+> `order` property. You can set this property only if the `BeanPostProcessor`
+> implements the `Ordered` interface. If you write your own `BeanPostProcessor`,
+> you should consider implementing the `Ordered` interface, too.
+>
+> — [Spring 5.3.39 Docs - &sect; Customizing Beans by Using a BeanPostProcessor](https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#beans-factory-extension-bpp)
+
+
+<br>
 
 ---
 

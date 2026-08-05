@@ -68,6 +68,28 @@ Below are the three (3) ways for specifying bean lifecycle methods for *Initiali
 > *— [Spring 5.3.39 Docs &sect; 1.5. Bean Scopes &sect; 1.5.2 The Prototype Scope](https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/core.html#beans-factory-scopes-prototype)*
 
 
+## Multiple lifecycle mechanisms configured for the same bean
+
+If multiple lifecycle mechanisms are configured for a bean and each mechanism
+is configured with a different method name, then each configured method is run
+in the order listed after this note.
+<br>
+
+Multiple lifecycle mechanisms configured for the same bean, with different
+initialization methods, are called as follows:
+
+1. Methods annotated with `@PostConstruct`
+1. `afterPropertiesSet()` as defined by the `InitializingBean` callback
+   interface
+1. A custom configured init() method
+
+Destroy methods are called in the same order:
+
+1. Methods annotated with `@PreDestroy`
+1. `destroy()` as defined by the `DisposableBean` callback interface
+1. A custom configured `destroy()` method
+
+
 <br>
 
 ---

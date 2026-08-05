@@ -270,3 +270,73 @@ Registered bean names:
 
 ```
 
+
+<br>
+
+---
+
+## 6. Main06_LifecycleCallbackOrder.java
+
+- Main class: [com.example.annodemo.mains.Main06_LifecycleCallbackOrder](./src/com/example/annodemo/mains/Main06_LifecycleCallbackOrder.java)
+- Configuration class(es):
+    - [com.example.annodemo.config.LifecycleConfig](./src/com/example/annodemo/config/LifecycleConfig.java)
+- Components package:
+  [com.example.annodemo.lifecycle](./src/com/example/annodemo/lifecycle/)
+
+
+### 6.1. Output
+
+```txt
+=== Main06: lifecycle callback precedence order ===
+===================================================
+
+
+> Below two classes are annotated with @Component:
+  1. InitializingDisposableBean
+  2. PostConstructPreDestroyBean
+
+> Below two typed objects are returned from @Bean methods in a @Configuration class:
+  1. CustomInitDestroyPojo
+  2. AllCallbacksPojo
+
+- Watch AllCallbacksPojo's numbered lines below.
+
+[lifecycle] InitializingDisposableBean: constructor
+[lifecycle] InitializingDisposableBean: afterPropertiesSet()
+[lifecycle] PostConstructPreDestroyBean: constructor
+[lifecycle] PostConstructPreDestroyBean: @PostConstruct init()
+[lifecycle] CustomInitDestroyPojo: constructor
+[lifecycle] CustomInitDestroyPojo: custom init() (via @Bean initMethod)
+[lifecycle] AllCallbacksPojo: 1) constructor
+[lifecycle] AllCallbacksPojo: 2) @PostConstruct
+[lifecycle] AllCallbacksPojo: 3) InitializingBean#afterPropertiesSet()
+[lifecycle] AllCallbacksPojo: 4) custom init-method (customInit)
+
+>> Listing all user-defined beans in the context:
+   - lifecycleConfig [ Class -> com.example.annodemo.config.LifecycleConfig$$EnhancerBySpringCGLIB$$da6135a ]
+   - initializingDisposableBean [ Class -> com.example.annodemo.lifecycle.InitializingDisposableBean ]
+   - postConstructPreDestroyBean [ Class -> com.example.annodemo.lifecycle.PostConstructPreDestroyBean ]
+   - customInitDestroyPojo [ Class -> com.example.annodemo.lifecycle.CustomInitDestroyPojo ]
+   - allCallbacksPojo [ Class -> com.example.annodemo.lifecycle.AllCallbacksPojo ]
+
+--- context fully initialized, beans ready for use ---
+
+
+--- Closing context now (triggers destroy callbacks) ...
+
+[lifecycle] AllCallbacksPojo: 1) @PreDestroy
+[lifecycle] AllCallbacksPojo: 2) DisposableBean#destroy()
+[lifecycle] AllCallbacksPojo: 3) custom destroy-method (customDestroy)
+[lifecycle] CustomInitDestroyPojo: custom destroy() (via @Bean destroyMethod)
+[lifecycle] PostConstructPreDestroyBean: @PreDestroy cleanup()
+[lifecycle] InitializingDisposableBean: destroy()
+
+--- Done with destroy callbacks. Program execution finished ---
+
+
+```
+
+<br>
+
+---
+

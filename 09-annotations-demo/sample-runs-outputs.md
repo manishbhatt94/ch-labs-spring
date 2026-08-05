@@ -84,9 +84,11 @@ Registered bean names:
 [lazy] EagerBean constructed
 [lazy] ForcedEagerBean constructed (@Lazy(false) override)
 
--- context refreshed, beans above already constructed except LazyBean --
+--- context refreshed, beans above already constructed except LazyBean ---
 
-Now calling getBean(LazyBean.class) ...
+
+> Now calling getBean(LazyBean.class) ...
+
 [lazy] LazyBean constructed (only on first use!)
 
 
@@ -101,15 +103,21 @@ Now calling getBean(LazyBean.class) ...
 
 [lazy] ForcedEagerBean constructed (@Lazy(false) override)
 
--- context refreshed; only ForcedEagerBean should have printed above --
+--- context refreshed; only ForcedEagerBean should have printed above ---
 
-Now calling getBean(EagerBean.class) ...
+
+> Now calling getBean(EagerBean.class) ...
+
 [lazy] EagerBean constructed
-Now calling getBean(LazyBean.class) ...
+
+> Now calling getBean(LazyBean.class) ...
+
 [lazy] LazyBean constructed (only on first use!)
-Now calling getBean("demoWidgetBean") ...
+
+> Now calling getBean("demoWidgetBean") ...
+
 [lazy] demoWidgetBean() @Bean method invoked (deferred solely because of THIS class's own @Lazy annotation)
-[instantiation] Widget object created, origin=lazy-configuration-class-bean-method, identityHash=1627857534
+[instantiation] {!= Widget#Widget(String origin) =!} -- Widget object created, origin=lazy-configuration-class-bean-method, identityHash=1627857534
 
 ```
 
@@ -137,10 +145,10 @@ Now calling getBean("demoWidgetBean") ...
 ############################################################
 
 [instantiation] {!= WidgetStaticFactory.createWidget() =!} -- WidgetStaticFactory.createWidget() invoked
-[instantiation] {!= Widget#Widget(String orging) =!} -- Widget object created, origin=static-factory-method, identityHash=1161667116
+[instantiation] {!= Widget#Widget(String origin) =!} -- Widget object created, origin=static-factory-method, identityHash=1161667116
 [instantiation] {!= WidgetInstanceFactory#WidgetInstanceFactory() =!} -- WidgetInstanceFactory constructed (identityHash=1898220577)
 [instantiation] {!= WidgetInstanceFactory.createWidget() =!} -- WidgetInstanceFactory#createWidget() invoked
-[instantiation] {!= Widget#Widget(String orging) =!} -- Widget object created, origin=instance-factory-method, identityHash=1143371233
+[instantiation] {!= Widget#Widget(String origin) =!} -- Widget object created, origin=instance-factory-method, identityHash=1143371233
 
 >> Listing all user-defined beans in the context:
    - instantiationConfig [ Class -> com.example.annodemo.config.InstantiationConfig$$EnhancerBySpringCGLIB$$3526c02d ]
@@ -219,21 +227,45 @@ Now calling getBean("demoWidgetBean") ...
 ============================================
 
 [scope] {! SingletonScopedBean#SingletonScopedBean() !} -- SingletonScopedBean constructed
+[scope] {! ScopeConfig#singletonWidgetBean() !} -- singletonWidgetBean() @Bean method invoked
+[instantiation] {!= Widget#Widget(String origin) =!} -- Widget object created, origin=scope-config-class-bean-method-singleton, identityHash=1564984895
 
 -- context refreshed, singleton bean(s) have been constructed --
 
 
+-~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~-~-~-~-~-~-
+
 >> Calling getBean(SingletonScopedBean.class) twice -- Note that constructor WON'T be called at all.
 
-> Singleton: s1==s2 ? true  (expect true).
+> Singleton: s1==s2 ?  -- true    ---> (expect true).
 
+-~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~-~-~-~-~-~-
 
 >> Calling getBean(PrototypeScopedBean.class) twice -- Note that constructor GETS CALLED twice.
 
 [scope] {! PrototypeScopedBean#PrototypeScopedBean() !} -- PrototypeScopedBean constructed
 [scope] {! PrototypeScopedBean#PrototypeScopedBean() !} -- PrototypeScopedBean constructed
 
-> Prototype: p1==p2 ? false  (expect false).
+> Prototype: p1==p2 ?  -- false    ---> (expect false).
+
+-~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~-~-~-~-~-~-
+
+>> Calling getBean("singletonWidgetBean", Widget.class) twice -- Note that constructor WON'T be called at all.
+
+> Singleton: sngWidget1 == sngWidget1 ?  -- true    ---> (expect true).
+
+-~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~-~-~-~-~-~-
+
+>> Calling getBean("protoWidgetBean", Widget.class) twice -- Note that constructor GETS CALLED twice.
+
+[scope] {! ScopeConfig#protoWidgetBean() !} -- protoWidgetBean() @Bean method invoked
+[instantiation] {!= Widget#Widget(String origin) =!} -- Widget object created, origin=scope-config-class-bean-method-prototype, identityHash=715521683
+[scope] {! ScopeConfig#protoWidgetBean() !} -- protoWidgetBean() @Bean method invoked
+[instantiation] {!= Widget#Widget(String origin) =!} -- Widget object created, origin=scope-config-class-bean-method-prototype, identityHash=1545242146
+
+> Prototype: protoWidget1 == protoWidget2 ?  -- false    ---> (expect false).
+
+-~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~--~-~-~-~-~-~-~-~-~-
 
 
 ```

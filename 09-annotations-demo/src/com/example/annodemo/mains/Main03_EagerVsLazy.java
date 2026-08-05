@@ -14,8 +14,8 @@ public class Main03_EagerVsLazy {
 		System.out.println("=== Main03a: PlainScanConfig (only per-bean @Lazy applies) ===");
 		System.out.println("==============================================================\n");
 		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(PlainScanConfig.class)) {
-			System.out.println("\n-- context refreshed, beans above already constructed except LazyBean --\n");
-			System.out.println("Now calling getBean(LazyBean.class) ...");
+			System.out.println("\n--- context refreshed, beans above already constructed except LazyBean ---\n");
+			System.out.println("\n> Now calling getBean(LazyBean.class) ...\n");
 			ctx.getBean(LazyBean.class);
 		}
 
@@ -28,12 +28,12 @@ public class Main03_EagerVsLazy {
 		System.out.println();
 		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
 				DefaultLazyScanConfig.class)) {
-			System.out.println("\n-- context refreshed; only ForcedEagerBean should have printed above --\n");
-			System.out.println("Now calling getBean(EagerBean.class) ...");
+			System.out.println("\n--- context refreshed; only ForcedEagerBean should have printed above ---\n");
+			System.out.println("\n> Now calling getBean(EagerBean.class) ...\n");
 			ctx.getBean(EagerBean.class);
-			System.out.println("Now calling getBean(LazyBean.class) ...");
+			System.out.println("\n> Now calling getBean(LazyBean.class) ...\n");
 			ctx.getBean(LazyBean.class);
-			System.out.println("Now calling getBean(\"demoWidgetBean\") ...");
+			System.out.println("\n> Now calling getBean(\"demoWidgetBean\") ...\n");
 			ctx.getBean("demoWidgetBean");
 		}
 

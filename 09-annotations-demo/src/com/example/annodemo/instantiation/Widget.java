@@ -6,7 +6,7 @@ public class Widget {
 
 	public Widget(String origin) {
 		this.origin = origin;
-		System.out.println("[instantiation] {!= Widget#Widget(String orging) =!} -- " + "Widget object created, origin="
+		System.out.println("[instantiation] {!= Widget#Widget(String origin) =!} -- " + "Widget object created, origin="
 				+ origin + ", identityHash=" + System.identityHashCode(this));
 	}
 

@@ -33,14 +33,14 @@ as `@Autowired` does, without needing an `@Autowired` field or constructor anywh
 
 Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version`:
 
-- **For Spring Core (5 JARs):**
+- **For Spring Core (5 JARs):** \
   (Placed under custom User Library titled: "spring-basics-libs-5.3.39")
   1. `org.springframework:spring-beans:5.3.39`
   1. `org.springframework:spring-context:5.3.39`
   1. `org.springframework:spring-core:5.3.39`
   1. `org.springframework:spring-expression:5.3.39`
   1. `org.springframework:spring-jcl:5.3.39`
-- **For JSR-250 Annotations @PostConstruct, @PreDestroy:**
+- **For JSR-250 Annotations @PostConstruct, @PreDestroy:** \
   (Placed under custom User Library titled: "spring-jsr250-annotations-5.3.39")
   1. `javax.annotation:javax.annotation-api:1.3.2`
   1. `org.springframework:spring-aop:5.3.39`

@@ -466,3 +466,58 @@ Caught expected NoUniqueBeanDefinitionException:
 
 ---
 
+
+## 10. Main10_MixedXmlAnnotationConfig.java
+
+- Main class: [com.example.annodemo.mains.Main10_MixedXmlAnnotationConfig](./src/com/example/annodemo/mains/Main10_MixedXmlAnnotationConfig.java)
+- Configuration files (XML):
+    - [beans-with-annotation-config.xml](./src/com/example/annodemo/mixedxml/beans-with-annotation-config.xml)
+    - [beans-without-annotation-config.xml](./src/com/example/annodemo/mixedxml/beans-without-annotation-config.xml)
+    - [beans-with-component-scan.xml](./src/com/example/annodemo/mixedxml/beans-with-component-scan.xml)
+- Components package:
+  [com.example.annodemo.mixedxml](./src/com/example/annodemo/mixedxml/)
+
+
+### 10.1. Output
+
+```txt
+=== Main10a: WITH <context:annotation-config/> ===
+==================================================
+
+[mixedxml] LegacyXmlBean: constructor
+[mixedxml] LegacyXmlBean: @PostConstruct fired!
+-- expect to see '@PostConstruct fired!' above --
+[mixedxml] LegacyXmlBean: @PreDestroy fired!
+
+
+=== Main10b: WITHOUT <context:annotation-config/> ===
+=====================================================
+
+[mixedxml] LegacyXmlBean: constructor
+-- notice '@PostConstruct fired!' is MISSING this time --
+
+
+=== Main10c: WITH <context:component-scan/> (finds @Component classes too) ===
+==============================================================================
+
+[component-scan] ScannedBeanOne constructed (found via component-scan, package #1)
+[component-scan] ScannedBeanTwo constructed (found via component-scan, package #2)
+[component-scan] ScannedBeanTwo: @PostConstruct fired! (component-scan implied annotation-config, no separate tag needed)
+[mixedxml] LegacyXmlBean: constructor
+[mixedxml] LegacyXmlBean: @PostConstruct fired!
+
+>> Listing all user-defined beans in the context:
+   - scannedBeanOne [ Class -> com.example.annodemo.mixedxml.scanned.pkgone.ScannedBeanOne ]
+   - scannedBeanTwo [ Class -> com.example.annodemo.mixedxml.scanned.pkgtwo.ScannedBeanTwo ]
+   - legacyXmlBean [ Class -> com.example.annodemo.mixedxml.LegacyXmlBean ]
+
+[mixedxml] LegacyXmlBean: @PreDestroy fired!
+[component-scan] ScannedBeanTwo: @PreDestroy fired!
+
+
+```
+
+<br>
+
+---
+

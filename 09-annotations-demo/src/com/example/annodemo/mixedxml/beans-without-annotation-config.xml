@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- No <context:annotation-config/> here -> @PostConstruct/@PreDestroy 
+		on LegacyXmlBean will silently NOT fire. -->
+
+	<!-- @PostConstruct/@PreDestroy need the CommonAnnotationBeanPostProcessor 
+		to be registered using EITHER directly declaring a bean for it in XML, like: 
+		<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> 
+
+		OR, CommonAnnotationBeanPostProcessor gets internally registered when we 
+		use the below XML tag (in Spring Context XML Namespace), which is the preferred 
+		way to do it: <context:annotation-config /> -->
+	<bean id="legacyXmlBean"
+		class="com.example.annodemo.mixedxml.LegacyXmlBean" />
+
+</beans>

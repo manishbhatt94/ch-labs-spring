@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- This activates AutowiredAnnotationBeanPostProcessor, CommonAnnotationBeanPostProcessor, 
+		etc. WITHOUT scanning any package - it only "switches on" annotation processing 
+		for beans already declared below. -->
+	<!-- For @PostConstruct & @PreDestroy life-cycle methods to to registered 
+		to a bean, it is essential to register the CommonAnnotationBeanPostProcessor 
+		BeanPostProcessor. This is done by <context:annotation-config/>. -->
+	<context:annotation-config />
+
+	<bean id="legacyXmlBean"
+		class="com.example.annodemo.mixedxml.LegacyXmlBean" />
+
+</beans>

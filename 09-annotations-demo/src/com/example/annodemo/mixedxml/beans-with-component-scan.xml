@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Unlike <context:annotation-config/>, this tag ACTIVELY WALKS the given 
+		base package(s) looking for @Component-family classes and registers them 
+		as beans - no hand-written <bean/> needed for them at all. Multiple base 
+		packages are given as a comma-separated list. -->
+	<!-- component-scan implies annotation-config: CommonAnnotationBeanPostProcessor, 
+		AutowiredAnnotationBeanPostProcessor etc. are registered automatically as 
+		a side effect of this single tag - see ScannedBeanTwo's @PostConstruct/@PreDestroy 
+		firing below with no extra tag added. -->
+	<context:component-scan
+		base-package="com.example.annodemo.mixedxml.scanned.pkgone, com.example.annodemo.mixedxml.scanned.pkgtwo" />
+
+	<!-- LegacyXmlBean is NOT @Component-annotated, so component-scan alone 
+		will never find it - it still needs to be declared by hand, exactly like 
+		in the other two XMLs in this demo. Kept here only to show that scanning 
+		and hand-declared <bean/>s can coexist in the same file. -->
+	<bean id="legacyXmlBean"
+		class="com.example.annodemo.mixedxml.LegacyXmlBean" />
+
+</beans>

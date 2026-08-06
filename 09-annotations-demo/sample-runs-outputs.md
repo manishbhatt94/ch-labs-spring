@@ -425,3 +425,44 @@ orderedStream() result:
 
 ---
 
+
+## 9. Main09_PrimaryAndQualifierDeclaration.java
+
+- Main class: [com.example.annodemo.mains.Main09_PrimaryAndQualifierDeclaration](./src/com/example/annodemo/mains/Main09_PrimaryAndQualifierDeclaration.java)
+- Configuration class(es):
+    - [com.example.annodemo.config.PrimaryConfig](./src/com/example/annodemo/config/PrimaryConfig.java)
+    - [com.example.annodemo.config.NoPrimaryConfig](./src/com/example/annodemo/config/NoPrimaryConfig.java)
+- Components package:
+  [com.example.annodemo.primary](./src/com/example/annodemo/primary/)
+
+
+### 9.1. Output
+
+```txt
+=== Main09a: @Primary resolves ambiguity ===
+============================================
+
+ctx.getBean(Notifier.class) resolved to:    --> EmailNotifier (@Primary)
+   (won by @Primary, no ambiguity error).
+
+All Notifier beans in context:
+    emailNotifier   -> EmailNotifier (@Primary)
+    pushNotifier    -> PushNotifier  (plain)
+    smsNotifier     -> SmsNotifier   (@Qualifier("sms"))
+
+
+=== Main09b: WITHOUT @Primary, ambiguity is a startup-time error ===
+====================================================================
+
+Attempting to call getBean(AmbiguousService.class) below:
+
+Caught expected NoUniqueBeanDefinitionException: 
+  No qualifying bean of type 'com.example.annodemo.primary.noprimary.AmbiguousService' available: expected single matching bean but found 2: serviceA,serviceB
+
+
+```
+
+<br>
+
+---
+

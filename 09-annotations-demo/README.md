@@ -24,6 +24,8 @@ as `@Autowired` does, without needing an `@Autowired` field or constructor anywh
   [study-notes-configuration-proxying-and-lite-mode.md](./study-notes-configuration-proxying-and-lite-mode.md)
 - Example project code - sample runs - output\
   [sample-runs-outputs.md](./sample-runs-outputs.md)
+- Notes on BeanPostProcessor ordering & ObjectProvider\
+  [notes-bpp-ordering-and-objectprovider.md](./notes-bpp-ordering-and-objectprovider.md)
 
 
 ---

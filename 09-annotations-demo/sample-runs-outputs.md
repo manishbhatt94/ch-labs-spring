@@ -395,3 +395,33 @@ Registered bean names:
 
 ---
 
+
+## 8. Main08_OrderedBeans.java
+
+- Main class: [com.example.annodemo.mains.Main08_OrderedBeans](./src/com/example/annodemo/mains/Main08_OrderedBeans.java)
+- Configuration class(es):
+    - [com.example.annodemo.config.OrderingConfig](./src/com/example/annodemo/config/OrderingConfig.java)
+- Components package:
+  [com.example.annodemo.ordering](./src/com/example/annodemo/ordering/)
+
+
+### 8.1. Output
+
+```txt
+=== Main08: ordering beans in a collection via @Order ===
+=========================================================
+
+orderedStream() result:
+  -> NameValidator(@Order=1)
+  -> AgeValidator(@Order=2)
+  -> EmailValidator(no @Order)
+
+(NameValidator@1, AgeValidator@2 sort first; EmailValidator with no @Order trails behind, in registration order)
+
+
+```
+
+<br>
+
+---
+

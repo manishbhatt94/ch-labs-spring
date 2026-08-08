@@ -50,6 +50,50 @@ Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version
 
 ---
 
+## About this project
+
+A companion codebase to the "XML → Annotations" concept-mapping notes — a plain,
+no-build-tool Eclipse Java project (JARs added to the build path by hand) that turns
+each mapped concept into a small, runnable, self-narrating demo.
+
+**Motivation:** reading the annotation equivalents on paper is one thing; watching the
+container actually construct, wrap, order, and destroy beans — in the *right* order,
+under the *right* conditions — is what makes the mental model stick. Every `MainXX_*`
+class prints exactly what's happening and why, so the console output *is* the lesson.
+
+**Deliberate scope boundary:** dependency injection (`@Autowired`, `@Value`,
+`@Resource`, self-injection, autowiring modes) is intentionally excluded — that's a
+separate demo project. Wherever a concept would normally need an injection point to
+demonstrate (`@Primary`, `@Order`, multi-bean aggregation), this project uses
+`getBean(Class)` / `getBeansOfType(Class)` / `getBeanProvider(Class)` instead — these
+run through the exact same resolution/ordering logic `@Autowired` uses internally, so
+nothing here is a workaround, it's just the same machinery driven by hand.
+
+**What's covered, `Main01` → `Main10`:**
+- stereotypes + `@ComponentScan` (incl. include/exclude filters)
+- eager vs. lazy init (`@Lazy`, and the real `default-lazy-init` equivalent,
+  `@ComponentScan(lazyInit=true)`)
+- all three bean instantiation styles via `@Bean`, including `@Configuration`
+  class proxying and "lite mode"
+- singleton vs. prototype scope
+- the full lifecycle-callback precedence order across `@PostConstruct`/
+  `InitializingBean`/custom init-method
+- `BeanPostProcessor` registration and ordering (and where `@Order` quietly
+  doesn't apply)
+- `@Primary` and ambiguity resolution
+- mixing XML `<bean/>` declarations with `<context:annotation-config/>`
+  and `<context:component-scan/>`.
+
+**Along the way, a few things got corrected or dug into deeper on review** —
+`@Lazy`-on-`@Configuration` only governs `@Bean` methods (not scanned `@Component`
+beans), `BeanPostProcessor` ordering only honors `Ordered`, not `@Order`, and
+`ObjectProvider`/`orderedStream()` turned out to be barely documented outside the
+Javadoc. Those are written up separately in:
+- [`study-notes-configuration-proxying-and-lite-mode.md`](./study-notes-configuration-proxying-and-lite-mode.md)
+- [`notes-bpp-ordering-and-objectprovider.md`](./notes-bpp-ordering-and-objectprovider.md)
+
+---
+
 ## 2. What each Main class demonstrates
 
 | Class | XML concept being mirrored | Annotation(s) shown |

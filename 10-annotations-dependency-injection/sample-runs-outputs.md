@@ -72,7 +72,6 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
     - [di.beans.beanwiring](./src/di/beans/beanwiring/)
 
 
-
 ### 2.1 Output
 
 ```txt
@@ -127,3 +126,61 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
 <br>
 
 ---
+
+
+## 3. Main03_CollectionInjectionAndOrdering.java
+
+- Main class:\
+  [di.main.Main03_CollectionInjectionAndOrdering](./src/di/main/Main03_CollectionInjectionAndOrdering.java)
+- Components package(s):\
+    - [di.beans.collections](./src/di/beans/collections/)
+
+
+### 3.1 Output
+
+```txt
+=========================================================
+ MAIN03: collection injection, aggregation, and ordering
+=========================================================
+
+
+--- Section 1: aggregation with NATURAL (unordered) registration order ---
+
+    [NewsAggregatorUnordered] order=AlJazeera BBC CNN      (natural registration order -- not a guaranteed contract)
+
+
+--- Section 2a: aggregation ordered via @Order ---
+
+    [WeatherAggregatorOrdered] order=OpenWeather(@Order=1) | AccuWeather(@Order=2) | NOAA(@Order=3) | 
+
+
+--- Section 2b: aggregation ordered via the Ordered interface ---
+
+    [StockAggregatorOrderedInterface] order=NYSE(Ordered=1) | NASDAQ(Ordered=2) | LSE(Ordered=3) | 
+
+
+--- Section 3: a @Bean method returning List<String> directly (not aggregated) ---
+
+    [ExchangePreferences] preferredExchanges=[NYSE, NASDAQ]      (this is the ONE @Bean-returned List, not an aggregation)
+
+
+--- Section 4: @Order on individual @Bean methods (same bean class, two defs) ---
+
+    [AlertDispatcher] order=Email SMS      (expected: Email SMS -- per-@Bean-method @Order)
+
+
+--- Section 5: aggregated beans in Map, and Set ---
+
+    [AggregateWeatherStockMapSet] weatherSources (java.util.LinkedHashMap)
+    [AggregateWeatherStockMapSet] weatherSources={ accuWeatherSource: AccuWeather(@Order=2), noaaWeatherSource: NOAA(@Order=3), openWeatherSource: OpenWeather(@Order=1) }
+
+    [AggregateWeatherStockMapSet] exchanges (java.util.LinkedHashSet)
+    [AggregateWeatherStockMapSet] exchanges=[LSE(Ordered=3), NASDAQ(Ordered=2), NYSE(Ordered=1)]
+
+
+```
+
+<br>
+
+---
+

@@ -3,8 +3,9 @@
 
 ## 1. Main01_AutowiredInjectionStyles.java
 
-- Main class: [di.main.Main01_AutowiredInjectionStyles](./src/di/main/Main01_AutowiredInjectionStyles.java)
-- Components package:
+- Main class:\
+  [di.main.Main01_AutowiredInjectionStyles](./src/di/main/Main01_AutowiredInjectionStyles.java)
+- Components package:\
   [di.beans.constructors](./src/di/beans/constructors/)
 
 
@@ -62,3 +63,43 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
 ---
 
 
+## 2. Main02_SimpleComplexArraysAndBeanWiring.java
+
+- Main class:\
+  [di.main.Main02_SimpleComplexArraysAndBeanWiring](./src/di/main/Main02_SimpleComplexArraysAndBeanWiring.java)
+- Components package:\
+  [di.beans.simplecomplex](./src/di/beans/simplecomplex/)
+
+
+
+### 2.1 Output
+
+```txt
+================================================================
+ MAIN02: simple vs complex types, arrays, @Bean-to-@Bean wiring
+================================================================
+
+        (Amplifier instance created)
+
+
+--- Section 1: @Value simple type vs @Autowired complex type ---
+
+    [ThemeSettings] themeName=Dark, volumeLevel=42
+    [SoundSystem] amplifier=OK
+
+
+--- Section 2: array of a complex type (aggregated from 3 beans) ---
+
+    [AudioDeviceRouter] devices=[Headphones, Speaker, Subwoofer] (count=3)
+
+
+--- Section 3: array of a simple type (single @Bean, NOT aggregated) ---
+
+    [LocalizationInfo] supportedLanguages=[en, fr, de]
+
+
+```
+
+<br>
+
+---

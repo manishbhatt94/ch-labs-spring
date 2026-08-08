@@ -67,8 +67,9 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
 
 - Main class:\
   [di.main.Main02_SimpleComplexArraysAndBeanWiring](./src/di/main/Main02_SimpleComplexArraysAndBeanWiring.java)
-- Components package:\
-  [di.beans.simplecomplex](./src/di/beans/simplecomplex/)
+- Components package(s):\
+    - [di.beans.simplecomplex](./src/di/beans/simplecomplex/)
+    - [di.beans.beanwiring](./src/di/beans/beanwiring/)
 
 
 
@@ -96,6 +97,29 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
 --- Section 3: array of a simple type (single @Bean, NOT aggregated) ---
 
     [LocalizationInfo] supportedLanguages=[en, fr, de]
+
+
+
+--- Section 4a: @Bean-to-@Bean wiring under FULL mode (both styles safe) ---
+
+        (a new Engine2 object was just constructed)
+
+    containerEngine == directCall.getEngine()     ? true
+    containerEngine == paramInjection.getEngine() ? true
+
+    → (expected: both true -- full mode keeps everything singleton-consistent)
+
+
+--- Section 4b: @Bean-to-@Bean wiring under LITE mode (direct call breaks) ---
+
+        (a new Engine2 object was just constructed)
+        (a new Engine2 object was just constructed)
+
+    liteContainerEngine == directCallLite.getEngine()     ? false
+    → (expected: FALSE -- direct call bypassed the container)
+
+    liteContainerEngine == paramInjectionLite.getEngine() ? true
+    → (expected: TRUE -- parameter injection unaffected by lite mode)
 
 
 ```

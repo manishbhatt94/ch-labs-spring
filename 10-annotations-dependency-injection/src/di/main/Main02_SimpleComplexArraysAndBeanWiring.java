@@ -2,6 +2,11 @@ package di.main;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import di.beans.beanwiring.CarStyleA;
+import di.beans.beanwiring.CarStyleB;
+import di.beans.beanwiring.Engine2;
+import di.beans.beanwiring.FullModeConfig;
+import di.beans.beanwiring.LiteModeConfig;
 import di.beans.simplecomplex.AudioDeviceRouter;
 import di.beans.simplecomplex.LocalizationInfo;
 import di.beans.simplecomplex.SoundSystem;
@@ -33,6 +38,37 @@ public class Main02_SimpleComplexArraysAndBeanWiring {
 		ctx.getBean(LocalizationInfo.class).printStatus();
 
 		ctx.close();
+		System.out.println();
+
+		System.out.println();
+		System.out.println("\n--- Section 4a: @Bean-to-@Bean wiring under FULL mode (both styles safe) ---\n");
+		AnnotationConfigApplicationContext fullCtx = new AnnotationConfigApplicationContext(FullModeConfig.class);
+		Engine2 containerEngine = fullCtx.getBean(Engine2.class);
+		CarStyleA directCall = fullCtx.getBean(CarStyleA.class);
+		CarStyleB paramInjection = fullCtx.getBean(CarStyleB.class);
+		System.out.println();
+		System.out.println(
+				"    containerEngine == directCall.getEngine()     ? " + (containerEngine == directCall.getEngine()));
+		System.out.println("    containerEngine == paramInjection.getEngine() ? "
+				+ (containerEngine == paramInjection.getEngine()));
+		System.out.println("\n    → (expected: both true -- full mode keeps everything singleton-consistent)");
+		fullCtx.close();
+
+		System.out.println();
+		System.out.println("\n--- Section 4b: @Bean-to-@Bean wiring under LITE mode (direct call breaks) ---\n");
+		AnnotationConfigApplicationContext liteCtx = new AnnotationConfigApplicationContext(LiteModeConfig.class);
+		Engine2 liteContainerEngine = liteCtx.getBean(Engine2.class);
+		CarStyleA directCallLite = liteCtx.getBean("carDirectCallLite", CarStyleA.class);
+		CarStyleB paramInjectionLite = liteCtx.getBean("carParamInjectionLite", CarStyleB.class);
+		System.out.println();
+		System.out.println("    liteContainerEngine == directCallLite.getEngine()     ? "
+				+ (liteContainerEngine == directCallLite.getEngine())
+				+ "\n    → (expected: FALSE -- direct call bypassed the container)\n");
+		System.out.println("    liteContainerEngine == paramInjectionLite.getEngine() ? "
+				+ (liteContainerEngine == paramInjectionLite.getEngine())
+				+ "\n    → (expected: TRUE -- parameter injection unaffected by lite mode)");
+		liteCtx.close();
+
 		System.out.println();
 
 	}

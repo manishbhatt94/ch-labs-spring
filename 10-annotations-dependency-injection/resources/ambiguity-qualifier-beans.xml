@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Two beans of the SAME class, disambiguated purely via nested <qualifier> 
+		tags. Recall from the XML-config phase: this <qualifier> tag has no effect 
+		on its own - it only matters because FraudCheckServiceUser (Java side) uses 
+		@Qualifier to consume it. -->
+
+	<bean id="fastFraudCheck"
+		class="di.beans.ambiguityxml.FraudCheckServiceImpl">
+		<constructor-arg value="Fast" />
+		<qualifier value="fast" />
+	</bean>
+
+	<bean id="thoroughFraudCheck"
+		class="di.beans.ambiguityxml.FraudCheckServiceImpl">
+		<constructor-arg value="Thorough" />
+		<qualifier value="thorough" />
+	</bean>
+
+</beans>

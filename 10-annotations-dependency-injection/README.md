@@ -17,7 +17,19 @@ excluded `@Autowired`/DI.
 ---
 
 
-## 1. JARs Required
+## 1. Eclipse project setup
+
+1. Create a new plain Java Project in Eclipse (no Maven/Gradle).
+2. Add the `src` folder as your main source folder (should be the default).
+3. Add the `resources` folder as an ADDITIONAL source folder:
+   right-click the project → **Build Path → Configure Build Path… →
+   Source → Add Folder…** → select `resources`. This makes
+   `app.properties` and `ambiguity-qualifier-beans.xml` visible on the
+   classpath (`classpath:...`) the way `@PropertySource` and
+   `@ImportResource` expect. 
+
+
+### JARs Required
 
 Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version`:
 

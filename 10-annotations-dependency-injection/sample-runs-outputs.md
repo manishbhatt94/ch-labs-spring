@@ -184,3 +184,59 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
 
 ---
 
+
+## 4. Main04_AmbiguityResolution.java
+
+- Main class:\
+  [di.main.Main04_AmbiguityResolution](./src/di/main/Main04_AmbiguityResolution.java)
+- Components package(s):
+    - [di.beans.ambiguity](./src/di/beans/ambiguity/)
+    - [di.beans.ambiguityxml](./src/di/beans/ambiguityxml/)
+
+
+### 4.1 Output
+
+```txt
+==================================================================
+ MAIN04: ambiguity resolution (single-value AND collection cases)
+==================================================================
+
+
+
+--- Section 1: single-value disambiguation via @Primary ---
+
+    [CheckoutServicePrimary] gateway=CreditCard(@Primary)  (expected: CreditCard, via @Primary)
+
+
+--- Section 2: single-value disambiguation via @Qualifier ---
+
+    [CheckoutServiceQualifier] notifier=Email  (expected: Email, via matching @Qualifier values)
+
+
+--- Section 3: single-value disambiguation via implicit by-name fallback ---
+
+    [CheckoutServiceByName] expressShipping=Express  (expected: Express, via implicit by-name match, no @Primary/@Qualifier used)
+
+
+--- Section 3a: collection injection ignores @Primary/@Qualifier entirely ---
+
+    [CheckoutServiceAllGateways] allGateways=CreditCard(@Primary) | DebitCard | NetBanking |  (expected: all 3, @Primary is irrelevant here)
+
+
+--- Section 3c: @Qualifier as a COLLECTION FILTER (3 of 5 beans match) ---
+
+    [DiscountAggregator] seasonalDiscounts=BlackFriday | NewYear | SummerSale |  (expected: SummerSale, BlackFriday, NewYear only -- 2 of 5 filtered OUT)
+
+
+
+--- Section 3b: XML <qualifier> + Java-side @Qualifier, single-valued ---
+
+    [FraudCheckServiceUser] checker=FraudCheckServiceImpl[Thorough]  (expected: FraudCheckServiceImpl[Thorough], via XML <qualifier> + Java @Qualifier)
+
+
+```
+
+<br>
+
+---
+

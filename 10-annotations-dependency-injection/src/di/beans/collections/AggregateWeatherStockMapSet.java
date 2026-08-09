@@ -32,7 +32,7 @@ public class AggregateWeatherStockMapSet {
 		System.out.println("    [AggregateWeatherStockMapSet] exchanges=" + printExchanges());
 	}
 
-	public String printWeatherSources() {
+	private String printWeatherSources() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{ ");
 		String[] keys = weatherSources.keySet().toArray(new String[0]);
@@ -49,7 +49,7 @@ public class AggregateWeatherStockMapSet {
 		return sb.toString();
 	}
 
-	public String printExchanges() {
+	private String printExchanges() {
 		List<String> names = exchanges.stream().map(StockSource::name).collect(Collectors.toList());
 		return names.toString();
 	}

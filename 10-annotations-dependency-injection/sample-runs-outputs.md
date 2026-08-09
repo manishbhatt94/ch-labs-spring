@@ -240,3 +240,52 @@ Dashboard [gps=di.beans.constructors.GPS@44f75083, battery=di.beans.constructors
 
 ---
 
+
+## 5. Main05_OptionalDependencies.java
+
+- Main class:\
+  [di.main.Main05_OptionalDependencies](./src/di/main/Main05_OptionalDependencies.java)
+- Components package(s):
+    - [di.beans.optional](./src/di/beans/optional/)
+
+
+### 5.1 Output
+
+```txt
+=========================================================
+ MAIN05: required semantics, Optional<T>, and @Nullable
+=========================================================
+
+
+
+--- Section 1: required=false on a setter (dependency absent) ---
+
+    [NotifierClient] smsGateway=NULL (sentinel default kept)  (expected: NULL -- setter should never have been invoked)
+
+
+--- Section 2: default required=true on an EMPTY collection (expected FAILURE) ---
+
+Aug 09, 2026 5:39:16 PM org.springframework.context.support.AbstractApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'requiredCollectionConsumer': Unsatisfied dependency expressed through field 'mustHaveAtLeastOne'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'java.util.List<di.beans.optional.UnregisteredType>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+    Got expected UnsatisfiedDependencyException.
+    Message: Error creating bean with name 'requiredCollectionConsumer': Unsatisfied dependency expressed through field 'mustHaveAtLeastOne'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'java.util.List<di.beans.optional.UnregisteredType>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+
+
+--- Section 3: Optional<T> on FIELD, SETTER, and CONSTRUCTOR PARAMETER ---
+
+    [OptionalDemoBean] premiumSupport   (FIELD)      isPresent=false  (expected: false, no bean registered)
+    [OptionalDemoBean] loyaltyProgram   (SETTER)     isPresent=true   (expected: true -> Gold)
+    [OptionalDemoBean] conciergeService (CTOR arg)   isPresent=false  (expected: false, no bean registered)
+
+
+--- Section 4: @Nullable on a method parameter ---
+
+    [NullableDemoBean] backupContact=null  (expected: null -- no bean registered, but no exception either)
+
+
+```
+
+<br>
+
+---
+

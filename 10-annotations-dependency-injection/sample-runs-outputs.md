@@ -289,3 +289,122 @@ WARNING: Exception encountered during context initialization - cancelling refres
 
 ---
 
+
+## 6. Main06_ValuePropertySourceSpEL.java
+
+- Main class:\
+  [di.main.Main06_ValuePropertySourceSpEL](./src/di/main/Main06_ValuePropertySourceSpEL.java)
+- Components package(s):
+    - [di.beans.valuespel](./src/di/beans/valuespel/)
+
+
+### 6.1 Output
+
+```txt
+=========================================================
+ MAIN06: @Value, @PropertySource, and SpEL
+=========================================================
+
+
+
+--- Part A, Section 1: ExpressionParser/Expression/EvaluationContext -- all getValue/setValue overloads ---
+
+    getValue()                                  -> Hello World
+    getValue(Class)                             -> Hello World
+    getValue(rootObject)                        -> Nikola Tesla
+    getValue(rootObject, Class)                 -> Nikola Tesla
+    getValue(context)  [root preset on context] -> Nikola Tesla
+    getValue(context, Class)                    -> Nikola Tesla
+    getValue(context, rootObject)  [override]   -> Nikola Tesla
+    getValue(context, rootObject, Class)        -> Nikola Tesla
+    setValue(rootObject, value)          -> tesla.name is now: Nikola Tesla #1
+    setValue(context, value)             -> tesla.name is now: Nikola Tesla #2
+    setValue(context, rootObject, value) -> tesla.name is now: Nikola Tesla #3
+
+
+--- Part A, Section 2: property navigation and indexing (arrays/strings/maps) ---
+
+    placeOfBirth.name                             -> Smiljan
+    inventions[0]  (array indexing)               -> Tesla Coil
+    'Hello World'[0]  (string indexing)           -> H
+    {'India':'Delhi','France':'Paris'}['France']  -> Paris
+
+
+--- Part A, Section 3: inline lists, inline maps, array construction ---
+
+    {1,2,3,4}  (inline list)               -> [1, 2, 3, 4]
+    {'India':'Delhi','France':'Paris'}     -> {India=Delhi, France=Paris}
+    new int[]{1,2,3}  (array construction) -> [1, 2, 3]
+    (note: SpEL cannot take an initializer for a MULTI-dimensional array construction)
+
+
+--- Part A, Section 4: invoking methods (on a literal, and on a root object) ---
+
+    'Hello World'.concat('!')  (on a literal)   -> Hello World!
+    describe()  (instance method on rootObject) -> Nikola Tesla #3 (Serbian)
+
+
+--- Part A, Section 5: the T() operator (types + static members) ---
+
+    T(java.lang.Math).PI                       -> 3.141592653589793
+    T(java.lang.Math).random()                 -> 0.9062204289065221
+    T(String) == T(java.lang.String)?  (java.lang needs no qualification) -> true
+    T(Math).toDegrees(3.141592653589793)       -> 180.0
+    T(di.beans.valuespel.GreetingHelper).randomGreeting()   (non-java.lang MUST be fully-qualified) -> Salaam
+    T(di.beans.valuespel.City).getSimpleName()   (calling Class<City>#getSimpleName() method) -> City
+    T(di.beans.valuespel.Inventor)             -> class di.beans.valuespel.Inventor
+
+
+--- Part A, Section 6: the Elvis operator (?:) ---
+
+    nickname ?: 'Unknown'  (nickname was never set)    -> Unknown
+
+
+--- Part A, Section 7: the safe navigation operator (?.) ---
+
+    placeOfBirth?.name  (placeOfBirth is null, no NPE) -> null
+    #calculator?.max(4, 2)  (calculator variable is null, no NPE) -> null
+    calc?.max(8, 11)  (`calc` field is null on rootObject `tesla`, STILL no NPE) -> null
+    calc?.max(8, 11)  (`calc` field is now set on rootObject `tesla`) -> 11
+
+
+--- Part A, Section 8: collection selection (.?[], .^[], .$[]) ---
+
+    #numbers.?[#this % 2 == 0]  (all evens)  -> [2, 4, 6, 8, 10]
+    #numbers.^[#this % 2 == 0]  (first even) -> 2
+    #numbers.$[#this % 2 == 0]  (last even)  -> 10
+    {'India':'Delhi','France':'Paris','US':'DC'}.?[key.length() <= 2]  (map selection, by key) -> {US=DC}
+
+
+--- Part A, Section 9: collection projection (.![]) ---
+
+    #inventors.![placeOfBirth.name]  (list of birth cities)      -> [Smiljan, Idvor]
+    {'a':1,'b':2}.![value]  (map projection -> a List, per docs) -> [1, 2]
+
+
+--- Part A, Section 10: expression templating (standalone -- needs TemplateParserContext) ---
+
+    random number is 0.9885346819720419
+
+
+--- Part B: @Value, @PropertySource, and SpEL inside a Spring-managed bean ---
+
+    [AppInfo] appName=Spring DI Demo
+    [AppInfo] version=1.0
+    [AppInfo] maxUsers=100
+    [AppInfo] withDefault=DefaultValue  (expected: DefaultValue, key absent from app.properties)
+    [AppInfo] spelArithmetic=42  (expected: 42)
+    [AppInfo] spelTernary=HighCapacity  (expected: HighCapacity, since maxUsers=100 > 50)
+    [AppInfo] greeting=Welcome to Spring DI Demo!
+    [AppInfo] randomGreeting=Ciao
+    [AppInfo] osName (predefined 'systemProperties' bean)          =Windows 11
+    [AppInfo] appNameViaEnvironment (predefined 'environment' bean) =Spring DI Demo
+    [AppInfo] randomIdMessage (templating works natively in @Value) =Your random ID is 0.7756513966722343
+
+
+```
+
+<br>
+
+---
+

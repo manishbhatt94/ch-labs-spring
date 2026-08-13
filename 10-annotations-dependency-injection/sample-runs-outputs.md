@@ -408,3 +408,51 @@ WARNING: Exception encountered during context initialization - cancelling refres
 
 ---
 
+
+## 7. Main07_SelfInjectionBonus.java
+
+- Main class:\
+  [di.main.Main07_SelfInjectionBonus](./src/di/main/Main07_SelfInjectionBonus.java)
+- Components package(s):
+    - [di.beans.selfinjection](./src/di/beans/selfinjection/)
+
+
+### 7.1 Output
+
+```txt
+=========================================================
+ MAIN07 (BONUS): self-injection mechanism
+=========================================================
+
+
+
+--- Section 1: calling a method directly (this) ---
+
+    [ReportGenerator] generateReport() executing
+
+
+--- Section 2: calling the SAME method via the self-injected field ---
+
+    [ReportGenerator] generateReportViaSelf() -- about to call self.generateReport()
+    [ReportGenerator] generateReport() executing
+
+
+--- Section 3: identity check ---
+
+    contextBean == contextBean.getSelfReference() ? true
+      (expected: TRUE -- no AOP proxy is configured in this project, so 'self' is plain 'this')
+
+    NOTE: in a real @Transactional/AOP-advised bean, the self-injected
+    reference would instead be a PROXY, not the raw instance -- so calling
+    self.someTransactionalMethod() would correctly trigger that advice,
+    whereas this.someTransactionalMethod() would silently bypass it.
+    This project does not configure real AOP proxying (out of scope);
+    that is left for a future, dedicated AOP-focused learning phase.
+
+
+```
+
+<br>
+
+---
+

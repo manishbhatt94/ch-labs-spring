@@ -12,6 +12,8 @@ excluded `@Autowired`/DI.
 
 - Example project code - sample runs - output\
   [sample-runs-outputs.md](./sample-runs-outputs.md)
+- Study notes on Spring Dependency Injection with Annotations\
+  [study-notes-di-annotations-demo.md](./study-notes-di-annotations-demo.md)
 
 
 ---

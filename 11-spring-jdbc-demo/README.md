@@ -30,6 +30,8 @@ Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version
   (Placed under custom User Library titled: "spring-jsr250-annotations-5.3.39")
   1. `javax.annotation:javax.annotation-api:1.3.2`
   1. `org.springframework:spring-aop:5.3.39`
+- **For MySQL Connector J:** \
+  1. `com.mysql:mysql-connector-j:8.2.0`
 - **For Spring JDBC:** \
   ("spring-tx.jar" holds the DataAccessException class)
   1. Spring JDBC » 5.3.39 (`org.springframework:spring-jdbc:5.3.39`)\
@@ -45,6 +47,22 @@ Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version
 
 
 No separate CGLIB/ASM jar is needed — Spring repackages both inside `spring-core`.
+
+
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="../assets/images/fig-05-jars-for-spring-jdbc.png"
+           alt="JARs required for Spring JDBC - Eclipse User Library 'spring-jdbc-libs-5.3.39'"
+           title="JARs required for Spring JDBC - Eclipse User Library 'spring-jdbc-libs-5.3.39'"
+           width="640" height="507" loading="lazy" border="1">
+      <br />
+      <em>Figure 1: JARs required for Spring JDBC - Eclipse User Library 'spring-jdbc-libs-5.3.39'</em>
+    </td>
+  </tr>
+</table>
+
 
 ---
 

@@ -35,6 +35,9 @@ public class LaunchXmlHardcode {
 
 		crud.getStateWiseEmployeeCounts();
 
+		crud.findEmployeesBySalaryAndState(55000, "Karnataka");
+		crud.findEmployeesBySalaryAndState(50000, "Uttar Pradesh");
+
 		ctx.close();
 
 	}

@@ -9,6 +9,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -18,6 +21,8 @@ import com.entity.EmployeeData;
 public abstract class AbstractEmployeeCrud {
 
 	protected JdbcTemplate jdbcTemplate;
+
+	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	private static final RowMapper<Employee> employeeRowMapper = (rs, rowNum) -> {
 		Employee mappedEmp = new Employee();
@@ -257,6 +262,35 @@ public abstract class AbstractEmployeeCrud {
 		} catch (EmptyResultDataAccessException ex) {
 			System.out.println("\nEmployee with employee_id = " + employeeId + " -- NOT FOUND!\n");
 		}
+
+	}
+
+	public void findEmployeesBySalaryAndState(int minSalary, String state) {
+
+		System.out.println("\nFetching employees with salary >= " + minSalary + " residing in state containing '"
+				+ state + "'...");
+
+		// @formatter:off
+	    String sql = "SELECT * FROM spring_employee \n"
+	            + "  WHERE employee_salary >= :minSalary \n"
+	            + "  AND employee_address LIKE :statePattern \n"
+	            + "  ORDER BY employee_salary DESC";
+
+		SqlParameterSource params = new MapSqlParameterSource()
+				.addValue("minSalary", minSalary)
+				.addValue("statePattern", "%" + state);
+		// @formatter:on
+
+		List<Employee> employees = namedParameterJdbcTemplate.query(sql, params, employeeRowMapper);
+
+		System.out.println("Found " + employees.size() + " employee(s) matching criteria.");
+		System.out.println("Records fetched below:\n");
+
+		for (Employee emp : employees) {
+			System.out.println("    ->  " + emp);
+		}
+
+		System.out.println("\nDone reading employees by salary and state.\n");
 
 	}
 

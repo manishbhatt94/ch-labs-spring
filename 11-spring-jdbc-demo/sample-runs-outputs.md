@@ -1,6 +1,16 @@
 # Output for Sample Code Run
 
+## Output for "com.mainapp.LaunchAnnoPooled" main class
+
+This output is "com.mainapp.LaunchAnnoPooled" main class, which uses HikariCP
+provided connection-pooled DataSource.
+
+Other main classes in "com.mainapp.*" package have same output.
+
 ```txt
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 
 Dropping table spring_employee in database...
 Table spring_employee dropped successfully in database.
@@ -160,6 +170,11 @@ Records fetched below:
     ->  Employee [id=48, name=Poonam Yadav, address=Sector 22, Noida, Uttar Pradesh, salary=50000]
 
 Done reading employees by salary and state.
+
+
+===============================================
+Time elapsed for CRUD operations: 74 ms
+===============================================
 
 
 ```

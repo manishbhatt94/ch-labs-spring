@@ -49,6 +49,7 @@ Listed as GAV (GroupId, ArtifactId, Version) coordinates `Group:Artifact:Version
 No separate CGLIB/ASM jar is needed — Spring repackages both inside `spring-core`.
 
 
+Below is screenshot of JARs for Spring JDBC added to Eclipse project:
 
 <table align="center" border="1" cellpadding="8">
   <tr>
@@ -62,6 +63,27 @@ No separate CGLIB/ASM jar is needed — Spring repackages both inside `spring-co
     </td>
   </tr>
 </table>
+
+
+<br>
+
+And, for using Connection Pooling (via HikariCP), we added two additional JARs
+as shown in below screenshot (check Eclipse User Library named
+*"hikaricp-libs-3.1.0"* in the image):
+
+<table align="center" border="1" cellpadding="8">
+  <tr>
+    <td align="center">
+      <img src="../assets/images/fig-06-spring-jdbc-jars-with-hikaricp.png"
+           alt="JARs for Spring JDBC with HikariCP"
+           title="JARs for Spring JDBC with HikariCP"
+           width="680" height="399" loading="lazy" border="1">
+      <br />
+      <em>Figure 2: JARs for Spring JDBC with HikariCP</em>
+    </td>
+  </tr>
+</table>
+
 
 
 ---

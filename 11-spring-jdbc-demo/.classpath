@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring-jsr250-annotations-5.3.39"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql-connector-8.2.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring-jdbc-libs-5.3.39"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hikaricp-libs-3.1.0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

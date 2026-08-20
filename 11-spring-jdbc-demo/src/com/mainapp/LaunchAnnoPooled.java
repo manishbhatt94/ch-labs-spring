@@ -3,15 +3,15 @@ package com.mainapp;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.annoConf.AppConfig;
-import com.annoConf.DataConfig;
+import com.annoConf.PooledDataConfig;
 import com.crud.EmployeeCrudAnno;
 import com.entity.Employee;
 
-public class LaunchAnno {
+public class LaunchAnnoPooled {
 
 	public static void main(String[] args) {
 
-		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataConfig.class,
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(PooledDataConfig.class,
 				AppConfig.class);
 
 		EmployeeCrudAnno crud = ctx.getBean("employeeCrudBean", EmployeeCrudAnno.class);

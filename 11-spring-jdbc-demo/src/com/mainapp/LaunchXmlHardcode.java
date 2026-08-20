@@ -3,6 +3,7 @@ package com.mainapp;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.crud.EmployeeCrudXml;
+import com.entity.Employee;
 
 public class LaunchXmlHardcode {
 
@@ -12,8 +13,8 @@ public class LaunchXmlHardcode {
 
 		EmployeeCrudXml crud = ctx.getBean("employeeCrud", EmployeeCrudXml.class);
 
-		crud.insertEmployee("Method Man", "Park Hill Project, Staten Island, New York State", 23000);
-		crud.insertEmployee("Ol' Dirty Bastard", "Park Hill Project, Staten Island, New York State", 31000);
+		crud.insertEmployee("Method Man", "Park Hill Project, Staten Island, New York", 23000);
+		crud.insertEmployee("Ol' Dirty Bastard", "Park Hill Project, Staten Island, New York", 31000);
 
 		crud.updateEmployeeSalary(1, 11111);
 		crud.updateEmployeeSalary(2, 22222);
@@ -21,14 +22,18 @@ public class LaunchXmlHardcode {
 
 		crud.deleteEmployees(11, 15);
 
-		crud.showEmployeeCount();
-
 		crud.readBelowAverageSalaryEmployees();
 		crud.readKarnatakaEmployees();
 		crud.readEmployeesHavingName("Kulkarni");
 
 		crud.findEmployeeById(3017);
 		crud.findEmployeeById(19);
+
+		crud.insertAndGetKey(new Employee("Inspectah Deck", "The Bronx, New York", 26000));
+
+		crud.showEmployeeCount();
+
+		crud.getStateWiseEmployeeCounts();
 
 		ctx.close();
 

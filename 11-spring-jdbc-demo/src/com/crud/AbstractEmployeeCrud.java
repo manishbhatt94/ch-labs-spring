@@ -1,12 +1,16 @@
 package com.crud;
 
+import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import com.entity.Employee;
 import com.entity.EmployeeData;
@@ -65,6 +69,34 @@ public abstract class AbstractEmployeeCrud {
 
 	public void insertEmployee(Employee employee) {
 		insertEmployee(employee.getName(), employee.getAddress(), employee.getSalary());
+	}
+
+	public void insertAndGetKey(Employee employee) {
+
+		final String name = employee.getName();
+		System.out.println("\nInserting employee: " + name + " into table spring_employee in database...");
+
+		final String sql = "INSERT INTO spring_employee (employee_name, employee_address, employee_salary) VALUES (?, ?, ?)";
+
+		PreparedStatementCreator psc = connection -> {
+			PreparedStatement ps = connection.prepareStatement(sql, new String[] { "employee_id" });
+			ps.setString(1, name);
+			ps.setString(2, employee.getAddress());
+			ps.setInt(3, employee.getSalary());
+			return ps;
+		};
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		int rowsAffected = jdbcTemplate.update(psc, keyHolder);
+
+		// keyHolder.getKey() now contains the generated key
+		System.out.println("Rows affected: " + rowsAffected);
+
+		Number key = keyHolder.getKey();
+		System.out.println("Inserted record's auto generated primary key = " + key);
+		System.out.println("Inserted employee: " + name + ".\n");
+
 	}
 
 	public void updateEmployeeSalary(int employeeId, int newSalary) {
@@ -127,6 +159,44 @@ public abstract class AbstractEmployeeCrud {
 		}
 
 		System.out.println("\nDone reading all below average salary employees.\n");
+
+	}
+
+	/*
+	 * SELECT *, TRIM(SUBSTRING_INDEX(employee_address, ',', -1)) AS
+	 * `employee_state` FROM spring_employee;
+	 */
+	// https://docs.oracle.com/cd/E17952_01/mysql-8.0-en/string-functions.html#function_substring-index
+
+	public void getStateWiseEmployeeCounts() {
+
+		System.out.println("\nGetting state-wise counts of employees...");
+
+		// @formatter:off
+		String sql = "SELECT \n"
+				+ "  TRIM(SUBSTRING_INDEX(employee_address, ',', -1)) AS employee_state, \n"
+				+ "  COUNT(*) AS state_employee_count \n"
+				+ "  FROM spring_employee GROUP BY employee_state \n"
+				+ "  ORDER BY state_employee_count DESC;";
+		// @formatter:on
+
+		// Execute a query for a result list, given static SQL.
+		// Uses a JDBC Statement, not a PreparedStatement
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+		System.out.println("Retrieved " + rows.size() + " rows(s) -- i.e. this many states.");
+		System.out.println("Records fetched below:\n");
+
+		for (Map<String, Object> row : rows) {
+			System.out.print("    ->  ");
+			for (Map.Entry<String, Object> data : row.entrySet()) {
+				System.out.print(data.getKey() + " = ");
+				System.out.printf("%-20s", data.getValue().toString());
+			}
+			System.out.println();
+		}
+
+		System.out.println("\nDone reading state-wise counts of employees.\n");
 
 	}
 

@@ -291,3 +291,67 @@ spring-web  (shared foundation)
 
 <br>
 
+---
+
+<br>
+
+## Spring MVC XML Configuration
+
+> Section 22.2.1, “Special Bean Types In the WebApplicationContext” and Section
+> 22.2.2, “Default DispatcherServlet Configuration” explained about Spring
+> MVC's special beans and the default implementations used by the
+> `DispatcherServlet`.
+> In this section you'll learn about two additional ways
+> of configuring Spring MVC. Namely **the MVC Java config** and
+> **the MVC XML namespace**.
+>
+> Quoted from: \
+> [Spring 4.3.x Docs - &sect; 22.16 Configuring Spring MVC](https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/mvc.html#mvc-config)
+
+This page also mentions the skeletal of the MVC XML file, while talking about
+*"Enabling the MVC Configuration"* in the very next section:
+
+(Taken from [Spring 4.3.x Docs - &sect; 22.16.1 Enabling the MVC Java Config or the MVC XML Namespace](https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/mvc.html#mvc-config-enable))
+
+To enable MVC Java config add the annotation @EnableWebMvc to one of your
+`@Configuration` classes:
+
+```java
+@Configuration
+@EnableWebMvc
+public class WebConfig {
+}
+```
+
+To achieve the same in XML use the `mvc:annotation-driven` element in your
+DispatcherServlet context (or in your root context if you have no
+DispatcherServlet context defined):
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven/>
+
+</beans>
+```
+
+<br>
+
+> [!NOTE]
+> Similar information as above is provided, in more recent Spring versions
+> documentation reference pages, although, in not as much clear language,
+> as in the documentation of Spring 3.x and Spring 4.x.
+>
+> Below are the links to similar sections in recent Spring documentation
+> pages:
+> - [Spring 5.3.39 - &sect; 1.11.1. Enable MVC Configuration](https://docs.spring.io/spring-framework/docs/5.3.39/reference/html/web.html#mvc-config-enable)
+> - [Spring Latest / v7.0.9 - &sect; Enable MVC Configuration](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/enable.html)
+

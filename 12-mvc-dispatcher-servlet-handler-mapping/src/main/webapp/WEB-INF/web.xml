@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app id="WebApp_ID">
+
 	<display-name>12-mvc-dispatcher-servlet-handler-mapping</display-name>
+
+	<!-- spring-web will create a "root" WebApplicationContext (WAC), if you 
+		setup a ContextLoaderListener (which calls Spring's ContextLoader that does 
+		the job of creating a root WAC & setting it as an attribute of the web app's 
+		ServletContext); And if you either have the Spring Context beans XML file 
+		for your root WAC at either the default path (i.e. "/WEB-INF/applicationContext.xml"), 
+		or you declare a custom file path for it using a <context-param> named "contextConfigLocation" 
+		providing the path as its value (like in the example below as "/WEB-INF/root-context.xml") 
+		and ensure that this Spring Beans XML file is present at the path you just 
+		mentioned in "contextConfigLocation" value. -->
+	<!--
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/root-context.xml</param-value>
+	</context-param>
+	-->
+
+	<!-- SpringMVC creates a separate WebApplicationContext per each DispatcherServlet 
+		servlet we mention in web.xml configuration using <servlet></servlet>, as 
+		below. -->
+	<servlet>
+		<servlet-name>news-app-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- <display-name>MyNewsAppDispatcher</display-name> <description></description> -->
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>news-app-dispatcher</servlet-name>
+		<!-- Route all requests of pattern "*.do" through this DispatcherServlet 
+			having name "news-app-dispatcher". -->
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -12,4 +49,5 @@
 		<welcome-file>default.jsp</welcome-file>
 		<welcome-file>default.xhtml</welcome-file>
 	</welcome-file-list>
+
 </web-app>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- Notice: no xmlns:context namespace, no xmlns:mvc namespace, no <context:component-scan>, 
+		no <mvc:annotation-driven/>. Pure <beans> namespace only — because we're 
+		declaring everything explicitly as <bean> tags. -->
+
+
+	<!--
+        BeanNameUrlHandlerMapping:
+        Maps incoming URLs to controller beans by matching the URL
+        against each bean's "name" attribute.
+        e.g. a request to "/registration.do" will be routed to
+        whichever bean has name="/registration.do"
+
+        Note: Spring MVC actually registers BeanNameUrlHandlerMapping
+        as a default even without declaring it explicitly — but we
+        declare it here to make the invisible visible. This is the
+        whole point of this exercise.
+    -->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+    <!--
+        SimpleControllerHandlerAdapter:
+        DispatcherServlet doesn't call your controller directly.
+        It asks a HandlerAdapter: "you know how to invoke this type
+        of controller — you do it."
+        SimpleControllerHandlerAdapter knows how to invoke controllers
+        that implement Spring's Controller interface (via handleRequest()).
+        Without this, DispatcherServlet can't invoke your controller.
+    -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+    <!--
+        The controller bean itself.
+        name="/registration.do" serves dual purpose:
+        1. It's the Spring bean name (id)
+        2. BeanNameUrlHandlerMapping uses it as the URL pattern to match
+        This is what @GetMapping("/registration.do") was hiding.
+    -->
+    <bean name="/registration.do" class="com.example.controller.RegistrationController"/>
+
+    <!--
+        InternalResourceViewResolver:
+        Turns logical view name returned by controller ("register")
+        into actual JSP path (/WEB-INF/view/register.jsp)
+        prefix + viewName + suffix = full path
+    -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+</beans>

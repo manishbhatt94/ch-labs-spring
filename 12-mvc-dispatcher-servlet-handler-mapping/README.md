@@ -1,5 +1,11 @@
 # Spring MVC Introduction - Dispatcher Servlet & Handler Mapping
 
+### Notes
+
+- [Notes on Few Foundation Concepts in Spring MVC](./notes-spring-mvc-foundations.md)
+
+---
+
 First, we discuss the setup steps below in Eclipse for a Spring MVC project.
 We will be creating a New **"Dynamic Web Project"** in Eclipse, like we used to
 do when working with Servlets / JSP - Refer:
@@ -307,6 +313,10 @@ spring-web  (shared foundation)
 >
 > Quoted from: \
 > [Spring 4.3.x Docs - &sect; 22.16 Configuring Spring MVC](https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/mvc.html#mvc-config)
+
+From above, we see that there are two ways to configure Spring MVC, namely:
+1. The MVC Java Config, and
+1. The MVC XML Namespace.
 
 This page also mentions the skeletal of the MVC XML file, while talking about
 *"Enabling the MVC Configuration"* in the very next section:

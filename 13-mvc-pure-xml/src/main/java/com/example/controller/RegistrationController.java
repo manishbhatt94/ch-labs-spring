@@ -1,8 +1,11 @@
 package com.example.controller;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -26,6 +29,10 @@ public class RegistrationController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		System.out.println("RegistrationController.handleRequest() invoked");
+
+		ServletContext sc = request.getServletContext();
+		WebApplicationContext rootWac = WebApplicationContextUtils.getWebApplicationContext(sc);
+		System.out.println("[RegistrationController.handleRequest] Root WAC: " + rootWac); // Prints: null
 
 		/*
 		 * ModelAndView bundles two things together:

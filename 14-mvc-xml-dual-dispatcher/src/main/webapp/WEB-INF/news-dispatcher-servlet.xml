@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/news/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+
+	<!--
+		NewsController is a child WAC bean — specific to news section.
+		articleService (root WAC bean) is injected here via <property>.
+		Spring resolves it by walking up to the parent root WAC transparently.
+		NewsController never needs to fetch it from any context manually.
+	-->
+	<bean name="/articles" class="com.dualapp.news.NewsController">
+		<property name="articleService" ref="articleServiceBean"/>
+	</bean>
+
+
+</beans>

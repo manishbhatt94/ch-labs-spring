@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/admin/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+
+	<!--
+		AdminController is a child WAC bean — specific to admin section.
+		Same articleService bean injected — Spring resolves from root WAC.
+		Both controllers share the SAME articleService instance (singleton
+		in root WAC) — this is the whole point of root WAC shared beans.
+	-->
+	<bean name="/dashboard" class="com.dualapp.admin.AdminController">
+		<property name="articleService" ref="articleServiceBean"/>
+	</bean>
+
+
+</beans>

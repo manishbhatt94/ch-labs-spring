@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!--
+		ArticleService is a shared bean — lives in root WAC.
+		Both child WACs (news and admin) will have it injected
+		into their respective controllers via parent WAC transparency.
+		No controller needs to fetch it manually.
+	-->
+	<bean id="articleServiceBean" class="com.dualapp.service.ArticleService"/>
+
+
+</beans>

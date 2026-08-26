@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app id="WebApp_ID">
+
+	<display-name>14-mvc-xml-dual-dispatcher</display-name>
+
+	<!--
+		ROOT WAC SETUP:
+
+		ContextLoaderListener fires first — before any servlet initializes.
+		It reads root-context.xml and builds the root WAC, storing it on
+		ServletContext. This is where ArticleService lives — shared by both
+		child WACs.
+	-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/root-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+
+	<!--
+		OUR OWN STARTUP LISTENER:
+
+		Declared AFTER ContextLoaderListener — listeners fire in declaration
+		order. By the time StartupListener.contextInitialized() runs, the
+		root WAC is already alive on ServletContext. But neither child WAC
+		exists yet (DispatcherServlets haven't initialized).
+		This is the demo of: root WAC accessible before child WACs exist.
+	-->
+	<listener>
+		<listener-class>
+			com.dualapp.listener.StartupListener
+		</listener-class>
+	</listener>
+
+
+	<!--
+		CHILD WAC 1 — News DispatcherServlet:
+
+		Handles all /news/* requests.
+		Auto-looks for /WEB-INF/news-dispatcher-servlet.xml
+		(default is "/WEB-INF/[servlet_name]-servlet.xml")
+	-->
+	<servlet>
+		<servlet-name>news-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<!-- If custom path needs to be specified for the Spring's ApplicationContext
+			(WebApplicationContext) XML for this servlet, then provide the custom path
+			within <init-param> named "contextConfigLocation", like below:
+		-->
+		<!--
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/custom-news-dispatcher-spring-context.xml</param-value>
+		</init-param>
+		-->
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>news-dispatcher</servlet-name>
+		<url-pattern>/news/*</url-pattern>
+	</servlet-mapping>
+
+
+	<!--
+		CHILD WAC 2 — Admin DispatcherServlet:
+
+		Handles all /admin/* requests.
+		Auto-looks for /WEB-INF/admin-dispatcher-servlet.xml
+		(default is "/WEB-INF/[servlet_name]-servlet.xml")
+	-->
+	<servlet>
+		<servlet-name>admin-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+		<!-- If custom path needs to be specified for the Spring's ApplicationContext
+			(WebApplicationContext) XML for this servlet, then provide the custom path
+			within <init-param> named "contextConfigLocation", like below:
+		-->
+		<!--
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/custom-admin-dispatcher-spring-context.xml</param-value>
+		</init-param>
+		-->
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>admin-dispatcher</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
+	</servlet-mapping>
+	
+
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.xhtml</welcome-file>
+	</welcome-file-list>
+
+
+</web-app>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			https://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			https://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/mvc
+			https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!--
+		Scans com.bookshelf.controller package for @Controller classes
+		and registers them as beans — replacing explicit <bean> declarations
+		we used in Case 1 and 2.
+		Note: only scanning controller package here, NOT service package —
+		BookService is declared explicitly in root-context.xml, not here.
+		Scanning it here too would create a second BookService instance
+		in the child WAC, shadowing the root WAC bean — wrong.
+	-->
+	<context:component-scan base-package="com.bookshelf.controller"/>
+
+	<!--
+		Replaces what we declared manually in Case 1 and 2:
+		- BeanNameUrlHandlerMapping       → RequestMappingHandlerMapping
+		- SimpleControllerHandlerAdapter  → RequestMappingHandlerAdapter
+		Also registers:
+		- Default HttpMessageConverters (JSON, XML, plain text etc.)
+		- Type conversion / formatting support
+		- JSR-303 validation support (if Hibernate Validator on classpath)
+		Without this, @GetMapping / @RequestMapping annotations are
+		silently ignored and every request returns 404.
+	-->
+	<mvc:annotation-driven/>
+
+
+
+</beans>

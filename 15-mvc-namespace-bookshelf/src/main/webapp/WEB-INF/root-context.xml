@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		   http://www.springframework.org/schema/beans
+		   https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!--
+		BookService is a shared singleton in root WAC.
+		No @Service annotation — declared explicitly as a <bean>.
+		BookController (in child WAC) will receive this via @Autowired —
+		Spring walks up to parent root WAC transparently during wiring.
+	-->
+	<bean id="bookService" class="com.bookshelf.service.BookService"/>
+
+
+</beans>

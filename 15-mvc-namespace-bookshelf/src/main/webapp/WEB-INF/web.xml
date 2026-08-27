@@ -7,16 +7,42 @@
 
 	<display-name>15-mvc-namespace-bookshelf</display-name>
 
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.xhtml</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.xhtml</welcome-file>
-	</welcome-file-list>
+
+	<!--
+		ROOT WAC SETUP
+		ContextLoaderListener reads root-context.xml and builds
+		the root WAC before any DispatcherServlet initializes.
+		BookService lives here — shared with the child WAC.
+	-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/root-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+
+	<!--
+		Single DispatcherServlet mapped to "/" — the default servlet mapping.
+		Unlike "*.do", this intercepts ALL requests including static files.
+		That's why <mvc:resources/> is needed in dispatcher-servlet.xml —
+		to carve out static file requests before they hit controllers.
+		Auto-looks for /WEB-INF/dispatcher-servlet.xml by convention.
+	-->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

@@ -23,6 +23,7 @@
 	-->
 	<context:component-scan base-package="com.bookshelf.controller"/>
 
+
 	<!--
 		Replaces what we declared manually in Case 1 and 2:
 		- BeanNameUrlHandlerMapping       → RequestMappingHandlerMapping
@@ -36,6 +37,7 @@
 	-->
 	<mvc:annotation-driven/>
 
+
 	<!--
 		Maps "/" directly to "home" view — no controller needed.
 		InternalResourceViewResolver turns "home" → /WEB-INF/views/home.jsp
@@ -43,6 +45,19 @@
 		whose only job is: return "home";
 	-->
 	<mvc:view-controller path="/" view-name="home"/>
+
+	
+	<!--
+		Since DispatcherServlet is mapped to "/" it intercepts everything —
+		including requests for CSS, JS, images. Without this tag, a request
+		for /static/style.css would reach RequestMappingHandlerMapping,
+		find no matching controller, and return 404.
+		This tells Spring: requests matching /static/** should be served
+		directly from the /static/ folder in webapp root —
+		bypassing controllers entirely.
+	-->
+	<mvc:resources mapping="/static/**" location="/static/"/>
+
 
 	<!--
 		Same as Case 1 and 2 — turns logical view names into JSP paths.

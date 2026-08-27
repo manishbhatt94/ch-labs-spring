@@ -59,10 +59,18 @@ html {
 body {
 	font-family: Arial, sans-serif;
 	height: inherit;
-	max-width: 800px;
-	margin-inline: auto;
-	padding: 8px 20px;
 	background-color: #eee;
+	padding: 15px;
+}
+
+main {
+	min-height: 100%;
+	max-width: 800px;
+	width: calc(100% - 40px);
+	box-shadow: 0px 0px 5px 2px darkgray;
+	margin-inline: auto;
+	padding: 15px 18px;
+	background-color: antiquewhite;	
 }
 
 h1 {
@@ -88,7 +96,9 @@ ul li a:hover {
 }
 
 .book-detail {
-	background: white;
+	background-color: honeydew;
+	margin: 12px 16px;
 	padding: 20px;
-	border-radius: 4px;
+	border-radius: 8px;
+	box-shadow: inset 0px 0px 8px 2px darkseagreen;
 }

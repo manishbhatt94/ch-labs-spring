@@ -62,6 +62,8 @@
 	<!--
 		Same as Case 1 and 2 — turns logical view names into JSP paths.
 		"home"        → /WEB-INF/views/home.jsp
+		"books"       → /WEB-INF/views/books.jsp
+		"book-detail" → /WEB-INF/views/book-detail.jsp
 	-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"/>

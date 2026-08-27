@@ -36,6 +36,22 @@
 	-->
 	<mvc:annotation-driven/>
 
+	<!--
+		Maps "/" directly to "home" view — no controller needed.
+		InternalResourceViewResolver turns "home" → /WEB-INF/views/home.jsp
+		This is the mvc namespace equivalent of writing a controller
+		whose only job is: return "home";
+	-->
+	<mvc:view-controller path="/" view-name="home"/>
+
+	<!--
+		Same as Case 1 and 2 — turns logical view names into JSP paths.
+		"home"        → /WEB-INF/views/home.jsp
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
 
 
 </beans>

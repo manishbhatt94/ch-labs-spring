@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+/* --- CSS Reset Starts --- */
+
+/* Use a more-intuitive box-sizing model */
+html {
+	box-sizing: border-box;
+}
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	/* Increase line-height */
+	line-height: 1.5;
+	/* Improve text rendering */
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Improve media defaults */
+img, picture, video, canvas, svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* Inherit fonts for form controls */
+input, button, textarea, select {
+	font: inherit;
+}
+
+/* Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+	overflow-wrap: break-word;
+}
+
+/* Improve line wrapping */
+p {
+	text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+	text-wrap: balance;
+}
+
+/* --- CSS Reset Ends --- */
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	height: inherit;
+	background-color: #eee;
+	padding: 15px;
+}
+
+main {
+	min-height: 100%;
+	max-width: 800px;
+	width: calc(100% - 40px);
+	box-shadow: 0px 0px 5px 2px darkgray;
+	margin-inline: auto;
+	padding: 15px 18px;
+	background-color: antiquewhite;	
+}
+
+h1 {
+	color: #333;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+ul li {
+	margin: 10px 0;
+}
+
+ul li a {
+	text-decoration: none;
+	color: #0066cc;
+}
+
+ul li a:hover {
+	text-decoration: underline;
+}
+
+.book-detail, .course-detail {
+	background-color: honeydew;
+	margin: 12px 16px;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: inset 0px 0px 8px 2px darkseagreen;
+}

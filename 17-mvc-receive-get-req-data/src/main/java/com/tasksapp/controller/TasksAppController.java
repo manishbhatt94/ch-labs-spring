@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tasksapp.model.Department;
 import com.tasksapp.service.TasksAppDataService;
 
 @Controller
@@ -24,6 +26,13 @@ public class TasksAppController {
 		model.addAttribute("searchResultsPage", false);
 		model.addAttribute("searchedDeptName", "");
 		return "departments-list";
+	}
+
+	@PostMapping("/departments")
+	public String createDepartment(Model model, HttpServletRequest req) {
+		String deptName = req.getParameter("deptName");
+		Department department = service.createDepartment(deptName);
+		return "redirect:/tasks-app/departments/" + department.getDeptId();
 	}
 
 	@GetMapping("/filter-departments")

@@ -17,13 +17,18 @@
 		<nav>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/tasks-app/">Home</a></li>
+				<li>
+					<a href="${pageContext.request.contextPath}/tasks-app/create-department">
+						Add Department
+					</a>
+				</li>
 			</ul>
 		</nav>
 	</aside>
 
 	<h3>Filter Departments</h3>
 	<form action="${pageContext.request.contextPath}/tasks-app/filter-departments" method="get">
-		<label for="fltrDeptName">Filter by Department Name: </label>
+		<label for="fltrDeptName">Filter by Department Name:</label>
 		<input type="search" name="qDeptName" id="fltrDeptName"
 			required="required" placeholder="Partial dept name"
 			value="${searchedDeptName}" />

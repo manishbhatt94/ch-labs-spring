@@ -162,6 +162,35 @@ table.xl {
 	max-width: 680px;
 }
 
+form {
+	border: 1px dashed #555;
+	border-radius: 5px;
+	padding: 15px 20px;
+	margin: 10px 0 18px;
+}
+
+label:has(+ input[required])::after {
+	content: '* ';
+	color: #B22222;
+	font-size: 1.2em;
+}
+
+.form-control {
+	display: block;
+	margin-bottom: 20px;
+}
+
+.form-control label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.form-control input {
+	display: block;
+	width: 100%;
+	max-width: 360px;
+}
+
 .book-detail, .course-detail {
 	background-color: honeydew;
 	margin: 12px 16px;

@@ -57,6 +57,12 @@ public class TasksAppDataService {
 		}).collect(Collectors.toList());
 	}
 
+	public Department createDepartment(String deptName) {
+		Department department = new Department(deptName);
+		departments.add(department);
+		return department;
+	}
+
 	private void seedInitialData() {
 
 		Department kycTeam = new Department("KYC Tech");

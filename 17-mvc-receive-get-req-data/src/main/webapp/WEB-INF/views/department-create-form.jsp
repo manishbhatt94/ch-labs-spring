@@ -6,13 +6,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>TasksApp - Department Details</title>
+	<title>TasksApp - Add Department</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/style.css"/>
 </head>
 <body>
 <main>
-	<h1>TasksApp - Department Details</h1>
-	
+	<h1>TasksApp - Add Department</h1>
+
 	<aside>
 		<nav>
 			<ul>
@@ -26,29 +26,18 @@
 		</nav>
 	</aside>
 
-	<table border="1" class="sm">
-		<caption>Department Details</caption>
-		<c:choose>
-			<c:when test="${department == null}">
-				<tbody>
-					<tr align="center">
-						<td>Department with <code>deptId = ${deptId}</code> was <strong>NOT FOUND</strong>!</td>
-					</tr>
-				</tbody>
-			</c:when>
-			<c:otherwise>
-				<thead>
-					<tr><th>deptId</th><th>deptName</th></tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>${department.getDeptId()}</td>
-						<td>${department.getDeptName()}</td>
-					</tr>
-				</tbody>
-			</c:otherwise>
-		</c:choose>
-	</table>
+	<h2>Create a new department</h2>
+	<form action="${pageContext.request.contextPath}/tasks-app/departments" method="post">
+		<div class="form-control">
+			<label for="deptName">Department Name:</label>
+			<input type="text" name="deptName" id="deptName"
+				required="required" placeholder="Enter dept name" />
+		</div>
+		<button type="submit">Save</button>
+		&nbsp;&nbsp;
+		<a href="${pageContext.request.contextPath}/tasks-app/departments">Cancel</a>
+	</form>
+	<br>
 </main>
 </body>
 </html>

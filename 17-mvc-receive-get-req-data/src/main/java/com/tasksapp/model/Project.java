@@ -6,11 +6,17 @@ public class Project {
 
 	private String projName;
 
+	private static int nextId = 501;
+
 	public Project() {
 		super();
 	}
 
-	public Project(int projId, String projName) {
+	public Project(String projName) {
+		this(nextId++, projName);
+	}
+
+	private Project(int projId, String projName) {
 		super();
 		this.projId = projId;
 		this.projName = projName;

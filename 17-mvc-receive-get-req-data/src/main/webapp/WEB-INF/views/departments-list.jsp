@@ -12,7 +12,7 @@
 <body>
 <main>
 	<h1>TasksApp - Departments Listing</h1>
-	
+
 	<aside>
 		<nav>
 			<ul>
@@ -29,6 +29,7 @@
 			value="${searchedDeptName}" />
 		<button type="submit">Search</button>
 	</form>
+	<br>
 
 	<c:if test="${searchResultsPage == false}">
 		<h2>All Departments</h2>

@@ -59,26 +59,26 @@ public class TasksAppDataService {
 
 	private void seedInitialData() {
 
-		Department kycTeam = new Department(101, "KYC Tech");
-		Department onboardingTeam = new Department(102, "Onboarding Tech");
-		Department discoveryTeam = new Department(103, "Discovery Tech");
+		Department kycTeam = new Department("KYC Tech");
+		Department onboardingTeam = new Department("Onboarding Tech");
+		Department discoveryTeam = new Department("Discovery Tech");
 
 		departments.add(kycTeam);
 		departments.add(onboardingTeam);
 		departments.add(discoveryTeam);
 
-		User aliceUser = new User(301, "Alice", kycTeam.getDeptId(), kycTeam.getDeptName());
-		User amyUser = new User(302, "Amy", kycTeam.getDeptId(), kycTeam.getDeptName());
-		User atkinsUser = new User(303, "Atkins", kycTeam.getDeptId(), kycTeam.getDeptName());
+		User aliceUser = new User("Alice", kycTeam.getDeptId(), kycTeam.getDeptName());
+		User amyUser = new User("Amy", kycTeam.getDeptId(), kycTeam.getDeptName());
+		User atkinsUser = new User("Atkins", kycTeam.getDeptId(), kycTeam.getDeptName());
 
-		User balakrishnanUser = new User(304, "Balakrishnan", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
-		User billyUser = new User(305, "Billy", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
-		User bhaskarUser = new User(306, "Bhaskar", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
+		User balakrishnanUser = new User("Balakrishnan", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
+		User billyUser = new User("Billy", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
+		User bhaskarUser = new User("Bhaskar", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
 
-		User charuUser = new User(307, "Charu", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
-		User carlosUser = new User(308, "Carlos", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
-		User camilaUser = new User(309, "Camila", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
-		User chintuUser = new User(309, "Chintu", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User charuUser = new User("Charu", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User carlosUser = new User("Carlos", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User camilaUser = new User("Camila", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User chintuUser = new User("Chintu", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
 
 		users.add(aliceUser);
 		users.add(amyUser);
@@ -91,19 +91,19 @@ public class TasksAppDataService {
 		users.add(camilaUser);
 		users.add(chintuUser);
 
-		Project aadhaarProj = new Project(501, "Aadhaar Integration Module");
-		Project kycReadyProj = new Project(502, "KYC Readiness Tracker");
-		Project sponsoredDiscoveryProj = new Project(503, "Sponsored Partners Discovery");
+		Project aadhaarProj = new Project("Aadhaar Integration Module");
+		Project kycReadyProj = new Project("KYC Readiness Tracker");
+		Project sponsoredDiscoveryProj = new Project("Sponsored Partners Discovery");
 
 		projects.add(aadhaarProj);
 		projects.add(kycReadyProj);
 		projects.add(sponsoredDiscoveryProj);
 
-		Task regWithAadharApi = new Task(701, "Register application at Aadhaar Developer Console",
-				aadhaarProj.getProjId(), aadhaarProj.getProjName(), aliceUser.getUserId(), aliceUser.getUserName());
-		Task whitelistAadharServerIps = new Task(702, "Whitelist Aadhaar Server IPs for web-hooks",
-				aadhaarProj.getProjId(), aadhaarProj.getProjName(), amyUser.getUserId(), amyUser.getUserName());
-		Task profileUsersPanNumber = new Task(703, "Profile User's PAN Number", kycReadyProj.getProjId(),
+		Task regWithAadharApi = new Task("Register application at Aadhaar Developer Console", aadhaarProj.getProjId(),
+				aadhaarProj.getProjName(), aliceUser.getUserId(), aliceUser.getUserName());
+		Task whitelistAadharServerIps = new Task("Whitelist Aadhaar Server IPs for web-hooks", aadhaarProj.getProjId(),
+				aadhaarProj.getProjName(), amyUser.getUserId(), amyUser.getUserName());
+		Task profileUsersPanNumber = new Task("Profile User's PAN Number", kycReadyProj.getProjId(),
 				kycReadyProj.getProjName(), balakrishnanUser.getUserId(), balakrishnanUser.getUserName());
 
 		tasks.add(regWithAadharApi);

@@ -6,11 +6,17 @@ public class Department {
 
 	private String deptName;
 
+	private static int nextId = 101;
+
 	public Department() {
 		super();
 	}
 
-	public Department(int deptId, String deptName) {
+	public Department(String deptName) {
+		this(nextId++, deptName);
+	}
+
+	private Department(int deptId, String deptName) {
 		super();
 		this.deptId = deptId;
 		this.deptName = deptName;

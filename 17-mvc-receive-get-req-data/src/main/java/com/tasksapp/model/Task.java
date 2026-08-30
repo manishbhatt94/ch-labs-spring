@@ -14,11 +14,17 @@ public class Task {
 
 	private String assigneeName;
 
+	private static int nextId = 701;
+
 	public Task() {
 		super();
 	}
 
-	public Task(int taskId, String taskName, int linkedProjId, String linkedProjName, int assigneeId,
+	public Task(String taskName, int linkedProjId, String linkedProjName, int assigneeId, String assigneeName) {
+		this(nextId++, taskName, linkedProjId, linkedProjName, assigneeId, assigneeName);
+	}
+
+	private Task(int taskId, String taskName, int linkedProjId, String linkedProjName, int assigneeId,
 			String assigneeName) {
 		super();
 		this.taskId = taskId;

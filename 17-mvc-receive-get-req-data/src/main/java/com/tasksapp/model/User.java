@@ -10,11 +10,17 @@ public class User {
 
 	private String workDeptName;
 
+	private static int nextId = 301;
+
 	public User() {
 		super();
 	}
 
-	public User(int userId, String userName, int workDeptId, String workDeptName) {
+	public User(String userName, int workDeptId, String workDeptName) {
+		this(nextId++, userName, workDeptId, workDeptName);
+	}
+
+	private User(int userId, String userName, int workDeptId, String workDeptName) {
 		super();
 		this.userId = userId;
 		this.userName = userName;

@@ -28,11 +28,31 @@ public class TasksAppDataService {
 		seedInitialData();
 	}
 
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public Department getDepartmentById(int deptId) {
+		return departments.stream().filter(dept -> deptId == dept.getDeptId()).findFirst().orElse(null);
+	}
+
 	private void seedInitialData() {
 
 		Department kycTeam = new Department(101, "KYC Tech");
-		Department onboardingTeam = new Department(101, "Onboarding Tech");
-		Department discoveryTeam = new Department(101, "Discovery Tech");
+		Department onboardingTeam = new Department(102, "Onboarding Tech");
+		Department discoveryTeam = new Department(103, "Discovery Tech");
 
 		departments.add(kycTeam);
 		departments.add(onboardingTeam);

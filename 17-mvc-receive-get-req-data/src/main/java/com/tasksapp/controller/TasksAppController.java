@@ -1,5 +1,7 @@
 package com.tasksapp.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,17 @@ public class TasksAppController {
 	@GetMapping("/departments")
 	public String departmentsListing(Model model) {
 		model.addAttribute("departments", service.getDepartments());
+		model.addAttribute("searchResultsPage", false);
+		model.addAttribute("searchedDeptName", "");
+		return "departments-list";
+	}
+
+	@GetMapping("/filter-departments")
+	public String departmentsFiltered(Model model, HttpServletRequest req) {
+		String queriedDeptName = req.getParameter("qDeptName");
+		model.addAttribute("departments", service.filterDepartments(queriedDeptName));
+		model.addAttribute("searchResultsPage", true);
+		model.addAttribute("searchedDeptName", queriedDeptName);
 		return "departments-list";
 	}
 

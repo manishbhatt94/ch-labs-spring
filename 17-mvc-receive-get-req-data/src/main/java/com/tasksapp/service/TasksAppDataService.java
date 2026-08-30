@@ -2,6 +2,7 @@ package com.tasksapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -46,6 +47,14 @@ public class TasksAppDataService {
 
 	public Department getDepartmentById(int deptId) {
 		return departments.stream().filter(dept -> deptId == dept.getDeptId()).findFirst().orElse(null);
+	}
+
+	public List<Department> filterDepartments(String deptNameSearchTerm) {
+		String searchTerm = deptNameSearchTerm.trim().toLowerCase();
+		return departments.stream().filter((dept) -> {
+			String fullDeptName = dept.getDeptName().toLowerCase();
+			return fullDeptName.contains(searchTerm);
+		}).collect(Collectors.toList());
 	}
 
 	private void seedInitialData() {

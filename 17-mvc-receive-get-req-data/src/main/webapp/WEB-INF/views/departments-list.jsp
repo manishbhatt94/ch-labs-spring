@@ -20,49 +20,24 @@
 			</ul>
 		</nav>
 	</aside>
-	
+
 	<h3>Filter Departments</h3>
 	<form action="${pageContext.request.contextPath}/tasks-app/filter-departments" method="get">
 		<label for="fltrDeptName">Filter by Department Name: </label>
-		<input type="search" name="filterDeptName" id="fltrDeptName"
-			required="required" placeholder="Partial dept name" />
+		<input type="search" name="qDeptName" id="fltrDeptName"
+			required="required" placeholder="Partial dept name"
+			value="${searchedDeptName}" />
 		<button type="submit">Search</button>
 	</form>
-	
-	<h2>Departments</h2>
 
-	<table border="1" class="sm">
-		<caption>List of Departments</caption>
-		<c:choose>
-			<c:when test="${departments == null}">
-				<tbody>
-					<tr align="center"><td>List of departments is <code>null</code></td></tr>
-				</tbody>
-			</c:when>
-			<c:when test="${fn:length(departments) == 0}">
-				<tbody>
-					<tr align="center"><td>List of departments is <strong>empty</strong></td></tr>
-				</tbody>
-			</c:when>
-			<c:otherwise>
-				<thead>
-					<tr><th>deptId</th><th>deptName</th></tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${departments}" var="data">
-						<tr>
-							<td>${data.getDeptId()}</td>
-							<td>
-								<a href="${pageContext.request.contextPath}/tasks-app/departments/${data.getDeptId()}">
-									${data.getDeptName()}
-								</a>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</c:otherwise>
-		</c:choose>
-	</table>
+	<c:if test="${searchResultsPage == false}">
+		<h2>All Departments</h2>
+	</c:if>
+	<c:if test="${searchResultsPage == true}">
+		<h2>Departments - Search Results</h2>
+	</c:if>
+
+	<%@ include file="../partials/table-departments.jsp" %>
 </main>
 </body>
 </html>

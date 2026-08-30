@@ -73,18 +73,19 @@ public class TasksAppDataService {
 		departments.add(onboardingTeam);
 		departments.add(discoveryTeam);
 
-		User aliceUser = new User("Alice", kycTeam.getDeptId(), kycTeam.getDeptName());
-		User amyUser = new User("Amy", kycTeam.getDeptId(), kycTeam.getDeptName());
-		User atkinsUser = new User("Atkins", kycTeam.getDeptId(), kycTeam.getDeptName());
+		User aliceUser = new User("Alice Smith", kycTeam.getDeptId(), kycTeam.getDeptName());
+		User amyUser = new User("Amy Keith", kycTeam.getDeptId(), kycTeam.getDeptName());
+		User atkinsUser = new User("Atkins Jr. Smith", kycTeam.getDeptId(), kycTeam.getDeptName());
 
-		User balakrishnanUser = new User("Balakrishnan", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
-		User billyUser = new User("Billy", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
-		User bhaskarUser = new User("Bhaskar", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
+		User balakrishnanUser = new User("Rashmi Balakrishnan", onboardingTeam.getDeptId(),
+				onboardingTeam.getDeptName());
+		User billyUser = new User("Billy Jones", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
+		User bhaskarUser = new User("Bhaskar Balaji", onboardingTeam.getDeptId(), onboardingTeam.getDeptName());
 
-		User charuUser = new User("Charu", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
-		User carlosUser = new User("Carlos", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
-		User camilaUser = new User("Camila", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
-		User chintuUser = new User("Chintu", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User charuUser = new User("Charu Kumar", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User carlosUser = new User("Carlos Jon", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User camilaUser = new User("Camila H. Jonathan", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
+		User chintuUser = new User("Chintu S. Kumaraswamy", discoveryTeam.getDeptId(), discoveryTeam.getDeptName());
 
 		users.add(aliceUser);
 		users.add(amyUser);

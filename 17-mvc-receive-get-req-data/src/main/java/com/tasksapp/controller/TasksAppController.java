@@ -1,5 +1,7 @@
 package com.tasksapp.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class TasksAppController {
 	}
 
 	@PostMapping("/departments")
-	public String createDepartment(Model model, HttpServletRequest req) {
+	public String createDepartment(HttpServletRequest req) {
 		String deptName = req.getParameter("deptName");
 		Department department = service.createDepartment(deptName);
 		return "redirect:/tasks-app/departments/" + department.getDeptId();
@@ -46,6 +48,39 @@ public class TasksAppController {
 
 	@GetMapping("/departments/{deptId}")
 	public String departmentDetails(Model model, @PathVariable int deptId) {
+		model.addAttribute("department", service.getDepartmentById(deptId));
+		model.addAttribute("deptId", deptId);
+		return "department-info";
+	}
+
+	@GetMapping("/users")
+	public String usersListing(Model model) {
+		List<Department> departments = service.getDepartments();
+		model.addAttribute("departments", departments);
+		model.addAttribute("users", service.getUsers());
+		model.addAttribute("searchResultsPage", false);
+		model.addAttribute("searchedUserName", "");
+		return "users-list";
+	}
+
+	@PostMapping("/users")
+	public String createUser(HttpServletRequest req) {
+		String deptName = req.getParameter("deptName");
+		Department department = service.createDepartment(deptName);
+		return "redirect:/tasks-app/departments/" + department.getDeptId();
+	}
+
+	@GetMapping("/filter-users")
+	public String usersFiltered(Model model, HttpServletRequest req) {
+		String queriedDeptName = req.getParameter("qDeptName");
+		model.addAttribute("departments", service.filterDepartments(queriedDeptName));
+		model.addAttribute("searchResultsPage", true);
+		model.addAttribute("searchedDeptName", queriedDeptName);
+		return "departments-list";
+	}
+
+	@GetMapping("/users/{userId}")
+	public String userDetails(Model model, @PathVariable int deptId) {
 		model.addAttribute("department", service.getDepartmentById(deptId));
 		model.addAttribute("deptId", deptId);
 		return "department-info";

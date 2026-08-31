@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tasksapp.model.Department;
 import com.tasksapp.model.Project;
+import com.tasksapp.model.Task;
 import com.tasksapp.model.User;
 import com.tasksapp.service.TasksAppDataService;
 
@@ -151,6 +152,30 @@ public class TasksAppController {
 		model.addAttribute("project", service.getProjectById(projId));
 		model.addAttribute("projId", projId);
 		return "project-info";
+	}
+
+	@GetMapping("/tasks")
+	public String tasksListing(Model model) {
+		List<Project> projects = service.getProjects();
+		List<User> users = service.getUsers();
+		List<Task> tasks = service.getTasks();
+
+		model.addAttribute("projects", projects);
+		model.addAttribute("users", users);
+		model.addAttribute("tasks", tasks);
+		model.addAttribute("searchResultsPage", false);
+		model.addAttribute("searchedTaskName", "");
+		model.addAttribute("searchedProjId", null);
+		model.addAttribute("searchedAssigneeId", null);
+
+		return "tasks-list";
+	}
+
+	@GetMapping("/tasks/{taskId}")
+	public String taskDetails(Model model, @PathVariable int taskId) {
+		model.addAttribute("task", service.getTaskById(taskId));
+		model.addAttribute("taskId", taskId);
+		return "task-info";
 	}
 
 }

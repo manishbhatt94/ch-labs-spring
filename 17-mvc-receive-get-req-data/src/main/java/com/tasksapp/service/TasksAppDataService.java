@@ -87,8 +87,8 @@ public class TasksAppDataService {
 		return projects.stream().filter(proj -> projId == proj.getProjId()).findFirst().orElse(null);
 	}
 
-	public List<Project> filterProjects(String projNameSearchTerm) {
-		String searchTerm = projNameSearchTerm.trim().toLowerCase();
+	public List<Project> filterProjects(String partialProjName) {
+		String searchTerm = partialProjName.trim().toLowerCase();
 		return projects.stream().filter((proj) -> {
 			String fullProjName = proj.getProjName().toLowerCase();
 			return fullProjName.contains(searchTerm);
@@ -97,6 +97,26 @@ public class TasksAppDataService {
 
 	public void createProject(Project project) {
 		projects.add(project);
+	}
+
+	public Task getTaskById(int taskId) {
+		return tasks.stream().filter(task -> taskId == task.getTaskId()).findFirst().orElse(null);
+	}
+
+	public List<Task> filterTasks(String partialTaskName, Integer linkedProjId, Integer assigneeId) {
+		String searchTerm = partialTaskName.trim().toLowerCase();
+		return tasks.stream().filter((task) -> {
+			String fullTaskName = task.getTaskName().toLowerCase();
+			boolean matched = true;
+			matched = matched && (linkedProjId == null || (task.getLinkedProjId() == linkedProjId));
+			matched = matched && (assigneeId == null || (task.getAssigneeId() == assigneeId));
+			matched = matched && (fullTaskName.contains(searchTerm));
+			return matched;
+		}).collect(Collectors.toList());
+	}
+
+	public void createTask(Task task) {
+		tasks.add(task);
 	}
 
 	private void seedInitialData() {

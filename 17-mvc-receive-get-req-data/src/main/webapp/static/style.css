@@ -169,7 +169,14 @@ form {
 	margin: 10px 0 18px;
 }
 
-label:has(+ input[required])::after {
+input, select {
+	height: 32px;
+	padding: 4px 8px;
+	font-family: Tahoma, Verdana, sans-serif;
+}
+
+label:has(+ input[required])::after,
+label:has(+ select[required])::after {
 	content: '* ';
 	color: #B22222;
 	font-size: 1.2em;

@@ -72,11 +72,19 @@ public class TasksAppController {
 		return "users-list";
 	}
 
+	@GetMapping("/create-user")
+	public String createUserForm(Model model) {
+		List<Department> departments = service.getDepartments();
+		model.addAttribute("departments", departments);
+
+		return "user-create-form";
+	}
+
 	@PostMapping("/users")
-	public String createUser(HttpServletRequest req) {
-		String deptName = req.getParameter("deptName");
-		Department department = service.createDepartment(deptName);
-		return "redirect:/tasks-app/departments/" + department.getDeptId();
+	public String createUser(@RequestParam String userName, @RequestParam Integer workDeptId) {
+		Department dept = service.getDepartmentById(workDeptId);
+		User user = service.createUser(userName, dept.getDeptId(), dept.getDeptName());
+		return "redirect:/tasks-app/users/" + user.getUserId();
 	}
 
 	@GetMapping("/filter-users")
@@ -102,10 +110,10 @@ public class TasksAppController {
 	}
 
 	@GetMapping("/users/{userId}")
-	public String userDetails(Model model, @PathVariable int deptId) {
-		model.addAttribute("department", service.getDepartmentById(deptId));
-		model.addAttribute("deptId", deptId);
-		return "department-info";
+	public String userDetails(Model model, @PathVariable int userId) {
+		model.addAttribute("user", service.getUserById(userId));
+		model.addAttribute("userId", userId);
+		return "user-info";
 	}
 
 }

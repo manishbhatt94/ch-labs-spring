@@ -46,14 +46,14 @@ h1, h2, h3, h4, h5, h6 {
 /* --- CSS Reset Ends --- */
 
 html {
-	height: 100%;
+	min-height: 100%;
 }
 
 body {
 	font-family: Arial, sans-serif;
-	height: inherit;
+	min-height: inherit;
 	background-color: #eee;
-	padding: 15px;
+	padding: 20px;
 }
 
 main {
@@ -62,7 +62,7 @@ main {
 	width: calc(100% - 40px);
 	box-shadow: 0px 0px 5px 2px darkgray;
 	margin-inline: auto;
-	padding: 15px 18px;
+	padding: 15px 20px 30px;
 	background-color: antiquewhite;	
 }
 
@@ -189,6 +189,12 @@ label:has(+ input[required])::after {
 	display: block;
 	width: 100%;
 	max-width: 360px;
+}
+
+.heading-link {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .book-detail, .course-detail {

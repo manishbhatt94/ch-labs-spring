@@ -63,6 +63,26 @@ public class TasksAppDataService {
 		return department;
 	}
 
+	public User getUserById(int userId) {
+		return users.stream().filter(usr -> userId == usr.getUserId()).findFirst().orElse(null);
+	}
+
+	public List<User> filterUsers(String partialUserName, Integer workDeptId) {
+		String searchTerm = partialUserName.trim().toLowerCase();
+		return users.stream().filter((usr) -> {
+			String fullUserName = usr.getUserName().toLowerCase();
+			boolean matched = workDeptId == null || (usr.getWorkDeptId() == workDeptId);
+			matched = matched && (fullUserName.contains(searchTerm));
+			return matched;
+		}).collect(Collectors.toList());
+	}
+
+	public User createUser(String userName, int workDeptId, String workDeptName) {
+		User user = new User(userName, workDeptId, workDeptName);
+		users.add(user);
+		return user;
+	}
+
 	private void seedInitialData() {
 
 		Department kycTeam = new Department("KYC Tech");

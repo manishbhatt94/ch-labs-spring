@@ -37,10 +37,17 @@
 	<br>
 
 	<c:if test="${searchResultsPage == false}">
-		<h2>All Departments</h2>
+		<div class="heading-link">
+			<h2>All Departments</h2>
+		</div>
 	</c:if>
 	<c:if test="${searchResultsPage == true}">
-		<h2>Departments - Search Results</h2>
+		<div class="heading-link">
+			<h2>Departments - Search Results</h2>
+			<a href="${pageContext.request.contextPath}/tasks-app/departments">
+				← Back to All Departments
+			</a>
+		</div>
 	</c:if>
 
 	<%@ include file="../partials/table-departments.jsp" %>

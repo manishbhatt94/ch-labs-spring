@@ -32,9 +32,19 @@
 			<div class="form-control">
 				<label for="fltrWorkDept">Filter by User's Department:</label>
 				<select name="qWorkDeptId" id="fltrWorkDept">
-					<option value="" default="">Select Department</option>
+					<option
+						value=""
+						<c:if test="${searchedDeptId == null}">selected</c:if>
+					>
+						-- Select Department --
+					</option>
 					<c:forEach items="${departments}" var="dept">
-						<option value="${dept.getDeptId()}">${dept.getDeptName()}</option>
+						<option
+							value="${dept.getDeptId()}"
+							<c:if test="${searchedDeptId == dept.getDeptId()}">selected</c:if>
+						>
+							${dept.getDeptName()}
+						</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -48,10 +58,17 @@
 	<br>
 
 	<c:if test="${searchResultsPage == false}">
-		<h2>All Users</h2>
+		<div class="heading-link">
+			<h2>All Users</h2>
+		</div>
 	</c:if>
 	<c:if test="${searchResultsPage == true}">
-		<h2>Users - Search Results</h2>
+		<div class="heading-link">
+			<h2>Users - Search Results</h2>
+			<a href="${pageContext.request.contextPath}/tasks-app/users">
+				← Back to All Users
+			</a>
+		</div>
 	</c:if>
 
 	<%@ include file="../partials/table-users.jsp" %>

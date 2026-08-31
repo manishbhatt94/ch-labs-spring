@@ -83,6 +83,22 @@ public class TasksAppDataService {
 		return user;
 	}
 
+	public Project getProjectById(int projId) {
+		return projects.stream().filter(proj -> projId == proj.getProjId()).findFirst().orElse(null);
+	}
+
+	public List<Project> filterProjects(String projNameSearchTerm) {
+		String searchTerm = projNameSearchTerm.trim().toLowerCase();
+		return projects.stream().filter((proj) -> {
+			String fullProjName = proj.getProjName().toLowerCase();
+			return fullProjName.contains(searchTerm);
+		}).collect(Collectors.toList());
+	}
+
+	public void createProject(Project project) {
+		projects.add(project);
+	}
+
 	private void seedInitialData() {
 
 		Department kycTeam = new Department("KYC Tech");

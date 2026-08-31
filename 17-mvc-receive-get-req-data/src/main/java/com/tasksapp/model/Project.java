@@ -10,6 +10,7 @@ public class Project {
 
 	public Project() {
 		super();
+		this.projId = nextId++;
 	}
 
 	public Project(String projName) {

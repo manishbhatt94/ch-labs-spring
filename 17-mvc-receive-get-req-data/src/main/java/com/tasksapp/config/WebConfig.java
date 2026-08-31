@@ -40,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addViewController("/tasks-app").setViewName("home");
 		registry.addViewController("/tasks-app/").setViewName("home");
 		registry.addViewController("/tasks-app/create-department").setViewName("department-create-form");
+		registry.addViewController("/tasks-app/create-project").setViewName("project-create-form");
 	}
 
 }

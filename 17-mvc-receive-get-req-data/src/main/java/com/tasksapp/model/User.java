@@ -14,6 +14,7 @@ public class User {
 
 	public User() {
 		super();
+		this.userId = nextId++;
 	}
 
 	public User(String userName, int workDeptId, String workDeptName) {

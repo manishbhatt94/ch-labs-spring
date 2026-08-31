@@ -6,52 +6,52 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>TasksApp - Departments Listing</title>
+	<title>TasksApp - Projects Listing</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/style.css"/>
 </head>
 <body>
 <main>
-	<h1>TasksApp - Departments Listing</h1>
+	<h1>TasksApp - Projects Listing</h1>
 
 	<aside>
 		<nav>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/tasks-app/">Home</a></li>
 				<li>
-					<a href="${pageContext.request.contextPath}/tasks-app/create-department">
-						Add Department
+					<a href="${pageContext.request.contextPath}/tasks-app/create-project">
+						Add Project
 					</a>
 				</li>
 			</ul>
 		</nav>
 	</aside>
 
-	<h3>Filter Departments</h3>
-	<form action="${pageContext.request.contextPath}/tasks-app/filter-departments" method="get">
-		<label for="fltrDeptName">Filter by Department Name:</label>
-		<input type="search" name="qDeptName" id="fltrDeptName"
-			required="required" placeholder="Partial dept name"
+	<h3>Filter Projects</h3>
+	<form action="${pageContext.request.contextPath}/tasks-app/filter-projects" method="get">
+		<label for="fltrProjName">Filter by Project Name:</label>
+		<input type="search" name="qProjName" id="fltrProjName"
+			required="required" placeholder="Partial project name"
 			spellcheck="false" autocomplete="off"
-			value="${searchedDeptName}" />
+			value="${searchedProjName}" />
 		<button type="submit">Search</button>
 	</form>
 	<br>
 
 	<c:if test="${searchResultsPage == false}">
 		<div class="heading-link">
-			<h2>All Departments</h2>
+			<h2>All Projects</h2>
 		</div>
 	</c:if>
 	<c:if test="${searchResultsPage == true}">
 		<div class="heading-link">
-			<h2>Departments - Search Results</h2>
-			<a href="${pageContext.request.contextPath}/tasks-app/departments">
-				← Back to All Departments
+			<h2>Projects - Search Results</h2>
+			<a href="${pageContext.request.contextPath}/tasks-app/projects">
+				← Back to All Projects
 			</a>
 		</div>
 	</c:if>
 
-	<%@ include file="../partials/table-departments.jsp" %>
+	<%@ include file="../partials/table-projects.jsp" %>
 </main>
 </body>
 </html>

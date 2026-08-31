@@ -18,6 +18,7 @@ public class Task {
 
 	public Task() {
 		super();
+		this.taskId = nextId++;
 	}
 
 	public Task(String taskName, int linkedProjId, String linkedProjName, int assigneeId, String assigneeName) {

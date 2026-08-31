@@ -10,6 +10,7 @@ public class Department {
 
 	public Department() {
 		super();
+		this.deptId = nextId++;
 	}
 
 	public Department(String deptName) {

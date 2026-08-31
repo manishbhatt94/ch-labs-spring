@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tasksapp.model.Department;
+import com.tasksapp.model.Project;
 import com.tasksapp.model.User;
 import com.tasksapp.service.TasksAppDataService;
 
@@ -114,6 +116,41 @@ public class TasksAppController {
 		model.addAttribute("user", service.getUserById(userId));
 		model.addAttribute("userId", userId);
 		return "user-info";
+	}
+
+	@GetMapping("/projects")
+	public String projectsListing(Model model) {
+		model.addAttribute("projects", service.getProjects());
+		model.addAttribute("searchResultsPage", false);
+		model.addAttribute("searchedProjName", "");
+		return "projects-list";
+	}
+
+	@PostMapping("/projects")
+	public String createProject(@ModelAttribute Project project) {
+		// Note: Used @ModelAttribute here to inject the entire form data into an
+		// object, instead of manually picking each form field, and then constructing
+		// the object ourselves.
+		service.createProject(project);
+		return "redirect:/tasks-app/projects/" + project.getProjId();
+	}
+
+	@GetMapping("/filter-projects")
+	public String projectFiltered(Model model, @RequestParam("qProjName") String partialProjName) {
+		List<Project> filteredProjects = service.filterProjects(partialProjName);
+
+		model.addAttribute("projects", filteredProjects);
+		model.addAttribute("searchResultsPage", true);
+		model.addAttribute("searchedProjName", partialProjName);
+
+		return "projects-list";
+	}
+
+	@GetMapping("/projects/{projId}")
+	public String projectDetails(Model model, @PathVariable int projId) {
+		model.addAttribute("project", service.getProjectById(projId));
+		model.addAttribute("projId", projId);
+		return "project-info";
 	}
 
 }

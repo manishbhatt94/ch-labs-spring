@@ -55,7 +55,6 @@
 			value="${searchedUserName}" />
 		<button type="submit">Search</button>
 	</form>
-	<br>
 
 	<c:if test="${searchResultsPage == false}">
 		<div class="heading-link">

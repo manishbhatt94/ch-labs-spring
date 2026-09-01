@@ -26,7 +26,7 @@
 		</nav>
 	</aside>
 
-	<table border="1" class="md">
+	<table border="1" class="lg">
 		<caption>User Details</caption>
 		<c:choose>
 			<c:when test="${user == null}">

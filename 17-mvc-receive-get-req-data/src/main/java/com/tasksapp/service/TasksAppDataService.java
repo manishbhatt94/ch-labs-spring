@@ -71,7 +71,7 @@ public class TasksAppDataService {
 		String searchTerm = partialUserName.trim().toLowerCase();
 		return users.stream().filter((usr) -> {
 			String fullUserName = usr.getUserName().toLowerCase();
-			boolean matched = workDeptId == null || (usr.getWorkDeptId() == workDeptId);
+			boolean matched = workDeptId == null || (usr.getWorkDeptId() == workDeptId.intValue());
 			matched = matched && (fullUserName.contains(searchTerm));
 			return matched;
 		}).collect(Collectors.toList());
@@ -108,8 +108,8 @@ public class TasksAppDataService {
 		return tasks.stream().filter((task) -> {
 			String fullTaskName = task.getTaskName().toLowerCase();
 			boolean matched = true;
-			matched = matched && (linkedProjId == null || (task.getLinkedProjId() == linkedProjId));
-			matched = matched && (assigneeId == null || (task.getAssigneeId() == assigneeId));
+			matched = matched && (linkedProjId == null || (task.getLinkedProjId() == linkedProjId.intValue()));
+			matched = matched && (assigneeId == null || (task.getAssigneeId() == assigneeId.intValue()));
 			matched = matched && (fullTaskName.contains(searchTerm));
 			return matched;
 		}).collect(Collectors.toList());

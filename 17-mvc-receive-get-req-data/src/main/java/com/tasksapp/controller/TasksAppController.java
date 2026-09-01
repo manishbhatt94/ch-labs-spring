@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tasksapp.dto.TaskFilter;
 import com.tasksapp.model.Department;
 import com.tasksapp.model.Project;
 import com.tasksapp.model.Task;
@@ -167,6 +168,27 @@ public class TasksAppController {
 		model.addAttribute("searchedTaskName", "");
 		model.addAttribute("searchedProjId", null);
 		model.addAttribute("searchedAssigneeId", null);
+
+		return "tasks-list";
+	}
+
+	@GetMapping("/filter-tasks")
+	public String tasksFiltered(Model model, @ModelAttribute TaskFilter taskFilter) {
+
+		System.out.println("[tasksFiltered] taskFilter: " + taskFilter);
+
+		List<Project> projects = service.getProjects();
+		List<User> users = service.getUsers();
+		List<Task> filteredTasks = service.filterTasks(taskFilter.getTaskName(), taskFilter.getLinkedProjId(),
+				taskFilter.getAssigneeId());
+
+		model.addAttribute("projects", projects);
+		model.addAttribute("users", users);
+		model.addAttribute("tasks", filteredTasks);
+		model.addAttribute("searchResultsPage", true);
+		model.addAttribute("searchedTaskName", taskFilter.getTaskName());
+		model.addAttribute("searchedProjId", taskFilter.getLinkedProjId());
+		model.addAttribute("searchedAssigneeId", taskFilter.getAssigneeId());
 
 		return "tasks-list";
 	}

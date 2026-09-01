@@ -27,7 +27,8 @@
 	</aside>
 
 	<h3>Filter Tasks</h3>
-	<form action="${pageContext.request.contextPath}/tasks-app/filter-tasks" method="get">
+	<form action="${pageContext.request.contextPath}/tasks-app/filter-tasks" method="get"
+			id="filter-tasks-form">
 		<c:if test="${fn:length(projects) > 0}">
 			<div class="form-control">
 				<label for="fltrLinkedProj">Filter by Task's Project:</label>
@@ -73,8 +74,7 @@
 		<div class="form-control">
 			<label for="fltrTaskName">Filter by Task Name:</label>
 			<input type="search" name="taskName" id="fltrTaskName"
-				required="required" placeholder="Partial task name"
-				value="${searchedTaskName}" />
+				placeholder="Partial task name" value="${searchedTaskName}" />
 		</div>
 		<button type="submit">Search</button>
 	</form>
@@ -96,5 +96,57 @@
 
 	<%@ include file="../partials/table-tasks.jsp" %>
 </main>
+
+
+<script type="text/javascript">
+filterFormHandling();
+
+function filterFormHandling() {
+  const filterForm = document.forms["filter-tasks-form"];
+  if (!filterForm) {
+    return;
+  }
+  const submitBtn = filterForm.querySelector('[type="submit"]');
+  if (!submitBtn) {
+    return;
+  }
+
+  const fields = Array.prototype.slice.call(filterForm.elements)
+    .filter((el) => {
+      return el.type !== "submit" && el.nodeName !== "BUTTON";
+    });
+
+  fields.forEach(f => f.addEventListener("input", handleInput));
+
+  checkInitialState();
+
+  function handleInput() {
+    const valid = checkValidity();
+    if (valid) {
+      submitBtn.disabled = "";
+    } else {
+      submitBtn.disabled = "disabled";
+    }
+  }
+
+  function checkInitialState() {
+    const valid = checkValidity();
+    if (valid) {
+      submitBtn.disabled = "";
+    } else {
+      submitBtn.disabled = "disabled";
+    }
+  }
+
+  function checkValidity() {
+    const valid = fields.some((el) => {
+      return el.value.trim() !== "";
+    });
+    return valid;
+  }
+}
+</script>
+
+
 </body>
 </html>

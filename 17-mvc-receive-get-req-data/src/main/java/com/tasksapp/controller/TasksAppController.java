@@ -172,6 +172,42 @@ public class TasksAppController {
 		return "tasks-list";
 	}
 
+	@GetMapping("/create-task")
+	public String createTaskForm(Model model) {
+		List<Project> projects = service.getProjects();
+		List<User> users = service.getUsers();
+
+		model.addAttribute("projects", projects);
+		model.addAttribute("users", users);
+
+		return "task-create-form";
+	}
+
+	@PostMapping("/tasks")
+	public String createTask(@ModelAttribute Task task) {
+		System.out.println("[createTask] task: " + task);
+		// Note: Used @ModelAttribute here to inject the entire form data into an
+		// object, instead of manually picking each form field, and then constructing
+		// the object ourselves.
+
+		// Populate the linkedProjName and assigneeName fields in the task object:
+		Project linkedProject = service.getProjectById(task.getLinkedProjId());
+		User assignee = service.getUserById(task.getAssigneeId());
+		if (linkedProject != null) {
+			task.setLinkedProjName(linkedProject.getProjName());
+		}
+		if (assignee != null) {
+			task.setAssigneeName(assignee.getUserName());
+		}
+		System.out.println("[createTask] task after populating linkedProjName and assigneeName: " + task);
+
+		// Save the task using the service:
+		service.createTask(task);
+
+		// Redirect to the task details page after creation:
+		return "redirect:/tasks-app/tasks/" + task.getTaskId();
+	}
+
 	@GetMapping("/filter-tasks")
 	public String tasksFiltered(Model model, @ModelAttribute TaskFilter taskFilter) {
 

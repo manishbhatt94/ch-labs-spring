@@ -95,8 +95,9 @@ public class TasksAppDataService {
 		}).collect(Collectors.toList());
 	}
 
-	public void createProject(Project project) {
+	public Project createProject(Project project) {
 		projects.add(project);
+		return project;
 	}
 
 	public Task getTaskById(int taskId) {
@@ -115,8 +116,9 @@ public class TasksAppDataService {
 		}).collect(Collectors.toList());
 	}
 
-	public void createTask(Task task) {
+	public Task createTask(Task task) {
 		tasks.add(task);
+		return task;
 	}
 
 	private void seedInitialData() {

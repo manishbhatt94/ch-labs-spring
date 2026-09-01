@@ -29,6 +29,9 @@
 	<h3>Filter Tasks</h3>
 	<form action="${pageContext.request.contextPath}/tasks-app/filter-tasks" method="get"
 			id="filter-tasks-form">
+		<p style="color: dimgray; font-style: italic; font-size: 0.9em;">
+			Fill in one or more of the following fields to filter tasks. Then click the "Search" button.
+		</p>
 		<c:if test="${fn:length(projects) > 0}">
 			<div class="form-control">
 				<label for="fltrLinkedProj">Filter by Task's Project:</label>

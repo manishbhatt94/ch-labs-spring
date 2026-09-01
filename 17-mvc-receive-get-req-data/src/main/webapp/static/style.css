@@ -66,6 +66,10 @@ main {
 	background-color: antiquewhite;	
 }
 
+a {
+	padding: 2px 4px;
+}
+
 h1 {
 	color: #333;
 }

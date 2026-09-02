@@ -32,12 +32,19 @@ Data is stored in `TasksAppDataService`, in `ArrayList`s, across 4 models: `Depa
 > the current page does not reflect the result of a POST but rather of a GET. The end effect is that
 > there is no way the user can accidentally re- POST the same data by performing a refresh. The refresh
 > forces a GET of the result page, not a resend of the initial POST data.
+>
 > — [Spring 4.3.x MVC - &sect; 22.5.3 Redirecting to Views](https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/mvc.html#mvc-redirecting)
 
 
 ## Demo Screenshots
 
 Project Demo Screenshots are attached in file: [DEMO.md](./DEMO.md)
+
+
+## Notes
+
+- Difference b/w RedirectAttributes methods `addAttribute` & `addFlashAttribute`: \
+  [spring-mvc-redirect-attributes-notes.md](./spring-mvc-redirect-attributes-notes.md)
 
 
 ## Endpoints

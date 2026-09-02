@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tasksapp.dto.TaskFilter;
 import com.tasksapp.model.Department;
@@ -40,6 +41,11 @@ public class TasksAppController {
 	public String createDepartment(HttpServletRequest req) {
 		String deptName = req.getParameter("deptName");
 		Department department = service.createDepartment(deptName);
+
+		// Note: We could have used RedirectAttributes in this controller method as
+		// well, but not using it here, just to demonstrate that we can also manually
+		// construct the redirect URL with the deptId of the newly created department.
+
 		return "redirect:/tasks-app/departments/" + department.getDeptId();
 	}
 
@@ -85,10 +91,36 @@ public class TasksAppController {
 	}
 
 	@PostMapping("/users")
-	public String createUser(@RequestParam String userName, @RequestParam Integer workDeptId) {
+	public String createUser(@RequestParam String userName, @RequestParam Integer workDeptId,
+			RedirectAttributes redirectAttrs) {
+
 		Department dept = service.getDepartmentById(workDeptId);
 		User user = service.createUser(userName, dept.getDeptId(), dept.getDeptName());
-		return "redirect:/tasks-app/users/" + user.getUserId();
+
+		// Manually construct the redirect URL with the userId of the newly created
+		// user:
+		// (This faces the issue of also manually calling toString() if applicable, and
+		// URL-encoding the value of userId).
+//		return "redirect:/tasks-app/users/" + user.getUserId();
+
+		// Below we use RedirectAttributes interface, which offers a safer/cleaner
+		// alternative to manually string-concatenating the redirect URL:
+		redirectAttrs.addAttribute("userId", user.getUserId()); // -> goes into the URL.
+
+		// Note: The above line redirectAttrs.addAttribute("userId", user.getUserId());
+		// will automatically URL-encode the value of user.getUserId(),
+		// and replace it in the redirect URL template string
+		// "redirect:/tasks-app/users/{userId}" where {userId} is a placeholder.
+		// If the redirect URL template string does not contain a placeholder for the
+		// attribute, it will be appended as a query parameter instead,
+		// like "redirect:/tasks-app/users?userId=123". But in our case, we have a
+		// placeholder {userId} in the redirect URL template string, so it will be
+		// replaced with the actual value of user.getUserId().
+
+		// Add a flash attribute to pass a one-time message to the redirected page:
+		redirectAttrs.addFlashAttribute("redirectMessage", "User created successfully!"); // -> one-time, invisible
+
+		return "redirect:/tasks-app/users/{userId}";
 	}
 
 	@GetMapping("/filter-users")
@@ -129,12 +161,23 @@ public class TasksAppController {
 	}
 
 	@PostMapping("/projects")
-	public String createProject(@ModelAttribute Project project) {
+	public String createProject(@ModelAttribute Project project, RedirectAttributes redirectAttrs) {
 		// Note: Used @ModelAttribute here to inject the entire form data into an
 		// object, instead of manually picking each form field, and then constructing
 		// the object ourselves.
 		service.createProject(project);
-		return "redirect:/tasks-app/projects/" + project.getProjId();
+
+//		return "redirect:/tasks-app/projects/" + project.getProjId();
+
+		// Just demonstrating that below methods can be chained together, as they return
+		// the same RedirectAttributes object.
+		// @formatter:off
+		redirectAttrs
+				.addAttribute("projId", project.getProjId())
+				.addFlashAttribute("redirectMessage", "Project created successfully!");
+		// @formatter:on
+
+		return "redirect:/tasks-app/projects/{projId}";
 	}
 
 	@GetMapping("/filter-projects")
@@ -184,7 +227,7 @@ public class TasksAppController {
 	}
 
 	@PostMapping("/tasks")
-	public String createTask(@ModelAttribute Task task) {
+	public String createTask(@ModelAttribute Task task, RedirectAttributes redirectAttrs) {
 		System.out.println("[createTask] task: " + task);
 		// Note: Used @ModelAttribute here to inject the entire form data into an
 		// object, instead of manually picking each form field, and then constructing
@@ -205,7 +248,16 @@ public class TasksAppController {
 		service.createTask(task);
 
 		// Redirect to the task details page after creation:
-		return "redirect:/tasks-app/tasks/" + task.getTaskId();
+//		return "redirect:/tasks-app/tasks/" + task.getTaskId();
+
+		// Use RedirectAttributes to pass the taskId as a path variable in the redirect
+		// URL:
+		redirectAttrs.addAttribute("taskId", task.getTaskId()); // -> goes into the URL.
+
+		// Add a flash attribute to pass a one-time message to the redirected page:
+		redirectAttrs.addFlashAttribute("redirectMessage", "Task created successfully!"); // -> one-time, invisible
+
+		return "redirect:/tasks-app/tasks/{taskId}";
 	}
 
 	@GetMapping("/filter-tasks")

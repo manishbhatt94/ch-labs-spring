@@ -26,6 +26,10 @@
 		</nav>
 	</aside>
 
+	<c:if test="${not empty redirectMessage}">
+		<div class="alert alert-success">${redirectMessage}</div>
+	</c:if>
+
 	<table border="1" class="sm">
 		<caption>Project Details</caption>
 		<c:choose>
